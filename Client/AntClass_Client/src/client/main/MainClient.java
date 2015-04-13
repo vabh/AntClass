@@ -5,10 +5,9 @@ import java.rmi.registry.Registry;
 
 import rmi.MessageImpl;
 
+public class MainClient {
 
-public class Main {
-
-	private void startServer() {
+	private void start() {
 		try {
 			// create on port 1099
 			Registry registry = LocateRegistry.createRegistry(1099);
@@ -22,7 +21,7 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		Main main = new Main();
-		main.startServer();
+		MainClient main = new MainClient();
+		main.start();
 	}
 }
