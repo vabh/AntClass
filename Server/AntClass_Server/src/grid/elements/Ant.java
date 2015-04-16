@@ -3,6 +3,7 @@ package grid.elements;
 public class Ant {
 
 	int x, y;
+	//probabilities
 	public Ant(int x, int y){
 		this.x = x;
 		this.y = y;

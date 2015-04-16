@@ -4,7 +4,7 @@ public class Heap {
 	
 	int heap[];
 	int size;
-	
+	//probabilities
 	public Heap(int size){
 		this.size = size;
 		heap = new int[size];
@@ -14,4 +14,5 @@ public class Heap {
 			heap[i] = (int) (Math.random() * 10);
 		}
 	}
+	
 }
