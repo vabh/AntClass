@@ -11,18 +11,23 @@ public class MessageImpl extends UnicastRemoteObject implements IMessage {
 	}
 
 	@Override
-	public void remoteFunction1(String param) throws RemoteException {
+	public void remoteAntProcessor(String param) throws RemoteException { // processes one single ant (received as a parameter)
 		System.out.println("remoteSynchronizedFunction1() received parameter: " + param);
-		while (true) { // do something useful instead ;)
-			;
-		}
+
+
+		// TODO: move the ant passed as a parameter
+
+
+		// TODO: pick-up or drop an object
+
+
 	}
 
-	@Override
-	public void remoteFunction2(String param) throws RemoteException {
-		System.out.println("remoteSynchronizedFunction2() received parameter: " + param);
-		while (true) { // do something useful instead ;)
-			;
-		}
-	}
+	// @Override
+	// public void remoteFunction2(String param) throws RemoteException {
+	// System.out.println("remoteSynchronizedFunction2() received parameter: " + param);
+	// while (true) { // do something useful instead ;)
+	// ;
+	// }
+	// }
 }
