@@ -3,6 +3,7 @@ package client.main;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
+import rmi.IMessage;
 import rmi.MessageImpl;
 
 public class MainClient {
@@ -13,7 +14,7 @@ public class MainClient {
 			Registry registry = LocateRegistry.createRegistry(1099);
 
 			// create a new service named myMessage
-			registry.rebind("myMessage", new MessageImpl());
+			registry.rebind(IMessage.messageTag, new MessageImpl());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

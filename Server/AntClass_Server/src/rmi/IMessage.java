@@ -4,5 +4,9 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface IMessage extends Remote {
-	void sayHello(String name) throws RemoteException;
+	public String messageTag = "MESSAGE_TAG";
+
+	public void remoteFunction1(String name) throws RemoteException;
+
+	public void remoteFunction2(String name) throws RemoteException;
 }
