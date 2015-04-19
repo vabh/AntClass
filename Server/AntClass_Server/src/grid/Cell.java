@@ -16,6 +16,9 @@ public class Cell {
 	public String getEntityType(){		
 		if(ant != null)
 			return "ant";
-		else return "heap";			
+		else if( heap != null)
+			return "heap";	
+		else
+			return "empty";
 	}
 }

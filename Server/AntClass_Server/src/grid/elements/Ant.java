@@ -2,20 +2,41 @@ package grid.elements;
 
 public class Ant {
 
-	int x, y;
+	int r, c;
+	int id;
 	//probabilities
-	public Ant(int x, int y){
-		this.x = x;
-		this.y = y;
+	
+	public Ant(int r, int c){
+		this.r = r;
+		this.c = c;
 	}
 	
-	public void move(int x, int y){
-		this.x = x;
-		this.y = y;
+	//this method should be called to make the ant move
+	//called with board size, to make movement toroidal
+	public void move(int rows, int columns){
+		float x = (float) Math.random();
+		float y = (float) Math.random();
+		
+		if( x >= 0.5)
+			r = (r + 1) % rows;
+		else{
+			r -= 1;
+			if(r < 0)
+				r = rows - 1;
+		}
+		
+		if( y >= 0.5)
+			c = (c + 1) % columns;
+		else{
+			c -= 1;
+			if(r < 0)
+				r = columns - 1;
+		}
+		
 	}
 	
 	public int[] getLocation(){
-		int location[] = {x, y};
+		int location[] = {r, c};
 		return location;
 	}
 }
