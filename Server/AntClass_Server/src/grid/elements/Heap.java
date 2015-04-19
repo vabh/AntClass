@@ -31,4 +31,17 @@ public class Heap {
 		int location[] = {r, c};
 		return location;
 	}
+	
+	public int[] getHeapElements(){
+		return heap;
+	}
+	
+	//modified after the pickup and dropping operations
+	public void updateHeap(int heap[]){
+		this.size = heap.length;
+		this.heap = new int[size];
+		for (int i = 0; i < heap.length; i++) {
+			this.heap[i] = heap[i];			
+		}
+	}
 }

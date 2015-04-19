@@ -47,6 +47,16 @@ public class Board {
 		return board[r][c].getEntityType();
 	}
 	
+	//true if heap can be destroyed, else false
+	public boolean destroyHeap(int r, int c){
+		if(board[r][c].getEntityType().equals("heap")){
+			board[r][c].heap = null;
+			return true;
+		}
+		else
+			return false;			
+	}
+	
 	public static void main(String args[]) {
 		
 		Board b = new Board(6, 6, 2, 5);
