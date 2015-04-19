@@ -14,7 +14,7 @@ public class Ant {
 		this.c = c;
 		
 		this.carrying = false;
-		int heapElement = -1;
+		this.heapElement = -1;
 	}
 	
 	public boolean isCarrying(){
