@@ -4,11 +4,35 @@ public class Ant {
 
 	int r, c;
 	int id;
+	
+	boolean carrying;
+	int heapElement;
 	//probabilities
 	
 	public Ant(int r, int c){
 		this.r = r;
 		this.c = c;
+		
+		this.carrying = false;
+		int heapElement = -1;
+	}
+	
+	public boolean isCarrying(){
+		return carrying;
+	}
+	
+	public int getHeapElementType(){
+		//-1 if ant is not carrying anything
+		return heapElement;
+	}
+	public void drop(){
+		carrying = false;
+		heapElement = -1;
+	}
+	
+	public void pickUp(int heapElement){
+		carrying = true;
+		this.heapElement = heapElement;
 	}
 	
 	//this method should be called to make the ant move
@@ -31,10 +55,9 @@ public class Ant {
 			c -= 1;
 			if(r < 0)
 				r = columns - 1;
-		}
-		
+		}		
 	}
-	
+
 	public int[] getLocation(){
 		int location[] = {r, c};
 		return location;
