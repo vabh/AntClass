@@ -168,8 +168,8 @@ public class GUI extends JPanel implements ActionListener {
 		// Input parameters
 		int r = 20;
 		int co = 20;
-		int w = 1000;
-		int h = 900;
+		int w = 1024;
+		int h = 600;
 
 		JFrame frame = new JFrame("Grid");
 		frame.setSize(w, h);
