@@ -32,7 +32,7 @@ public class Board {
 				}
 				else if(r < 2){//heap
 					int hSize= (int)(Math.random() * heapSize + 1);
-					board[i][j] = new Cell(null, new Heap(hSize, types));
+					board[i][j] = new Cell(null, new Heap(i, j, hSize, types));
 					System.out.println(hSize);
 				}
 				else{//empty
