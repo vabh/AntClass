@@ -57,6 +57,26 @@ public class Board {
 			return false;			
 	}
 	
+	public void placeAnt(Ant ant){
+		int pos[] = ant.getLocation();
+		int r = pos[0];
+		int c = pos[1];
+		if( (r >= 0 && r < rows) && (c >= 0 && c < columns)){
+			board[r][c] = null;
+			board[r][c] = new Cell(ant, null);
+		}
+	}
+	
+	public void placeHeap(Heap heap){
+		int pos[] = heap.getLocation();
+		int r = pos[0];
+		int c = pos[1];
+		if( (r >= 0 && r < rows) && (c >= 0 && c < columns)){
+			board[r][c] = null;
+			board[r][c] = new Cell(null, heap);
+		}
+	}
+	
 	public static void main(String args[]) {
 		
 		Board b = new Board(6, 6, 2, 5);

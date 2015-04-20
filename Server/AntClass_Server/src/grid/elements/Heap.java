@@ -36,6 +36,10 @@ public class Heap {
 		return heap;
 	}
 	
+	public int getTypes(){
+		return types;
+	}
+	
 	//modified after the pickup and dropping operations
 	public void updateHeap(int heap[]){
 		this.size = heap.length;

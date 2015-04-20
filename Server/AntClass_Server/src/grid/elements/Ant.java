@@ -62,4 +62,12 @@ public class Ant {
 		int location[] = {r, c};
 		return location;
 	}
+	
+	public void processDropAlgorithm(){
+		
+	}
+	
+	public void processPickUpAlgorithm(){
+		
+	}
 }

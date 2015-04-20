@@ -7,6 +7,12 @@ public class Cell {
 
 	Ant ant;
 	Heap heap;
+	
+	public Cell(){
+		ant = null;
+		heap = null;
+	}
+	
 	public Cell(Ant ant, Heap heap){
 		this.ant = ant;
 		this.heap = heap;
