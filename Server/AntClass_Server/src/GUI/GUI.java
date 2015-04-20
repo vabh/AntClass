@@ -1,5 +1,8 @@
 package GUI;
 
+import grid.Board;
+import grid.Cell;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -18,6 +21,7 @@ public class GUI extends JPanel implements ActionListener {
 
 	private static final int AntSize = 35, SPEED = 1, ObjSize = 30;
 
+	Board b;
 	private int xPos, yPos;
 	private int xSpeed, ySpeed;
 	int rows, cols;
@@ -34,7 +38,8 @@ public class GUI extends JPanel implements ActionListener {
 	int[] Obj2xPos = new int[obj2num];
 	int[] Obj2yPos = new int[obj2num];
 
-	GUI(int _rows, int _cols, int _width, int _height) {
+	GUI(Board _b, int _rows, int _cols, int _width, int _height) {
+		this.b = _b;
 		this.rows = _rows;
 		this.cols = _cols;
 		this.width = _width;
@@ -102,18 +107,14 @@ public class GUI extends JPanel implements ActionListener {
 		repaint();
 	}
 
-	// Maybe use later
 	public int getWidth(ActionEvent e) {
 		// get screen size
 		int widthnew = getWidth();
-		int heightnew = getHeight();
 		return widthnew;
 	}
 
-	// Maybe use later
 	public int getHeight(ActionEvent e) {
 		// get screen size
-		int widthnew = getWidth();
 		int heightnew = getHeight();
 		return heightnew;
 	}
@@ -132,7 +133,34 @@ public class GUI extends JPanel implements ActionListener {
 			Line2D lin = new Line2D.Float(j * sizecol, 0, j * sizecol, height);
 			g2.draw(lin);
 		}
-
+		
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				Cell c = b.board[i][j];
+				if(c.getEntityType().equals("ant")){
+					
+					g.setColor(Color.orange);
+					int x = i * sizecol;
+					int y = j * sizerow;
+					g.fillOval((int) (x + (sizecol - AntSize * 0.02 * Math.min(sizecol, sizerow)) / 2.0), (int) (y + (sizerow - AntSize
+							* 0.02 * Math.min(sizecol, sizerow)) / 2.0), (int) (AntSize * (0.02 * Math.min(sizecol, sizerow))),
+							(int) (AntSize * (0.02 * Math.min(sizecol, sizerow))));
+				}
+				else if (c.getEntityType().equals("heap")){
+					//Check for type ???
+					//if (c.heap.getSize() = 1)
+					//Change the color to something
+					g.setColor(Color.green);
+					int x = i * sizecol;
+					int y = j * sizerow;
+					g.fillRect((int) (x + (sizecol - ObjSize * 0.02 * Math.min(sizecol, sizerow)) / 2.0), (int) (y + (sizerow - ObjSize
+							* 0.02 * Math.min(sizecol, sizerow)) / 2.0), (int) (ObjSize * (0.02 * Math.min(sizecol, sizerow))),
+							(int) (ObjSize * (0.02 * Math.min(sizecol, sizerow))));
+				}
+			}
+			System.out.println();
+		}
+/*
 		// Drawing Ants
 		for (int i = 0; i < antnum; i++) {
 			g.setColor(Color.orange);
@@ -145,7 +173,11 @@ public class GUI extends JPanel implements ActionListener {
 
 		// Drawing objects type 1
 		for (int k = 0; k < obj1num; k++) {
-			g.setColor(Color.green);
+			float color1 = (k+1)/10;
+			
+			Color сolor = new Color((int)color1*255, (int)color1*255, (int)color1*255);
+			g.setColor(сolor );
+			
 			int x = Obj1xPos[k] * sizecol;
 			int y = Obj1yPos[k] * sizerow;
 			g.fillRect((int) (x + (sizecol - ObjSize * 0.02 * Math.min(sizecol, sizerow)) / 2.0), (int) (y + (sizerow - ObjSize
@@ -162,6 +194,7 @@ public class GUI extends JPanel implements ActionListener {
 					* 0.02 * Math.min(sizecol, sizerow)) / 2.0), (int) (ObjSize * (0.02 * Math.min(sizecol, sizerow))),
 					(int) (ObjSize * (0.02 * Math.min(sizecol, sizerow))));
 		}
+		*/
 	}
 
 	public static void main(String[] args) {
@@ -170,12 +203,16 @@ public class GUI extends JPanel implements ActionListener {
 		int co = 20;
 		int w = 1024;
 		int h = 600;
+		
+		Board b = new Board(r, co, 2, 2);
+		b.init();
+		System.out.println(b);
 
 		JFrame frame = new JFrame("Grid");
 		frame.setSize(w, h);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-		frame.add(new GUI(r, co, w, h));
+		frame.add(new GUI(b, r, co, w, h));
 		frame.setVisible(true);
 
 	}

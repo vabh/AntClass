@@ -2,64 +2,66 @@ package shared_classes;
 
 public class Ant {
 
-	int r, c;
-	int id; // corresponds to client
-	
-	boolean carrying;
-	int heapElement;
-	//probabilities
-	
-	public Ant(int r, int c){
+	private int r, c;
+	private int id; // corresponds to client
+	private boolean carrying;
+	private int heapElement;
+
+	// probabilities
+
+	public Ant(int r, int c) {
 		this.r = r;
 		this.c = c;
-		
+
 		this.carrying = false;
 		this.heapElement = -1;
 	}
-	
-	public boolean isCarrying(){
+
+	public boolean isCarrying() {
 		return carrying;
 	}
-	
-	public int getHeapElementType(){
-		//-1 if ant is not carrying anything
+
+	public int getHeapElementType() {
+		// -1 if ant is not carrying anything
 		return heapElement;
 	}
-	public void drop(){
+
+	public void drop() {
 		carrying = false;
 		heapElement = -1;
 	}
-	
-	public void pickUp(int heapElement){
+
+	public void pickUp(int heapElement) {
 		carrying = true;
 		this.heapElement = heapElement;
 	}
-	
-	//this method should be called to make the ant move
-	//called with board size, to make movement toroidal
-	public void move(int rows, int columns){
+
+	// this method should be called to make the ant move
+	// called with board size, to make movement toroidal
+	public void move(int rows, int columns) {
 		float x = (float) Math.random();
 		float y = (float) Math.random();
-		
-		if( x >= 0.5)
+
+		if (x >= 0.5) {
 			r = (r + 1) % rows;
-		else{
+		} else {
 			r -= 1;
-			if(r < 0)
+			if (r < 0)
 				r = rows - 1;
 		}
-		
-		if( y >= 0.5)
+
+		if (y >= 0.5){
 			c = (c + 1) % columns;
-		else{
+		}
+		else {
 			c -= 1;
-			if(r < 0)
+			if (r < 0)
 				r = columns - 1;
-		}		
+		}
 	}
 
-	public int[] getLocation(){
-		int location[] = {r, c};
+	public int[] getLocation() {
+		int location[] = { r, c };
 		return location;
 	}
 	

@@ -2,11 +2,12 @@ package shared_classes;
 
 
 public class Board {
-	Cell cells[][];
-	int rows;
-	int columns;
-	int types; //number of different heap elements for the board
-	int heapSize; // maximum size of a heap
+	
+	private Cell cells[][];
+	private int rows;
+	private int columns;
+	private int types; //number of different heap elements for the board
+	private int heapSize; // maximum size of a heap
 	
 	public Board(int rows, int columns, int types, int heapSize){
 		
