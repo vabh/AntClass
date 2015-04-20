@@ -3,10 +3,13 @@ package server.main;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
+import javax.swing.JFrame;
+
 import shared_classes.Ant;
 import shared_classes.Board;
 import shared_classes.Heap;
 import shared_classes.IMessage;
+import GUI.GUI;
 
 public class MainServer {
 
@@ -58,17 +61,28 @@ public class MainServer {
 		currentAnts = 0;
 		currentHeaps = 0;
 
+		// create the GUI object
+		int row = 20;
+		int co = 20;
+		int w = 1024;
+		int h = 600;
+		JFrame frame = new JFrame("AntClass");
+		frame.setSize(w, h);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.add(new GUI(mainServer.board, row, co, w, h));
+		frame.setVisible(true);
+
 		// initialise board
 		for (int i = 0; i < mainServer.boardSize; i++) {
 			for (int j = 0; j < mainServer.boardSize; j++) {
 				int r = (int) (Math.random() * 10);
 
-				if (currentAnts <= mainServer.NUM_OF_ANTS && r > mainServer.ANT_PROBABILITY) {// ant
+				if (currentAnts < mainServer.NUM_OF_ANTS && r > mainServer.ANT_PROBABILITY) {// ant
 					Ant ant = new Ant(i, j);
 					mainServer.board.placeAnt(ant);
 					mainServer.ants[currentAnts++] = ant;
 
-				} else if (currentHeaps <= mainServer.NUMBER_OF_INITIAL_HEAPS && r < mainServer.HEAP_PROBABILITY) {// heap
+				} else if (currentHeaps < mainServer.NUMBER_OF_INITIAL_HEAPS && r < mainServer.HEAP_PROBABILITY) {// heap
 					int hSize = (int) (Math.random() * mainServer.MAX_HEAP_SIZE + 1);
 					Heap heap = new Heap(i, j, hSize, mainServer.TYPES_OF_OBJECTS);
 					mainServer.board.placeHeap(heap);
@@ -83,40 +97,45 @@ public class MainServer {
 															// to process each
 															// ant
 
-			// run the synchronizedFunction() in a separate thread
-			Thread processor1 = new Thread() {
-				public void run() {
-					// for each ant allocated to the client #1
-					for (int i = 0; i < mainServer.NUM_OF_ANTS / mainServer.NUMBER_OF_PROCESSORS; ++i) {
-						mainServer.processAntsOnClient("127.0.0.1", 1099, mainServer.ants[i], mainServer.board);
-					}
-				}
-			};
-			processor1.start();
-
-			// run the synchronizedFunction() in another separate thread
-			Thread processor2 = new Thread() {
-				public void run() {
-					// for each ant allocated to the client #2
-					for (int i = 0; i < mainServer.NUM_OF_ANTS / mainServer.NUMBER_OF_PROCESSORS; ++i) {
-						mainServer.processAntsOnClient("127.0.0.1", 2099, mainServer.ants[i], mainServer.board);
-					}
-				}
-			};
-			processor2.start();
-
-			// wait for the processor1 and processor2 to finish their tasks
-			try {
-				processor1.join();
-				processor2.join();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			// // run the synchronizedFunction() in a separate thread
+			// Thread processor1 = new Thread() {
+			// public void run() {
+			// // for each ant allocated to the client #1
+			// for (int i = 0; i < mainServer.NUM_OF_ANTS / mainServer.NUMBER_OF_PROCESSORS; ++i) {
+			// mainServer.processAntsOnClient("127.0.0.1", 1099, mainServer.ants[i], mainServer.board);
+			// }
+			// }
+			// };
+			// processor1.start();
+			//
+			// // run the synchronizedFunction() in another separate thread
+			// Thread processor2 = new Thread() {
+			// public void run() {
+			// // for each ant allocated to the client #2
+			// for (int i = 0; i < mainServer.NUM_OF_ANTS / mainServer.NUMBER_OF_PROCESSORS; ++i) {
+			// mainServer.processAntsOnClient("127.0.0.1", 2099, mainServer.ants[i], mainServer.board);
+			// }
+			// }
+			// };
+			// processor2.start();
+			//
+			// // wait for the processor1 and processor2 to finish their tasks
+			// try {
+			// processor1.join();
+			// processor2.join();
+			// } catch (InterruptedException e) {
+			// e.printStackTrace();
+			// }
 
 			// TODO: update the GUI with new positions of ants and objects
+			mainServer.updateGUI();
 
 
 		} // end of the big for() loop
 
 	} // end of the main() function
+
+	private void updateGUI() {
+
+	}
 }
