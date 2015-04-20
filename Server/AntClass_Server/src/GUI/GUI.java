@@ -166,7 +166,9 @@ public class GUI extends JPanel implements ActionListener {
 					//Check for type ???
 					//if (c.heap.getSize() = 1)
 					//Change the color to something
-					g.setColor(Color.green);
+				//	g.setColor(Color.green);
+					Color сolor = new Color((int) ((1/2.0)*255), (int) ((1/2.0)*255), (int) ((1/2.0)*255));
+					g.setColor(сolor );
 					int x = i * sizecol;
 					int y = j * sizerow;
 					g.fillRect((int) (x + (sizecol - ObjSize * 0.02 * Math.min(sizecol, sizerow)) / 2.0), (int) (y + (sizerow - ObjSize
