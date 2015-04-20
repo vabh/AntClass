@@ -15,23 +15,10 @@ public class MainServer {
 
 	// TODO: use this function for processing some ants on the 1st remote client/processor
 	// (Hint: pass ants and grid object as parameters to the remote function)
-	public synchronized void processAntsOnClient1() {
+	public synchronized void processAntsOnClient(String ipAddress, int portNumber) {
 		try {
-			Registry rmiRegistry = LocateRegistry.getRegistry("127.0.0.1", 1099); // fire to localhost port 1099
+			Registry rmiRegistry = LocateRegistry.getRegistry(ipAddress, portNumber); // fire to localhost port 1099
 			IMessage rmiMessage = (IMessage) rmiRegistry.lookup(IMessage.messageTag); // search for service with the right message
-			rmiMessage.remoteAntProcessor("param 1"); // call server's method with parameters
-			System.out.println("IMessage Sent with param 1 to remoteAntProcessor()");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	// TODO: use this function for processing some ants on the 2nd remote client/processor
-	// (Hint: pass ants and grid object as parameters to the remote function)
-	public synchronized void processAntsOnClient2() {
-		try {
-			Registry rmiRegistry = LocateRegistry.getRegistry("127.0.0.1", 2099); // fire to another localhost port 2099
-			IMessage rmiMessage = (IMessage) rmiRegistry.lookup(IMessage.messageTag); // search for myMessage service
 			rmiMessage.remoteAntProcessor("param 1"); // call server's method with parameters
 			System.out.println("IMessage Sent with param 1 to remoteAntProcessor()");
 		} catch (Exception e) {
@@ -48,23 +35,23 @@ public class MainServer {
 
 		for (int i = 0; i < mainServer.NUM_OF_LOOPS; ++i) { // each step of this loop is one cycle to process each ant
 
-			// run the synchronizedFunction1() in a separate thread
+			// run the synchronizedFunction() in a separate thread
 			Thread processor1 = new Thread() {
 				public void run() {
 					// TODO:
 					// for each ant allocated to the client #1 do {
-					mainServer.processAntsOnClient1();
+					mainServer.processAntsOnClient("127.0.0.1", 1099);
 					// }
 				}
 			};
 			processor1.start();
 
-			// run the synchronizedFunction2() in another separate thread
+			// run the synchronizedFunction() in another separate thread
 			Thread processor2 = new Thread() {
 				public void run() {
 					// TODO:
 					// for each ant allocated to the client #2 do {
-					mainServer.processAntsOnClient2();
+					mainServer.processAntsOnClient("127.0.0.1", 2099);
 					// }
 				}
 			};
