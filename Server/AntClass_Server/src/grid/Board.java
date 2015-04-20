@@ -4,7 +4,7 @@ import grid.elements.Ant;
 import grid.elements.Heap;
 
 public class Board {
-	Cell board[][];
+	public Cell board[][];
 	int rows;
 	int columns;
 	int types; //number of different heap elements for the board
