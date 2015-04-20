@@ -1,4 +1,4 @@
-package grid.elements;
+package shared_classes;
 
 public class Heap {
 	
