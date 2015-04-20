@@ -38,11 +38,4 @@ public class MessageImpl extends UnicastRemoteObject implements IMessage {
 
 	}
 
-	// @Override
-	// public void remoteFunction2(String param) throws RemoteException {
-	// System.out.println("remoteSynchronizedFunction2() received parameter: " + param);
-	// while (true) { // do something useful instead ;)
-	// ;
-	// }
-	// }
 }
