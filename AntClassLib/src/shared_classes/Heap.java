@@ -1,4 +1,4 @@
-package grid.elements;
+package shared_classes;
 
 public class Heap {
 	
@@ -34,6 +34,10 @@ public class Heap {
 	
 	public int[] getHeapElements(){
 		return heap;
+	}
+	
+	public int getTypes(){
+		return types;
 	}
 	
 	//modified after the pickup and dropping operations

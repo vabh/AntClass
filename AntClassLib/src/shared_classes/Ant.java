@@ -1,4 +1,4 @@
-package grid.elements;
+package shared_classes;
 
 public class Ant {
 
@@ -64,5 +64,13 @@ public class Ant {
 	public int[] getLocation() {
 		int location[] = { r, c };
 		return location;
+	}
+	
+	public void processDropAlgorithm(){
+		
+	}
+	
+	public void processPickUpAlgorithm(){
+		
 	}
 }

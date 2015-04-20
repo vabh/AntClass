@@ -3,8 +3,8 @@ package client.main;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-import rmi.IMessage;
 import rmi.MessageImpl;
+import shared_classes.IMessage;
 
 public class MainClient {
 
