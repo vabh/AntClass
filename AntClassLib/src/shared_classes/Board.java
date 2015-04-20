@@ -1,7 +1,5 @@
-package grid;
+package shared_classes;
 
-import grid.elements.Ant;
-import grid.elements.Heap;
 
 public class Board {
 	Cell board[][];

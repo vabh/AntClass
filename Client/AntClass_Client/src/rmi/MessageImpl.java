@@ -3,6 +3,10 @@ package rmi;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
+import shared_classes.Ant;
+import shared_classes.Board;
+import shared_classes.IMessage;
+
 public class MessageImpl extends UnicastRemoteObject implements IMessage {
 
 	private static final long serialVersionUID = -7268072713058246914L;
@@ -11,15 +15,22 @@ public class MessageImpl extends UnicastRemoteObject implements IMessage {
 	}
 
 	@Override
-	public void remoteAntProcessor(String param) throws RemoteException { // processes one single ant (received as a parameter)
-		System.out.println("remoteSynchronizedFunction1() received parameter: " + param);
+	public void remoteAntProcessor(Ant ant, Board board) throws RemoteException { // processes one single ant (received as a
+																					// parameter)
 
+		// move the ant passed as a parameter
+		ant.move();
 
-		// TODO: move the ant passed as a parameter
+		int heapPosition = ant.lookAround();
 
-
-		// TODO: pick-up or drop an object
-
+		if (heapPosition > -1) {
+			// pick-up or drop an object
+			if (ant.isCarrying()) {
+				ant.processDropAlgorithm();
+			} else {
+				ant.processPickUpAlgorithm();
+			}
+		}
 
 	}
 
