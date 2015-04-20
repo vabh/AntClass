@@ -6,6 +6,7 @@ import java.rmi.server.UnicastRemoteObject;
 import shared_classes.Ant;
 import shared_classes.Board;
 import shared_classes.IMessage;
+import shared_classes.Location;
 
 public class MessageImpl extends UnicastRemoteObject implements IMessage {
 
@@ -19,11 +20,12 @@ public class MessageImpl extends UnicastRemoteObject implements IMessage {
 																					// parameter)
 
 		// move the ant passed as a parameter
-		ant.move();
+		ant.move(board.getRows(), board.getColumns());
 
-		int heapPosition = ant.lookAround();
+		Location heapLocation = null;
+		boolean isHeapFound = ant.lookAround(board, heapLocation);
 
-		if (heapPosition > -1) {
+		if (isHeapFound) {
 			// pick-up or drop an object
 			if (ant.isCarrying()) {
 				ant.processDropAlgorithm();
@@ -31,6 +33,8 @@ public class MessageImpl extends UnicastRemoteObject implements IMessage {
 				ant.processPickUpAlgorithm();
 			}
 		}
+
+		// TODO: @Anastasia: make it complicated please.
 
 	}
 
