@@ -1,43 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class-diagram version="1.1.7" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+<class-diagram version="1.1.8" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true">  
-  <class id="1" language="java" name="shared_classes.Board" project="AntClassLib" 
-    file="/AntClassLib/src/shared_classes/Board.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="152" width="98" x="169" y="154"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="2" language="java" name="shared_classes.Cell" project="AntClassLib" 
-    file="/AntClassLib/src/shared_classes/Cell.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="134" width="143" x="383" y="140"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="3" language="java" name="shared_classes.Ant" project="AntClassLib" 
-    file="/AntClassLib/src/shared_classes/Ant.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="170" width="120" x="30" y="17"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="4" language="java" name="shared_classes.Heap" project="AntClassLib" 
-    file="/AntClassLib/src/shared_classes/Heap.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="116" width="98" x="367" y="300"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="5" language="java" name="GUI.GUI" project="AntClass_Server" file="/AntClass_Server/src/GUI/GUI.java" 
+  <class id="1" language="java" name="GUI.GUI" project="AntClass_Server" file="/AntClass_Server/src/GUI/GUI.java" 
     binary="false" corner="BOTTOM_RIGHT">    
     <position height="368" width="106" x="575" y="32"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -46,16 +10,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="6" language="java" name="shared_classes.IMessage" project="AntClassLib" 
-    file="/AntClassLib/src/shared_classes/IMessage.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="68" width="114" x="6" y="335"/>    
-    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </interface>  
-  <class id="7" language="java" name="server.main.MainServer" project="AntClass_Server" 
+  <class id="2" language="java" name="server.main.MainServer" project="AntClass_Server" 
     file="/AntClass_Server/src/server/main/MainServer.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="131" width="130" x="301" y="9"/>    
     <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -64,7 +19,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="client.main.MainClient" project="AntClass_Client" 
+  <class id="3" language="java" name="client.main.MainClient" project="AntClass_Client" 
     file="/AntClass_Client/src/client/main/MainClient.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="116" width="125" x="160" y="332"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -73,16 +28,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="9" language="java" name="rmi.IMessage" project="AntClass_Client" 
-    file="/AntClass_Client/src/rmi/IMessage.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="923" y="403"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </interface>  
-  <class id="10" language="java" name="rmi.MessageImpl" project="AntClass_Client" 
+  <class id="4" language="java" name="rmi.MessageImpl" project="AntClass_Client" 
     file="/AntClass_Client/src/rmi/MessageImpl.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="972" y="167"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -91,46 +37,6 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <association id="11">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="12" name="ant">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="13" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="14">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="15" name="board">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="16" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="17">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="18" name="heap">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="19" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <realization id="20">    
-    <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="9"/>  
-  </realization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    

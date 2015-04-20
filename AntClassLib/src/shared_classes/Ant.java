@@ -3,7 +3,7 @@ package shared_classes;
 public class Ant {
 
 	int r, c;
-	int id;
+	int id; // corresponds to client
 	
 	boolean carrying;
 	int heapElement;

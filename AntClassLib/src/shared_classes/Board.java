@@ -2,7 +2,7 @@ package shared_classes;
 
 
 public class Board {
-	Cell board[][];
+	Cell cells[][];
 	int rows;
 	int columns;
 	int types; //number of different heap elements for the board
@@ -15,7 +15,11 @@ public class Board {
 		this.types = types;
 		this.heapSize = heapSize;
 		
-		board = new Cell[rows][columns];
+		cells = new Cell[rows][columns];
+	}
+	
+	public Cell[][] getBoardCells(){
+		return cells;
 	}
 	
 	public void init(){
@@ -26,15 +30,15 @@ public class Board {
 				int r = (int) (Math.random()*10);
 				
 				if(r > 5) {//ant
-					board[i][j] = new Cell(new Ant(i, j), null);
+					cells[i][j] = new Cell(new Ant(i, j), null);
 				}
 				else if(r < 2){//heap
 					int hSize= (int)(Math.random() * heapSize + 1);
-					board[i][j] = new Cell(null, new Heap(i, j, hSize, types));
+					cells[i][j] = new Cell(null, new Heap(i, j, hSize, types));
 					System.out.println(hSize);
 				}
 				else{//empty
-					board[i][j] = new Cell(null, null);
+					cells[i][j] = new Cell(null, null);
 				}
 			}
 		}
@@ -42,13 +46,13 @@ public class Board {
 		
 	//returns -- ant | heap | empty
 	public String getCellObjectType(int r, int c){
-		return board[r][c].getEntityType();
+		return cells[r][c].getEntityType();
 	}
 	
 	//true if heap can be destroyed, else false
 	public boolean destroyHeap(int r, int c){
-		if(board[r][c].getEntityType().equals("heap")){
-			board[r][c].heap = null;
+		if(cells[r][c].getEntityType().equals("heap")){
+			cells[r][c].heap = null;
 			return true;
 		}
 		else
@@ -60,8 +64,8 @@ public class Board {
 		int r = pos[0];
 		int c = pos[1];
 		if( (r >= 0 && r < rows) && (c >= 0 && c < columns)){
-			board[r][c] = null;
-			board[r][c] = new Cell(ant, null);
+			cells[r][c] = null;
+			cells[r][c] = new Cell(ant, null);
 		}
 	}
 	
@@ -70,8 +74,8 @@ public class Board {
 		int r = pos[0];
 		int c = pos[1];
 		if( (r >= 0 && r < rows) && (c >= 0 && c < columns)){
-			board[r][c] = null;
-			board[r][c] = new Cell(null, heap);
+			cells[r][c] = null;
+			cells[r][c] = new Cell(null, heap);
 		}
 	}
 	
@@ -82,7 +86,7 @@ public class Board {
 		
 		for (int i = 0; i < b.rows; i++) {
 			for (int j = 0; j < b.columns; j++) {
-				Cell c = b.board[i][j];
+				Cell c = b.cells[i][j];
 				if(c.getEntityType().equals("ant")){
 					System.out.print("ant  |");
 				}

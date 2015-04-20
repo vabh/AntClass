@@ -4,7 +4,7 @@ public class Heap {
 	
 	int r;
 	int c;
-	int heap[];
+	int elements[];
 	int size;
 	int types; // the different types of heal elements
 	
@@ -15,11 +15,11 @@ public class Heap {
 		this.c = c;
 		this.size = size;
 		this.types = types;
-		heap = new int[size];
+		elements = new int[size];
 		
 		//populating the heap
-		for (int i = 0; i < heap.length; i++) {
-			heap[i] = (int) (Math.random() * types); 
+		for (int i = 0; i < elements.length; i++) {
+			elements[i] = (int) (Math.random() * types); 
 		}
 	}
 	
@@ -33,7 +33,7 @@ public class Heap {
 	}
 	
 	public int[] getHeapElements(){
-		return heap;
+		return elements;
 	}
 	
 	public int getTypes(){
@@ -43,9 +43,9 @@ public class Heap {
 	//modified after the pickup and dropping operations
 	public void updateHeap(int heap[]){
 		this.size = heap.length;
-		this.heap = new int[size];
+		this.elements = new int[size];
 		for (int i = 0; i < heap.length; i++) {
-			this.heap[i] = heap[i];			
+			this.elements[i] = heap[i];			
 		}
 	}
 }
