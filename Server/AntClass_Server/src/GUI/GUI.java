@@ -1,7 +1,5 @@
 package GUI;
 
-import grid.Board;
-import grid.Cell;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -14,6 +12,10 @@ import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
+import shared_classes.Board;
+import shared_classes.Cell;
+import shared_classes.Heap;
 
 public class GUI extends JPanel implements ActionListener {
 
@@ -134,9 +136,10 @@ public class GUI extends JPanel implements ActionListener {
 			g2.draw(lin);
 		}
 		
+		Cell[][] board = b.getBoardCells();
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
-				Cell c = b.board[i][j];
+				Cell c = board[i][j];
 				if(c.getEntityType().equals("ant")){
 					
 					g.setColor(Color.orange);
@@ -147,6 +150,8 @@ public class GUI extends JPanel implements ActionListener {
 							(int) (AntSize * (0.02 * Math.min(sizecol, sizerow))));
 				}
 				else if (c.getEntityType().equals("heap")){
+					Heap h = c.getHeap();
+					
 					//Check for type ???
 					//if (c.heap.getSize() = 1)
 					//Change the color to something

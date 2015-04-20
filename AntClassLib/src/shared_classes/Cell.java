@@ -25,4 +25,11 @@ public class Cell {
 		else
 			return "empty";
 	}
+
+	
+	
+	public Heap getHeap() {
+		// TODO Auto-generated method stub
+		return heap;
+	}
 }
