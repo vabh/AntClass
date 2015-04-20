@@ -27,6 +27,9 @@ public class Cell {
 	}
 
 	
+	public Ant getAnt(){
+		return ant;
+	}
 	
 	public Heap getHeap() {
 		// TODO Auto-generated method stub

@@ -2,7 +2,7 @@ package shared_classes;
 
 public class Ant {
 
-	private int r, c;
+	private int r, c; //location on board
 	private int id; // corresponds to client
 	private boolean carrying;
 	private int heapElement;
@@ -38,10 +38,11 @@ public class Ant {
 
 	// this method should be called to make the ant move
 	// called with board size, to make movement toroidal
-	public void move(int rows, int columns) {
+	public int[] move(int rows, int columns) {
+		
 		float x = (float) Math.random();
 		float y = (float) Math.random();
-
+						
 		if (x >= 0.5) {
 			r = (r + 1) % rows;
 		} else {
@@ -58,6 +59,8 @@ public class Ant {
 			if (r < 0)
 				r = columns - 1;
 		}
+		int pos[] = {r, c};
+		return pos;
 	}
 
 	public int[] getLocation() {

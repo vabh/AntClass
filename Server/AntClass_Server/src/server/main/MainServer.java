@@ -72,12 +72,12 @@ public class MainServer {
 			for (int j = 0; j < mainServer.boardSize; j++) {
 				int r = (int) (Math.random() * 10);
 
-				if (currentAnts <= mainServer.NUM_OF_ANTS && r > 5) {// ant
+				if (currentAnts <= mainServer.NUM_OF_ANTS && r > mainServer.ANT_PROBABILITY) {// ant
 					Ant ant = new Ant(i, j);
 					mainServer.board.placeAnt(ant);
 					mainServer.ants[currentAnts++] = ant;
 					
-				} else if (currentHeaps <= mainServer.NUMBER_OF_INITIAL_HEAPS && r < 2) {// heap
+				} else if (currentHeaps <= mainServer.NUMBER_OF_INITIAL_HEAPS && r < mainServer.HEAP_PROBABILITY) {// heap
 					int hSize = (int) (Math.random() * mainServer.MAX_HEAP_SIZE + 1);
 					Heap heap = new Heap(i, j, hSize, mainServer.TYPES_OF_OBJECTS);
 					mainServer.board.placeHeap(heap);

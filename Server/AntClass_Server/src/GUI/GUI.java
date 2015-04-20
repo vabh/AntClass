@@ -106,6 +106,16 @@ public class GUI extends JPanel implements ActionListener {
 			}
 		}
 
+		Cell[][] board = b.getBoardCells();
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				Cell c = board[i][j];
+				if(c.getEntityType().equals("ant")){
+										
+//					b.move(c.getAnt());
+				}
+			}
+		}
 		repaint();
 	}
 
@@ -148,6 +158,7 @@ public class GUI extends JPanel implements ActionListener {
 					g.fillOval((int) (x + (sizecol - AntSize * 0.02 * Math.min(sizecol, sizerow)) / 2.0), (int) (y + (sizerow - AntSize
 							* 0.02 * Math.min(sizecol, sizerow)) / 2.0), (int) (AntSize * (0.02 * Math.min(sizecol, sizerow))),
 							(int) (AntSize * (0.02 * Math.min(sizecol, sizerow))));
+					c.getAnt().move(rows, cols);
 				}
 				else if (c.getEntityType().equals("heap")){
 					Heap h = c.getHeap();
@@ -213,7 +224,7 @@ public class GUI extends JPanel implements ActionListener {
 		b.init();
 		System.out.println(b);
 
-		JFrame frame = new JFrame("Grid");
+		JFrame frame = new JFrame("AntClass");
 		frame.setSize(w, h);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 

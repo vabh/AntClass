@@ -2,7 +2,7 @@ package shared_classes;
 
 public class Heap {
 	
-	int r;
+	int r; //location on board
 	int c;
 	int elements[];
 	int size;
