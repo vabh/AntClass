@@ -23,14 +23,15 @@ public class GUI extends JPanel implements ActionListener {
 
 	private static final int AntSize = 35, SPEED = 1, ObjSize = 30;
 
-	Board b;
+	Board board;
 	private int xPos, yPos;
 	private int xSpeed, ySpeed;
 	int rows, cols;
 	int width, height;
 	int sizecol = 0;
 	int sizerow = 0;
-	int antnum = 10;
+	Cell[][] cells;
+	/*int antnum = 10;
 	int obj1num = 10;
 	int obj2num = 15;
 	int[] AntxPos = new int[antnum];
@@ -38,18 +39,18 @@ public class GUI extends JPanel implements ActionListener {
 	int[] Obj1xPos = new int[obj1num];
 	int[] Obj1yPos = new int[obj1num];
 	int[] Obj2xPos = new int[obj2num];
-	int[] Obj2yPos = new int[obj2num];
+	int[] Obj2yPos = new int[obj2num];*/
 
-	public GUI(Board _b, int _rows, int _cols, int _width, int _height) {
-		this.b = _b;
+	public GUI(Board _board, int _rows, int _cols, int _width, int _height) {
+		this.board = _board;
 		this.rows = _rows;
 		this.cols = _cols;
 		this.width = _width;
 		this.height = _height;
 		sizecol = width / cols;
 		sizerow = height / rows;
-
-		Random r = new Random();
+		cells = board.getBoardCells();
+	/*	Random r = new Random();
 		for (int i = 0; i < antnum; i++) {
 			AntxPos[i] = r.nextInt(cols);
 			AntyPos[i] = r.nextInt(rows);
@@ -62,7 +63,7 @@ public class GUI extends JPanel implements ActionListener {
 		for (int i = 0; i < obj2num; i++) {
 			Obj2xPos[i] = r.nextInt(cols);
 			Obj2yPos[i] = r.nextInt(rows);
-		}
+		}*/
 		// determine speed direction
 		xSpeed = SPEED;
 		ySpeed = -SPEED;
@@ -81,8 +82,9 @@ public class GUI extends JPanel implements ActionListener {
 		sizerow = heightnew / rows;
 		width = widthnew;
 		height = heightnew;
+		cells = board.getBoardCells();
 
-		for (int i = 0; i < antnum; i++) {
+/*		for (int i = 0; i < antnum; i++) {
 			// update positions
 			AntxPos[i] += xSpeed;
 			// test if we go out the screen on the X axis
@@ -106,16 +108,17 @@ public class GUI extends JPanel implements ActionListener {
 			}
 		}
 
-		Cell[][] board = b.getBoardCells();
+		Cell[][] cells = board.getBoardCells();
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
-				Cell c = board[i][j];
+				Cell c = cells[i][j];
 				if (c.getEntityType().equals("ant")) {
 
 					// b.move(c.getAnt());
 				}
 			}
 		}
+		*/
 		repaint();
 	}
 
@@ -146,11 +149,12 @@ public class GUI extends JPanel implements ActionListener {
 			g2.draw(lin);
 		}
 
-		Cell[][] cells = b.getBoardCells();
+		//Cell[][] cells = board.getBoardCells();
+		
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
-				Cell c = cells[i][j];
-				if (c.getEntityType().equals("ant")) {
+				Cell cell = cells[i][j];
+				if (cell.getEntityType().equals("ant")) {
 
 					g.setColor(Color.orange);
 					int x = i * sizecol;
@@ -159,9 +163,9 @@ public class GUI extends JPanel implements ActionListener {
 							(int) (y + (sizerow - AntSize * 0.02 * Math.min(sizecol, sizerow)) / 2.0),
 							(int) (AntSize * (0.02 * Math.min(sizecol, sizerow))),
 							(int) (AntSize * (0.02 * Math.min(sizecol, sizerow))));
-					c.getAnt().move(rows, cols);
-				} else if (c.getEntityType().equals("heap")) {
-					Heap h = c.getHeap();
+					cell.getAnt().move(rows, cols);
+				} else if (cell.getEntityType().equals("heap")) {
+					Heap h = cell.getHeap();
 
 					// Check for type ???
 					// if (c.heap.getSize() = 1)
@@ -179,6 +183,11 @@ public class GUI extends JPanel implements ActionListener {
 			}
 			System.out.println();
 		}
+		
+		
+		
+		
+		
 		/*
 		 * // Drawing Ants for (int i = 0; i < antnum; i++) { g.setColor(Color.orange); int x = AntxPos[i] * sizecol; int y =
 		 * AntyPos[i] * sizerow; g.fillOval((int) (x + (sizecol - AntSize * 0.02 * Math.min(sizecol, sizerow)) / 2.0), (int) (y +
@@ -202,7 +211,7 @@ public class GUI extends JPanel implements ActionListener {
 
 	public static void main(String[] args) {
 		// Input parameters
-		int row = 20;
+		/*int row = 20;
 		int co = 20;
 		int w = 1024;
 		int h = 600;
@@ -216,7 +225,7 @@ public class GUI extends JPanel implements ActionListener {
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
 		frame.add(new GUI(board, row, co, w, h));
-		frame.setVisible(true);
+		frame.setVisible(true);*/
 
 	}
 }
