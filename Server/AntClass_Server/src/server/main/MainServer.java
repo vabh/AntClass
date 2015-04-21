@@ -61,15 +61,13 @@ public class MainServer {
 		currentAnts = 0;
 		currentHeaps = 0;
 
-		// create the GUI object
-		int row = 20;
-		int co = 20;
+		// create the GUI object		
 		int w = 1024;
 		int h = 600;
 		JFrame frame = new JFrame("AntClass");
 		frame.setSize(w, h);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.add(new GUI(mainServer.board, row, co, w, h));
+		frame.add(new GUI(mainServer.board, mainServer.boardSize, mainServer.boardSize, w, h));
 		frame.setVisible(true);
 
 		// initialise board
