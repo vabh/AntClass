@@ -19,10 +19,10 @@ public class MainServer {
 	// declare the member variable for array of objects in order to have
 	// them locked while processing ants with sync methods
 	private int boardSize = 10;
-	private final int NUM_OF_ANTS = 8;
-	private int MAX_HEAP_SIZE = 7;
-	private int NUMBER_OF_INITIAL_HEAPS = 12;
-	private int TYPES_OF_OBJECTS = 2;
+	private final int NUM_OF_ANTS = 5;
+	private int MAX_HEAP_SIZE = 10;
+	private int NUMBER_OF_INITIAL_HEAPS = 10;
+	private int TYPES_OF_OBJECTS = 3;
 	private final int NUMBER_OF_PROCESSORS = 2;
 
 	private final int ANT_PROBABILITY = 5;

@@ -1,6 +1,5 @@
 package GUI;
 
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -23,23 +22,12 @@ public class GUI extends JPanel implements ActionListener {
 
 	private static final int AntSize = 35, SPEED = 1, ObjSize = 30;
 
-	Board board;
-	private int xPos, yPos;
-	private int xSpeed, ySpeed;
-	int rows, cols;
-	int width, height;
-	int sizecol = 0;
-	int sizerow = 0;
-	Cell[][] cells;
-	/*int antnum = 10;
-	int obj1num = 10;
-	int obj2num = 15;
-	int[] AntxPos = new int[antnum];
-	int[] AntyPos = new int[antnum];
-	int[] Obj1xPos = new int[obj1num];
-	int[] Obj1yPos = new int[obj1num];
-	int[] Obj2xPos = new int[obj2num];
-	int[] Obj2yPos = new int[obj2num];*/
+	private Board board;
+	private int rows, cols;
+	private int width, height;
+	private int sizecol = 0;
+	private int sizerow = 0;
+	private Cell[][] cells;
 
 	public GUI(Board _board, int _rows, int _cols, int _width, int _height) {
 		this.board = _board;
@@ -50,24 +38,8 @@ public class GUI extends JPanel implements ActionListener {
 		sizecol = width / cols;
 		sizerow = height / rows;
 		cells = board.getBoardCells();
-	/*	Random r = new Random();
-		for (int i = 0; i < antnum; i++) {
-			AntxPos[i] = r.nextInt(cols);
-			AntyPos[i] = r.nextInt(rows);
-		}
-		for (int i = 0; i < obj1num; i++) {
-			Obj1xPos[i] = r.nextInt(cols);
-			Obj1yPos[i] = r.nextInt(rows);
-		}
 
-		for (int i = 0; i < obj2num; i++) {
-			Obj2xPos[i] = r.nextInt(cols);
-			Obj2yPos[i] = r.nextInt(rows);
-		}*/
-		// determine speed direction
-		xSpeed = SPEED;
-		ySpeed = -SPEED;
-		// timer to
+		// timer to repaint the board
 		Timer timer = new Timer(500, this);
 		timer.start();
 	}
@@ -77,48 +49,15 @@ public class GUI extends JPanel implements ActionListener {
 		int widthnew = getWidth();
 		int heightnew = getHeight();
 
-		// recalculate the column/row sizes to have them match the resized window area
+		// recalculate the column/row sizes to have them match the resized
+		// window area
 		sizecol = widthnew / cols;
 		sizerow = heightnew / rows;
 		width = widthnew;
 		height = heightnew;
+
+		// Save the updated board
 		cells = board.getBoardCells();
-
-/*		for (int i = 0; i < antnum; i++) {
-			// update positions
-			AntxPos[i] += xSpeed;
-			// test if we go out the screen on the X axis
-			if (AntxPos[i] < 0) {
-				AntxPos[i] = 0;
-				xSpeed = SPEED;
-			} else if (AntxPos[i] * sizecol > width) {
-				AntxPos[i] = 0;
-				xSpeed = SPEED;
-			}
-
-			// update positions
-			AntyPos[i] += ySpeed;
-			// test if we go out the screen on the Y axis
-			if (AntyPos[i] < 0) {
-				AntyPos[i] = 0;
-				ySpeed = SPEED;
-			} else if (AntyPos[i] * sizecol > width) {
-				AntyPos[i] = 0;
-				ySpeed = SPEED;
-			}
-		}
-
-		Cell[][] cells = board.getBoardCells();
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < cols; j++) {
-				Cell c = cells[i][j];
-				if (c.getEntityType().equals("ant")) {
-
-					// b.move(c.getAnt());
-				}
-			}
-		}
-		*/
 		repaint();
 	}
 
@@ -148,84 +87,60 @@ public class GUI extends JPanel implements ActionListener {
 			Line2D lin = new Line2D.Float(j * sizecol, 0, j * sizecol, height);
 			g2.draw(lin);
 		}
-
-		//Cell[][] cells = board.getBoardCells();
-		
+		// Traversing the board
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
 				Cell cell = cells[i][j];
 				if (cell.getEntityType().equals("ant")) {
-
+					// Drawing ants from their position on a board
 					g.setColor(Color.orange);
 					int x = i * sizecol;
 					int y = j * sizerow;
-					g.fillOval((int) (x + (sizecol - AntSize * 0.02 * Math.min(sizecol, sizerow)) / 2.0),
-							(int) (y + (sizerow - AntSize * 0.02 * Math.min(sizecol, sizerow)) / 2.0),
+					g.fillOval(
+							(int) (x + (sizecol - AntSize * 0.02
+									* Math.min(sizecol, sizerow)) / 2.0),
+							(int) (y + (sizerow - AntSize * 0.02
+									* Math.min(sizecol, sizerow)) / 2.0),
 							(int) (AntSize * (0.02 * Math.min(sizecol, sizerow))),
 							(int) (AntSize * (0.02 * Math.min(sizecol, sizerow))));
 					cell.getAnt().move(rows, cols);
-				} else if (cell.getEntityType().equals("heap")) {
-					Heap h = cell.getHeap();
 
-					// Check for type ???
-					// if (c.heap.getSize() = 1)
-					// Change the color to something
-					// g.setColor(Color.green);
-					Color сolor = new Color((int) ((1 / 2.0) * 255), (int) ((1 / 2.0) * 255), (int) ((1 / 2.0) * 255));
-					g.setColor(сolor);
-					int x = i * sizecol;
-					int y = j * sizerow;
-					g.fillRect((int) (x + (sizecol - ObjSize * 0.02 * Math.min(sizecol, sizerow)) / 2.0),
-							(int) (y + (sizerow - ObjSize * 0.02 * Math.min(sizecol, sizerow)) / 2.0),
-							(int) (ObjSize * (0.02 * Math.min(sizecol, sizerow))),
-							(int) (ObjSize * (0.02 * Math.min(sizecol, sizerow))));
+				} else if (cell.getEntityType().equals("heap")) {
+					// Drawing heap objects of different types with different colors
+					Heap h = cell.getHeap();
+					int[] heapelements = h.getHeapElements();
+					for (int k = 0; k < h.getSize(); k++) {
+						float color = (float) heapelements[k] / (float) h.getTypes();
+						Color сolortype = new Color((int) ((color) * 255),
+								(int) ((color) * 255), (int) ((0.7) * 255));
+						g.setColor(сolortype);
+						int x = i * sizecol;
+						int y = j * sizerow;
+						g.fillRect((int)(x + (k)*(sizecol/h.getSize())),(int) (y+(sizerow * 0.1 )), sizecol/h.getSize(), 
+								(int) (sizerow * 0.8 ));
+						//Drawing an edge for a heap element, to differentiate their quantity
+						g.setColor(Color.white);
+						g.drawRect((int)(x + (k)*(sizecol/h.getSize())),(int) (y+(sizerow * 0.1 )), sizecol/h.getSize(), 
+								(int) (sizerow * 0.8 ));
+					}
 				}
 			}
-			System.out.println();
 		}
-		
-		
-		
-		
-		
-		/*
-		 * // Drawing Ants for (int i = 0; i < antnum; i++) { g.setColor(Color.orange); int x = AntxPos[i] * sizecol; int y =
-		 * AntyPos[i] * sizerow; g.fillOval((int) (x + (sizecol - AntSize * 0.02 * Math.min(sizecol, sizerow)) / 2.0), (int) (y +
-		 * (sizerow - AntSize 0.02 * Math.min(sizecol, sizerow)) / 2.0), (int) (AntSize * (0.02 * Math.min(sizecol, sizerow))),
-		 * (int) (AntSize * (0.02 * Math.min(sizecol, sizerow)))); }
-		 * 
-		 * // Drawing objects type 1 for (int k = 0; k < obj1num; k++) { float color1 = (k+1)/10;
-		 * 
-		 * Color сolor = new Color((int)color1*255, (int)color1*255, (int)color1*255); g.setColor(сolor );
-		 * 
-		 * int x = Obj1xPos[k] * sizecol; int y = Obj1yPos[k] * sizerow; g.fillRect((int) (x + (sizecol - ObjSize * 0.02 *
-		 * Math.min(sizecol, sizerow)) / 2.0), (int) (y + (sizerow - ObjSize 0.02 * Math.min(sizecol, sizerow)) / 2.0), (int)
-		 * (ObjSize * (0.02 * Math.min(sizecol, sizerow))), (int) (ObjSize * (0.02 * Math.min(sizecol, sizerow)))); }
-		 * 
-		 * // Drawing objects type 2 for (int k = 0; k < obj2num; k++) { g.setColor(Color.blue); int x = Obj2xPos[k] * sizecol;
-		 * int y = Obj2yPos[k] * sizerow; g.fillRect((int) (x + (sizecol - ObjSize * 0.02 * Math.min(sizecol, sizerow)) / 2.0),
-		 * (int) (y + (sizerow - ObjSize 0.02 * Math.min(sizecol, sizerow)) / 2.0), (int) (ObjSize * (0.02 * Math.min(sizecol,
-		 * sizerow))), (int) (ObjSize * (0.02 * Math.min(sizecol, sizerow)))); }
-		 */
 	}
 
 	public static void main(String[] args) {
 		// Input parameters
-		/*int row = 20;
-		int co = 20;
-		int w = 1024;
-		int h = 600;
-
-		Board board = new Board(row, co, 2, 2);
-		board.init();
-		System.out.println(board);
-
-		JFrame frame = new JFrame("AntClass");
-		frame.setSize(w, h);
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-		frame.add(new GUI(board, row, co, w, h));
-		frame.setVisible(true);*/
+		/*
+		 * int row = 20; int co = 20; int w = 1024; int h = 600;
+		 * 
+		 * Board board = new Board(row, co, 2, 2); board.init();
+		 * System.out.println(board);
+		 * 
+		 * JFrame frame = new JFrame("AntClass"); frame.setSize(w, h);
+		 * frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		 * 
+		 * frame.add(new GUI(board, row, co, w, h)); frame.setVisible(true);
+		 */
 
 	}
 }
