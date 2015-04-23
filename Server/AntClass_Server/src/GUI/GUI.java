@@ -43,7 +43,10 @@ public class GUI extends JPanel implements ActionListener {
 		Timer timer = new Timer(500, this);
 		timer.start();
 	}
-
+	public void setUpdatedBoard(Board board){
+		this.board = board;
+	}
+	
 	public void actionPerformed(ActionEvent e) {
 		// get screen size, to use later maybe
 		int widthnew = getWidth();

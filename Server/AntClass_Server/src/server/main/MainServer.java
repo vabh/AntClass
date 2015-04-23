@@ -67,7 +67,8 @@ public class MainServer {
 		JFrame frame = new JFrame("AntClass");
 		frame.setSize(w, h);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.add(new GUI(mainServer.board, mainServer.boardSize, mainServer.boardSize, w, h));
+		GUI gui = new GUI(mainServer.board, mainServer.boardSize, mainServer.boardSize, w, h);
+		frame.add(gui);
 		frame.setVisible(true);
 
 		// initialise board
@@ -126,14 +127,20 @@ public class MainServer {
 			// }
 
 			// TODO: update the GUI with new positions of ants and objects
-			mainServer.updateGUI();
+			mainServer.updateGUI(gui);
+			//this doesn't work, the GUI does not return control to MainServer
+			//A separate thread is required for GUI update
+			
 
 
 		} // end of the big for() loop
 
 	} // end of the main() function
 
-	private void updateGUI() {
-
+	private void updateGUI(GUI gui) {
+		for (Ant ant : ants) {
+			ant.move(boardSize, boardSize);
+		}
+		gui.setUpdatedBoard(board);		
 	}
 }

@@ -2,17 +2,20 @@ package shared_classes;
 
 public class Heap {
 	
-	int r; //location on board
-	int c;
-	int elements[];
-	int size;
-	int types; // the different types of heal elements
+	private int r; //location on board
+	private int c;
+	private Location location;
+	private int elements[];
+	private int size;
+	private int types; // the different types of heal elements
+	
 	
 	//probabilities for heap operation
 	
 	public Heap(int r, int c, int size, int types){
 		this.r = r;
 		this.c = c;
+		location = new Location(r, c);
 		this.size = size;
 		this.types = types;
 		elements = new int[size];
@@ -27,8 +30,12 @@ public class Heap {
 		return size;
 	}
 	
-	public int[] getLocation(){
+	public int[] getLocationArray(){
 		int location[] = {r, c};
+		return location;
+	}
+	
+	public Location getLocation(){
 		return location;
 	}
 	

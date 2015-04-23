@@ -86,7 +86,7 @@ public class Board {
 	}
 
 	public void placeAnt(Ant ant) {
-		int pos[] = ant.getLocation();
+		int pos[] = ant.getLocationArray();
 		int r = pos[0];
 		int c = pos[1];
 		if ((r >= 0 && r < rows) && (c >= 0 && c < columns)) {
@@ -96,7 +96,7 @@ public class Board {
 	}
 
 	public void placeHeap(Heap heap) {
-		int pos[] = heap.getLocation();
+		int pos[] = heap.getLocationArray();
 		int r = pos[0];
 		int c = pos[1];
 		if ((r >= 0 && r < rows) && (c >= 0 && c < columns)) {
@@ -107,7 +107,7 @@ public class Board {
 
 	public void move(Ant ant) {
 
-		int pos[] = ant.getLocation();
+		int pos[] = ant.getLocationArray();
 
 		if (destroyAnt(pos[0], pos[1])) {
 
@@ -122,17 +122,21 @@ public class Board {
 		Board b = new Board(6, 6, 2, 5);
 		b.init();
 
-		for (int i = 0; i < b.rows; i++) {
-			for (int j = 0; j < b.columns; j++) {
-				Cell c = b.cells[i][j];
-				if (c.getEntityType().equals("ant")) {
-					System.out.print("ant  |");
-				} else if (c.getEntityType().equals("heap")) {
-					System.out.print("heap" + c.heap.getSize() + " |");
-				} else
-					System.out.print("-- |");
-			}
+		for(int k = 0; k < 10; k++){
 			System.out.println();
+			for (int i = 0; i < b.rows; i++) {
+				for (int j = 0; j < b.columns; j++) {
+					Cell c = b.cells[i][j];
+					if (c.getEntityType().equals("ant")) {
+						System.out.print("ant  |");
+						c.getAnt().move(b.getRows(), b.getColumns());
+					} else if (c.getEntityType().equals("heap")) {
+						System.out.print("heap" + c.heap.getSize() + " |");
+					} else
+						System.out.print("-- |");
+				}
+				System.out.println();
+			}
 		}
 
 	}
