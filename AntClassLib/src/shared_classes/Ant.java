@@ -17,7 +17,7 @@ public class Ant {
 		this.carrying = false;
 		this.heapElement = -1;
 	}
-
+	
 	public Ant(int r, int c, int id){
 		this.r = r;
 		this.c = c;
@@ -47,10 +47,38 @@ public class Ant {
 
 	// returns true if there is a heap found, false otherwise
 	public boolean lookAround(Board board, Location heapLocation) { // the second parameter is the result being populated by this
-																	// function
-
-		// TODO: @Anuvabh
-
+																	// function		
+		int xPos[] = {0, 1, 1, 1, 0, -1, -1, -1};
+		int yPos[] = {-1, -1, 0, 1, 1, 1, 0, -1};
+		
+		Cell[][] cells = board.getBoardCells();
+		int rows = board.getRows();
+		int columns = board.getColumns();
+		
+		for(int i = 0; i < xPos.length; i++){
+			
+			int lookatX = r + xPos[i];
+			int lookatY = c + yPos[i];
+			
+			if(xPos[i] >= 0){
+				lookatX %= rows;
+			}
+			else if(lookatX < 0){
+					lookatX = rows - 1;				
+			}
+			
+			if(yPos[i] >= 0){
+				lookatY %= columns;
+			}
+			else if(lookatY < 0){
+					lookatY = columns - 1;				
+			}			
+			
+			if(cells[lookatX][lookatY].getEntityType().equals("heap")){
+				heapLocation = cells[lookatX][lookatY].getHeap().getLocation();
+				return true;
+			}
+		}
 		return false;
 	}
 
