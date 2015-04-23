@@ -1,7 +1,11 @@
 package shared_classes;
 
+import java.io.Serializable;
 
-public class Board {
+
+public class Board implements Serializable {
+
+	private static final long serialVersionUID = -8340202074843934794L;
 
 	private Cell cells[][];
 	private int rows;
@@ -122,7 +126,7 @@ public class Board {
 		Board b = new Board(6, 6, 2, 5);
 		b.init();
 
-		for(int k = 0; k < 10; k++){
+		for (int k = 0; k < 10; k++) {
 			System.out.println();
 			for (int i = 0; i < b.rows; i++) {
 				for (int j = 0; j < b.columns; j++) {

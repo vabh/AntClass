@@ -1,9 +1,13 @@
 package shared_classes;
 
-public class Ant {
+import java.io.Serializable;
+
+public class Ant implements Serializable {
+
+	private static final long serialVersionUID = -6819460915834657895L;
 
 	private int r, c; // location on board
-	private int id; // corresponds to client
+	// private int id; // corresponds to client
 	private Location location;
 	private boolean carrying;
 	private int heapElement; // -1 when !carrying
@@ -17,15 +21,16 @@ public class Ant {
 		this.carrying = false;
 		this.heapElement = -1;
 	}
-	
-	public Ant(int r, int c, int id){
+
+	public Ant(int r, int c, int id) {
 		this.r = r;
 		this.c = c;
-		this.id = id;
+		// this.id = id;
 		location = new Location(r, c);
 		this.carrying = false;
 		this.heapElement = -1;
 	}
+
 	public boolean isCarrying() {
 		return carrying;
 	}
@@ -47,34 +52,32 @@ public class Ant {
 
 	// returns true if there is a heap found, false otherwise
 	public boolean lookAround(Board board, Location heapLocation) { // the second parameter is the result being populated by this
-																	// function		
-		int xPos[] = {0, 1, 1, 1, 0, -1, -1, -1};
-		int yPos[] = {-1, -1, 0, 1, 1, 1, 0, -1};
-		
+																	// function
+		int xPos[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
+		int yPos[] = { -1, -1, 0, 1, 1, 1, 0, -1 };
+
 		Cell[][] cells = board.getBoardCells();
 		int rows = board.getRows();
 		int columns = board.getColumns();
-		
-		for(int i = 0; i < xPos.length; i++){
-			
+
+		for (int i = 0; i < xPos.length; i++) {
+
 			int lookatX = r + xPos[i];
 			int lookatY = c + yPos[i];
-			
-			if(xPos[i] >= 0){
+
+			if (xPos[i] >= 0) {
 				lookatX %= rows;
+			} else if (lookatX < 0) {
+				lookatX = rows - 1;
 			}
-			else if(lookatX < 0){
-					lookatX = rows - 1;				
-			}
-			
-			if(yPos[i] >= 0){
+
+			if (yPos[i] >= 0) {
 				lookatY %= columns;
+			} else if (lookatY < 0) {
+				lookatY = columns - 1;
 			}
-			else if(lookatY < 0){
-					lookatY = columns - 1;				
-			}			
-			
-			if(cells[lookatX][lookatY].getEntityType().equals("heap")){
+
+			if (cells[lookatX][lookatY].getEntityType().equals("heap")) {
 				heapLocation = cells[lookatX][lookatY].getHeap().getLocation();
 				return true;
 			}
@@ -113,8 +116,8 @@ public class Ant {
 		int location[] = { r, c };
 		return location;
 	}
-	
-	public Location getLocation(){
+
+	public Location getLocation() {
 		return location;
 	}
 

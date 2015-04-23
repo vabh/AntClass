@@ -13,7 +13,7 @@ import GUI.GUI;
 
 public class MainServer {
 
-	private final int NUM_OF_LOOPS = 10000; // number of loops/steps to process
+	private final int NUM_OF_LOOPS = 10; // number of loops/steps to process
 											// ants
 
 	// declare the member variable for array of objects in order to have
@@ -61,7 +61,7 @@ public class MainServer {
 		currentAnts = 0;
 		currentHeaps = 0;
 
-		// create the GUI object		
+		// create the GUI object
 		int w = 1024;
 		int h = 600;
 		JFrame frame = new JFrame("AntClass");
@@ -96,42 +96,38 @@ public class MainServer {
 															// to process each
 															// ant
 
-			// // run the synchronizedFunction() in a separate thread
-			// Thread processor1 = new Thread() {
-			// public void run() {
-			// // for each ant allocated to the client #1
-			// for (int i = 0; i < mainServer.NUM_OF_ANTS / mainServer.NUMBER_OF_PROCESSORS; ++i) {
-			// mainServer.processAntsOnClient("127.0.0.1", 1099, mainServer.ants[i], mainServer.board);
-			// }
-			// }
-			// };
-			// processor1.start();
-			//
-			// // run the synchronizedFunction() in another separate thread
-			// Thread processor2 = new Thread() {
-			// public void run() {
-			// // for each ant allocated to the client #2
-			// for (int i = 0; i < mainServer.NUM_OF_ANTS / mainServer.NUMBER_OF_PROCESSORS; ++i) {
-			// mainServer.processAntsOnClient("127.0.0.1", 2099, mainServer.ants[i], mainServer.board);
-			// }
-			// }
-			// };
-			// processor2.start();
-			//
-			// // wait for the processor1 and processor2 to finish their tasks
-			// try {
-			// processor1.join();
-			// processor2.join();
-			// } catch (InterruptedException e) {
-			// e.printStackTrace();
-			// }
+			// run the synchronizedFunction() in a separate thread
+			Thread processor1 = new Thread() {
+				public void run() {
+					// for each ant allocated to the client #1
+					for (int i = 0; i < mainServer.NUM_OF_ANTS / mainServer.NUMBER_OF_PROCESSORS; ++i) {
+						mainServer.processAntsOnClient("127.0.0.1", 1099, mainServer.ants[i], mainServer.board);
+					}
+				}
+			};
+			processor1.start();
 
-			// TODO: update the GUI with new positions of ants and objects
+			// run the synchronizedFunction() in another separate thread
+			Thread processor2 = new Thread() {
+				public void run() {
+					// for each ant allocated to the client #2
+					for (int i = 0; i < mainServer.NUM_OF_ANTS / mainServer.NUMBER_OF_PROCESSORS; ++i) {
+						mainServer.processAntsOnClient("127.0.0.1", 2099, mainServer.ants[i], mainServer.board);
+					}
+				}
+			};
+			processor2.start();
+
+			// wait for the processor1 and processor2 to finish their tasks
+			try {
+				processor1.join();
+				processor2.join();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+
+			// update the GUI with new positions of ants and objects
 			mainServer.updateGUI(gui);
-			//this doesn't work, the GUI does not return control to MainServer
-			//A separate thread is required for GUI update
-			
-
 
 		} // end of the big for() loop
 
@@ -141,6 +137,6 @@ public class MainServer {
 		for (Ant ant : ants) {
 			ant.move(boardSize, boardSize);
 		}
-		gui.setUpdatedBoard(board);		
+		gui.setUpdatedBoard(board);
 	}
 }

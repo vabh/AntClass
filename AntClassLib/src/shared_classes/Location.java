@@ -1,8 +1,13 @@
 package shared_classes;
 
-public class Location {
-	private int column;
-	private int row;
+import java.io.Serializable;
+
+public class Location implements Serializable {
+
+	private static final long serialVersionUID = -6171531016967658900L;
+
+	private transient int column;
+	private transient int row;
 
 	Location(int column, int row) {
 		setRow(row);

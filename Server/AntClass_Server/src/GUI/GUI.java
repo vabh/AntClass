@@ -6,9 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Line2D;
-import java.util.Random;
+import java.io.Serializable;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -16,9 +15,9 @@ import shared_classes.Board;
 import shared_classes.Cell;
 import shared_classes.Heap;
 
-public class GUI extends JPanel implements ActionListener {
+public class GUI extends JPanel implements ActionListener, Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -6465327145108762100L;
 
 	private static final int AntSize = 35, SPEED = 1, ObjSize = 30;
 
@@ -43,10 +42,12 @@ public class GUI extends JPanel implements ActionListener {
 		Timer timer = new Timer(500, this);
 		timer.start();
 	}
-	public void setUpdatedBoard(Board board){
+
+	public void setUpdatedBoard(Board board) {
 		this.board = board;
+		cells = board.getBoardCells();
 	}
-	
+
 	public void actionPerformed(ActionEvent e) {
 		// get screen size, to use later maybe
 		int widthnew = getWidth();
@@ -99,11 +100,8 @@ public class GUI extends JPanel implements ActionListener {
 					g.setColor(Color.orange);
 					int x = i * sizecol;
 					int y = j * sizerow;
-					g.fillOval(
-							(int) (x + (sizecol - AntSize * 0.02
-									* Math.min(sizecol, sizerow)) / 2.0),
-							(int) (y + (sizerow - AntSize * 0.02
-									* Math.min(sizecol, sizerow)) / 2.0),
+					g.fillOval((int) (x + (sizecol - AntSize * 0.02 * Math.min(sizecol, sizerow)) / 2.0),
+							(int) (y + (sizerow - AntSize * 0.02 * Math.min(sizecol, sizerow)) / 2.0),
 							(int) (AntSize * (0.02 * Math.min(sizecol, sizerow))),
 							(int) (AntSize * (0.02 * Math.min(sizecol, sizerow))));
 					cell.getAnt().move(rows, cols);
@@ -114,17 +112,16 @@ public class GUI extends JPanel implements ActionListener {
 					int[] heapelements = h.getHeapElements();
 					for (int k = 0; k < h.getSize(); k++) {
 						float color = (float) heapelements[k] / (float) h.getTypes();
-						Color сolortype = new Color((int) ((color) * 255),
-								(int) ((color) * 255), (int) ((0.7) * 255));
+						Color сolortype = new Color((int) ((color) * 255), (int) ((color) * 255), (int) ((0.7) * 255));
 						g.setColor(сolortype);
 						int x = i * sizecol;
 						int y = j * sizerow;
-						g.fillRect((int)(x + (k)*(sizecol/h.getSize())),(int) (y+(sizerow * 0.1 )), sizecol/h.getSize(), 
-								(int) (sizerow * 0.8 ));
-						//Drawing an edge for a heap element, to differentiate their quantity
+						g.fillRect((int) (x + (k) * (sizecol / h.getSize())), (int) (y + (sizerow * 0.1)), sizecol / h.getSize(),
+								(int) (sizerow * 0.8));
+						// Drawing an edge for a heap element, to differentiate their quantity
 						g.setColor(Color.white);
-						g.drawRect((int)(x + (k)*(sizecol/h.getSize())),(int) (y+(sizerow * 0.1 )), sizecol/h.getSize(), 
-								(int) (sizerow * 0.8 ));
+						g.drawRect((int) (x + (k) * (sizecol / h.getSize())), (int) (y + (sizerow * 0.1)), sizecol / h.getSize(),
+								(int) (sizerow * 0.8));
 					}
 				}
 			}
@@ -136,11 +133,9 @@ public class GUI extends JPanel implements ActionListener {
 		/*
 		 * int row = 20; int co = 20; int w = 1024; int h = 600;
 		 * 
-		 * Board board = new Board(row, co, 2, 2); board.init();
-		 * System.out.println(board);
+		 * Board board = new Board(row, co, 2, 2); board.init(); System.out.println(board);
 		 * 
-		 * JFrame frame = new JFrame("AntClass"); frame.setSize(w, h);
-		 * frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		 * JFrame frame = new JFrame("AntClass"); frame.setSize(w, h); frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		 * 
 		 * frame.add(new GUI(board, row, co, w, h)); frame.setVisible(true);
 		 */
