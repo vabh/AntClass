@@ -53,32 +53,35 @@ public class Ant implements Serializable {
 	// returns true if there is a heap found, false otherwise
 	public boolean lookAround(Board board, Location heapLocation) { // the second parameter is the result being populated by this
 																	// function
-		int xPos[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
-		int yPos[] = { -1, -1, 0, 1, 1, 1, 0, -1 };
+		//direction to look at
+		int xPos[] = { -1, -1, 0, 1, 1,  1,  0, -1 };
+		int yPos[] = {  0,  1, 1, 1, 0, -1, -1, -1 };
 
 		Cell[][] cells = board.getBoardCells();
 		int rows = board.getRows();
 		int columns = board.getColumns();
-
+		
 		for (int i = 0; i < xPos.length; i++) {
-
+			
 			int lookatX = r + xPos[i];
 			int lookatY = c + yPos[i];
-
-			if (xPos[i] >= 0) {
+			//System.out.println(i + " :" + lookatX + "," + lookatY);
+			if (lookatX >= 0) {
 				lookatX %= rows;
 			} else if (lookatX < 0) {
 				lookatX = rows - 1;
 			}
 
-			if (yPos[i] >= 0) {
+			if (lookatY >= 0) {
 				lookatY %= columns;
 			} else if (lookatY < 0) {
 				lookatY = columns - 1;
 			}
-
+			//System.out.println(i + " :" + lookatX + "," + lookatY + "--");
+			//Cell c = cells[lookatX][lookatY];
 			if (cells[lookatX][lookatY].getEntityType().equals("heap")) {
 				heapLocation = cells[lookatX][lookatY].getHeap().getLocation();
+				//System.out.println("Heap:" + lookatX + "," + lookatY);
 				return true;
 			}
 		}
@@ -109,7 +112,7 @@ public class Ant implements Serializable {
 		}
 		location.setRow(r);
 		location.setColumn(c);
-		System.out.println(r + c);
+		//System.out.println(r + c);
 	}
 
 	public int[] getLocationArray() {

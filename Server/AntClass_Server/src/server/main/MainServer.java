@@ -57,7 +57,7 @@ public class MainServer {
 														// class
 
 		// initialise the grid with objects and ants in it
-		mainServer.board.init();
+		//mainServer.board.init();
 		currentAnts = 0;
 		currentHeaps = 0;
 
@@ -127,7 +127,7 @@ public class MainServer {
 			}
 
 			// update the GUI with new positions of ants and objects
-			mainServer.updateGUI(gui);
+			//mainServer.updateGUI(gui);
 
 		} // end of the big for() loop
 
@@ -135,7 +135,9 @@ public class MainServer {
 
 	private void updateGUI(GUI gui) {
 		for (Ant ant : ants) {
+			//board.destroyAnt(ant);
 			ant.move(boardSize, boardSize);
+			//board.placeAnt(ant);
 		}
 		gui.setUpdatedBoard(board);
 	}
