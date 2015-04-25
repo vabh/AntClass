@@ -95,6 +95,9 @@ public class GUI extends JPanel implements ActionListener, Serializable {
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < cols; j++) {
 				Cell cell = cells[i][j];
+				if (cell == null) {
+					continue;
+				}
 				if (cell.getEntityType().equals("ant")) {
 					// Drawing ants from their position on a board
 					g.setColor(Color.orange);
