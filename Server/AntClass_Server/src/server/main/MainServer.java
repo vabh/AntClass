@@ -1,25 +1,21 @@
 package server.main;
 
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-
 import javax.swing.JFrame;
 
 import shared_classes.Ant;
 import shared_classes.Board;
 import shared_classes.Heap;
-import shared_classes.IMessage;
 import GUI.GUI;
 
 public class MainServer {
 
-	private final int NUM_OF_LOOPS = 10; // number of loops/steps to process
+	private final int NUM_OF_LOOPS = 10000; // number of loops/steps to process
 											// ants
 
 	// declare the member variable for array of objects in order to have
 	// them locked while processing ants with sync methods
 	private int boardSize = 10;
-	private final int NUM_OF_ANTS = 5;
+	private final int NUM_OF_ANTS = 6;
 	private int MAX_HEAP_SIZE = 10;
 	private int NUMBER_OF_INITIAL_HEAPS = 10;
 	private int TYPES_OF_OBJECTS = 3;
@@ -32,19 +28,25 @@ public class MainServer {
 	private final Ant ants[] = new Ant[NUM_OF_ANTS];
 	private final Heap heaps[] = new Heap[NUMBER_OF_INITIAL_HEAPS];
 
-	private static int currentAnts;
-	private static int currentHeaps;
+	private int currentAnts;
+	private int currentHeaps;
 
 	// use this function for processing some ants on the 1st remote
 	// client/processor
 	// (Hint: pass ants and grid object as parameters to the remote function)
 	public synchronized void processAntsOnClient(String ipAddress, int portNumber, Ant ant, Board board) {
 		try {
-			Registry rmiRegistry = LocateRegistry.getRegistry(ipAddress, portNumber); // fire to localhost port 1099
-			IMessage rmiMessage = (IMessage) rmiRegistry.lookup(IMessage.messageTag); // search for service with the
-																						// right message
-			rmiMessage.remoteAntProcessor(ant, board); // call server's method
-														// with parameters
+			// Registry rmiRegistry = LocateRegistry.getRegistry(ipAddress, portNumber); // fire to localhost port 1099
+			// IMessage rmiMessage = (IMessage) rmiRegistry.lookup(IMessage.messageTag); // search for service
+
+			System.err.println("position before moving original: " + ant.getLocation().toString());
+			// rmiMessage.remoteAntProcessor(ant, board); // call server's method ith parameters
+			// ant.changeLocation(rmiMessage.getAnt().getLocation().getRow(), rmiMessage.getAnt().getLocation().getColumn());
+
+			ant.move(board.getRows(), board.getColumns()); // TODO: this line is only for testing purposes!
+
+			System.err.println("position after moving original: " + ant.getLocation().toString());
+
 			System.out.println("IMessage Sent with param 1 to remoteAntProcessor()");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -57,9 +59,28 @@ public class MainServer {
 														// class
 
 		// initialise the grid with objects and ants in it
-		//mainServer.board.init();
-		currentAnts = 0;
-		currentHeaps = 0;
+		mainServer.currentAnts = 0;
+		mainServer.currentHeaps = 0;
+
+		// initialise board
+		for (int i = 0; i < mainServer.boardSize; i++) {
+			for (int j = 0; j < mainServer.boardSize; j++) {
+				int randValue = (int) (Math.random() * 10);
+
+				if (mainServer.currentAnts < mainServer.NUM_OF_ANTS && randValue > mainServer.ANT_PROBABILITY) {// ant
+					Ant ant = new Ant(i, j);
+					mainServer.ants[mainServer.currentAnts++] = ant;
+					mainServer.board.placeAnt(ant);
+				} else if (mainServer.currentHeaps < mainServer.NUMBER_OF_INITIAL_HEAPS
+						&& randValue < mainServer.HEAP_PROBABILITY) {// heap
+					int hSize = (int) (Math.random() * mainServer.MAX_HEAP_SIZE + 1);
+					Heap heap = new Heap(i, j, hSize, mainServer.TYPES_OF_OBJECTS);
+					mainServer.board.placeHeap(heap);
+					mainServer.heaps[mainServer.currentHeaps++] = heap;
+				}
+			}
+		}
+		System.out.println("Initialized with " + mainServer.currentAnts + " ants and " + mainServer.currentHeaps + " heaps!");
 
 		// create the GUI object
 		int w = 1024;
@@ -71,26 +92,6 @@ public class MainServer {
 		frame.add(gui);
 		frame.setVisible(true);
 
-		// initialise board
-		for (int i = 0; i < mainServer.boardSize; i++) {
-			for (int j = 0; j < mainServer.boardSize; j++) {
-				int r = (int) (Math.random() * 10);
-
-				if (currentAnts < mainServer.NUM_OF_ANTS && r > mainServer.ANT_PROBABILITY) {// ant
-					Ant ant = new Ant(i, j);
-					mainServer.board.placeAnt(ant);
-					mainServer.ants[currentAnts++] = ant;
-
-				} else if (currentHeaps < mainServer.NUMBER_OF_INITIAL_HEAPS && r < mainServer.HEAP_PROBABILITY) {// heap
-					int hSize = (int) (Math.random() * mainServer.MAX_HEAP_SIZE + 1);
-					Heap heap = new Heap(i, j, hSize, mainServer.TYPES_OF_OBJECTS);
-					mainServer.board.placeHeap(heap);
-					mainServer.heaps[currentHeaps++] = heap;
-
-				}
-			}
-		}
-
 		for (int i = 0; i < mainServer.NUM_OF_LOOPS; ++i) { // each step of this
 															// loop is one cycle
 															// to process each
@@ -100,8 +101,12 @@ public class MainServer {
 			Thread processor1 = new Thread() {
 				public void run() {
 					// for each ant allocated to the client #1
-					for (int i = 0; i < mainServer.NUM_OF_ANTS / mainServer.NUMBER_OF_PROCESSORS; ++i) {
+					for (int i = 0; i <= mainServer.currentAnts / mainServer.NUMBER_OF_PROCESSORS; ++i) {
+						// System.err.println("T#1: ant #" + i + " position before moving: "
+						// + mainServer.ants[i].getLocation().toString());
 						mainServer.processAntsOnClient("127.0.0.1", 1099, mainServer.ants[i], mainServer.board);
+						// System.err.println("T#1: ant #" + i + " position after moving: "
+						// + mainServer.ants[i].getLocation().toString());
 					}
 				}
 			};
@@ -111,8 +116,12 @@ public class MainServer {
 			Thread processor2 = new Thread() {
 				public void run() {
 					// for each ant allocated to the client #2
-					for (int i = 0; i < mainServer.NUM_OF_ANTS / mainServer.NUMBER_OF_PROCESSORS; ++i) {
+					for (int i = mainServer.currentAnts / mainServer.NUMBER_OF_PROCESSORS; i < mainServer.currentAnts; ++i) {
+						// System.err.println("T#2: ant's position before moving: " + mainServer.ants[i].getLocation().getRow()
+						// + ", " + mainServer.ants[i].getLocation().getColumn());
 						mainServer.processAntsOnClient("127.0.0.1", 2099, mainServer.ants[i], mainServer.board);
+						// System.err.println("T#2: ant's position after moving: " + mainServer.ants[i].getLocation().getRow()
+						// + ", " + mainServer.ants[i].getLocation().getColumn());
 					}
 				}
 			};
@@ -127,18 +136,23 @@ public class MainServer {
 			}
 
 			// update the GUI with new positions of ants and objects
-			//mainServer.updateGUI(gui);
+			// Note: the GUI class will be updating itself, no need to call any function here!!!
+			synchronized (mainServer) { // lock the object to acquire the monitor
+				try {
+					mainServer.wait(200); // wait a bit to let the GUI update the screen
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+			// mainServer.updateGUI(gui);
 
 		} // end of the big for() loop
 
 	} // end of the main() function
-
-	private void updateGUI(GUI gui) {
-		for (Ant ant : ants) {
-			//board.destroyAnt(ant);
-			ant.move(boardSize, boardSize);
-			//board.placeAnt(ant);
-		}
-		gui.setUpdatedBoard(board);
-	}
+		// private void updateGUI(GUI gui) {
+		// // for (Ant ant : ants) {
+		// // board.move(ant);
+		// // }
+		// gui.setUpdatedBoard(board);
+		// }
 }

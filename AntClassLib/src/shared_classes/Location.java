@@ -8,11 +8,7 @@ public class Location implements Serializable {
 
 	private transient int column;
 	private transient int row;
-	
-	public Location(){
-		setRow(-1);
-		setColumn(-1);
-	}
+
 	public Location(int column, int row) {
 		setRow(row);
 		setColumn(column);
@@ -34,5 +30,8 @@ public class Location implements Serializable {
 		this.row = row;
 	}
 
-
+	@Override
+	public String toString() {
+		return "[" + row + ", " + column + "]";
+	}
 }

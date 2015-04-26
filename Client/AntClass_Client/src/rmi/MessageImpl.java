@@ -12,15 +12,24 @@ public class MessageImpl extends UnicastRemoteObject implements IMessage {
 
 	private static final long serialVersionUID = -7268072713058246914L;
 
+	private Ant _ant;
+
 	public MessageImpl() throws RemoteException {
 	}
 
 	@Override
-	public void remoteAntProcessor(Ant ant, Board board) throws RemoteException { // processes one single ant (received as a
-																					// parameter)
+	public Ant getAnt() throws RemoteException {
+		return _ant;
+	}
 
-		// move the ant passed as a parameter
-		ant.move(board.getRows(), board.getColumns());
+	@Override
+	public void remoteAntProcessor(Ant ant, Board board) throws RemoteException { // processes one single ant
+																					// (received as a
+		// parameter)
+
+		// System.err.println("moving an ant from position " + ant.getLocation().getRow() + ", " + ant.getLocation().getColumn());
+		ant.move(board.getRows(), board.getColumns()); // move the ant passed as a parameter
+		// System.err.println("the new position of ant " + ant.getLocation().getRow() + ", " + ant.getLocation().getColumn());
 
 		Location heapLocation = null;
 		boolean isHeapFound = ant.lookAround(board, heapLocation);
@@ -33,6 +42,8 @@ public class MessageImpl extends UnicastRemoteObject implements IMessage {
 				ant.processPickUpAlgorithm();
 			}
 		}
+
+		this._ant = ant; // new Ant(ant.getLocation().getRow(), ant.getLocation().getColumn());
 
 		// TODO: @Anastasia: make it complicated please.
 

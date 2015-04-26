@@ -7,36 +7,22 @@ public class Cell implements Serializable {
 
 	private static final long serialVersionUID = 6305343068366336423L;
 
-	public Ant ant;
-	public Heap heap;
+	private CellEntity cellEntity;
 
-	public Cell() {
-		ant = null;
-		heap = null;
+	public Cell(int r, int c) {
+		cellEntity = new EmptyCellEntity(r, c);
 	}
 
-	public Cell(Ant ant, Heap heap) {
-		this.ant = ant;
-		this.heap = heap;
-	}
-
-	// maybe we should have a GridElements class, and return an object of type GridElements
 	public String getEntityType() {
-		if (ant != null)
-			return "ant";
-		else if (heap != null)
-			return "heap";
-		else
-			return "empty";
+		return cellEntity.getEntityType();
 	}
 
-
-	public Ant getAnt() {
-		return ant;
+	public CellEntity getEntityOnCell() {
+		return cellEntity;
 	}
 
-	public Heap getHeap() {
-		// TODO Auto-generated method stub
-		return heap;
+	public void setEntityOnCell(CellEntity cellEntity) {
+		this.cellEntity = cellEntity;
 	}
+
 }

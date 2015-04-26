@@ -11,7 +11,7 @@ public class MainClient {
 	private void start() {
 		try {
 			// create on port 1099
-			Registry registry = LocateRegistry.createRegistry(1099); // change the port number to 2099 for the second client
+			Registry registry = LocateRegistry.createRegistry(2099); // change the port number to 2099 for the second client
 
 			// create a new service named myMessage
 			registry.rebind(IMessage.messageTag, new MessageImpl());

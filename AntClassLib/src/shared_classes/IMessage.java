@@ -8,4 +8,5 @@ public interface IMessage extends Remote {
 
 	public void remoteAntProcessor(Ant ant, Board board) throws RemoteException;
 
+	public Ant getAnt() throws RemoteException;
 }
