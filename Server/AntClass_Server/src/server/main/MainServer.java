@@ -17,7 +17,7 @@ public class MainServer {
 	// declare the member variable for array of objects in order to have
 	// them locked while processing ants with sync methods
 	private int boardSize = 10;
-	private final int NUM_OF_ANTS = 2;
+	private final int NUM_OF_ANTS = 5;
 	private int MAX_HEAP_SIZE = 10;
 	private int NUMBER_OF_INITIAL_HEAPS = 10;
 	private int TYPES_OF_OBJECTS = 3;
@@ -47,8 +47,8 @@ public class MainServer {
 			// rmiMessage.remoteAntProcessor(ant, board); // call server's method ith parameters
 			// ant.changeLocation(rmiMessage.getAnt().getLocation().getRow(), rmiMessage.getAnt().getLocation().getColumn());
 
-			ant.move(board.getRows(), board.getColumns()); // TODO: this line is only for testing purposes!
-
+			ant.move(board, board.getRows(), board.getColumns()); // TODO: this line is only for testing purposes!
+			
 			System.err.println("position after moving original: " + ant.getLocation().toString());
 
 			System.out.println("IMessage Sent with param 1 to remoteAntProcessor()");
