@@ -43,7 +43,7 @@ public class MessageImpl extends UnicastRemoteObject implements IMessage {
 			}
 		}
 
-		this._ant = ant; // new Ant(ant.getLocation().getRow(), ant.getLocation().getColumn());
+		// this._ant = ant; // new Ant(ant.getLocation().getRow(), ant.getLocation().getColumn());
 
 		// TODO: @Anastasia: make it complicated please.
 

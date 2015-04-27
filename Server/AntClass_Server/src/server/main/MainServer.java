@@ -15,7 +15,7 @@ public class MainServer {
 	// declare the member variable for array of objects in order to have
 	// them locked while processing ants with sync methods
 	private int boardSize = 10;
-	private final int NUM_OF_ANTS = 6;
+	private final int NUM_OF_ANTS = 2;
 	private int MAX_HEAP_SIZE = 10;
 	private int NUMBER_OF_INITIAL_HEAPS = 10;
 	private int TYPES_OF_OBJECTS = 3;
@@ -38,7 +38,7 @@ public class MainServer {
 		try {
 			// Registry rmiRegistry = LocateRegistry.getRegistry(ipAddress, portNumber); // fire to localhost port 1099
 			// IMessage rmiMessage = (IMessage) rmiRegistry.lookup(IMessage.messageTag); // search for service
-
+			//
 			System.err.println("position before moving original: " + ant.getLocation().toString());
 			// rmiMessage.remoteAntProcessor(ant, board); // call server's method ith parameters
 			// ant.changeLocation(rmiMessage.getAnt().getLocation().getRow(), rmiMessage.getAnt().getLocation().getColumn());
@@ -101,7 +101,7 @@ public class MainServer {
 			Thread processor1 = new Thread() {
 				public void run() {
 					// for each ant allocated to the client #1
-					for (int i = 0; i <= mainServer.currentAnts / mainServer.NUMBER_OF_PROCESSORS; ++i) {
+					for (int i = 0; i < mainServer.currentAnts / mainServer.NUMBER_OF_PROCESSORS; ++i) {
 						// System.err.println("T#1: ant #" + i + " position before moving: "
 						// + mainServer.ants[i].getLocation().toString());
 						mainServer.processAntsOnClient("127.0.0.1", 1099, mainServer.ants[i], mainServer.board);
@@ -135,6 +135,8 @@ public class MainServer {
 				e.printStackTrace();
 			}
 
+			gui.repaint();
+
 			// update the GUI with new positions of ants and objects
 			// Note: the GUI class will be updating itself, no need to call any function here!!!
 			synchronized (mainServer) { // lock the object to acquire the monitor
@@ -144,15 +146,9 @@ public class MainServer {
 					e.printStackTrace();
 				}
 			}
-			// mainServer.updateGUI(gui);
 
 		} // end of the big for() loop
 
 	} // end of the main() function
-		// private void updateGUI(GUI gui) {
-		// // for (Ant ant : ants) {
-		// // board.move(ant);
-		// // }
-		// gui.setUpdatedBoard(board);
-		// }
+
 }

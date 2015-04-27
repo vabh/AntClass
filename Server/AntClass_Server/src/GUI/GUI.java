@@ -8,7 +8,6 @@ import java.awt.geom.Line2D;
 import java.io.Serializable;
 
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 import shared_classes.Board;
 
@@ -23,6 +22,11 @@ public class GUI extends JPanel implements ActionListener, Serializable {
 	private int sizecol = 0;
 	private int sizerow = 0;
 
+	public void setUpdatedBoard(Board board) {
+		this.board = board;
+		repaint();
+	}
+
 	public GUI(Board _board, int _rows, int _cols, int _width, int _height) {
 		this.board = _board;
 		this.width = _width;
@@ -31,25 +35,25 @@ public class GUI extends JPanel implements ActionListener, Serializable {
 		sizerow = height / _rows;
 
 		// timer to repaint the board
-		Timer timer = new Timer(500, this);
-		timer.start();
+		// Timer timer = new Timer(500, this);
+		// timer.start();
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		// get screen size, to use later maybe
-		int widthnew = getWidth();
-		int heightnew = getHeight();
-
-		// recalculate the column/row sizes to have them match the resized
-		// window area
-		sizecol = widthnew / board.getColumns();
-		sizerow = heightnew / board.getRows();
-		width = widthnew;
-		height = heightnew;
-
-		// Save the updated board
-		// cells = board.getBoardCells();
-		repaint();
+		// // get screen size, to use later maybe
+		// int widthnew = getWidth();
+		// int heightnew = getHeight();
+		//
+		// // recalculate the column/row sizes to have them match the resized
+		// // window area
+		// sizecol = widthnew / board.getColumns();
+		// sizerow = heightnew / board.getRows();
+		// width = widthnew;
+		// height = heightnew;
+		//
+		// // Save the updated board
+		// // cells = board.getBoardCells();
+		// repaint();
 	}
 
 	public int getWidth(ActionEvent e) {
