@@ -1,5 +1,7 @@
 package server.main;
 
+import java.awt.event.ComponentListener;
+
 import javax.swing.JFrame;
 
 import shared_classes.Ant;
@@ -30,6 +32,8 @@ public class MainServer {
 
 	private int currentAnts;
 	private int currentHeaps;
+	private int client_id;
+	private float color = (float)client_id / (float)NUMBER_OF_PROCESSORS;
 
 	// use this function for processing some ants on the 1st remote
 	// client/processor
@@ -61,6 +65,7 @@ public class MainServer {
 		// initialise the grid with objects and ants in it
 		mainServer.currentAnts = 0;
 		mainServer.currentHeaps = 0;
+		
 
 		// initialise board
 		for (int i = 0; i < mainServer.boardSize; i++) {
@@ -68,7 +73,8 @@ public class MainServer {
 				int randValue = (int) (Math.random() * 10);
 
 				if (mainServer.currentAnts < mainServer.NUM_OF_ANTS && randValue > mainServer.ANT_PROBABILITY) {// ant
-					Ant ant = new Ant(i, j);
+					Ant ant = new Ant(i, j, mainServer.color);
+					System.out.print(mainServer.client_id +" "+ mainServer.color);
 					mainServer.ants[mainServer.currentAnts++] = ant;
 					mainServer.board.placeAnt(ant);
 				} else if (mainServer.currentHeaps < mainServer.NUMBER_OF_INITIAL_HEAPS
@@ -79,6 +85,20 @@ public class MainServer {
 					mainServer.heaps[mainServer.currentHeaps++] = heap;
 				}
 			}
+		}
+		
+
+		//Color
+		
+		for (int i = 0; i < mainServer.currentAnts / mainServer.NUMBER_OF_PROCESSORS; ++i) {
+			mainServer.client_id = 1;
+			mainServer.color = (float)mainServer.client_id / (float)mainServer.NUMBER_OF_PROCESSORS;
+			mainServer.ants[i].assignColor(mainServer.color);
+		}
+		for (int i = mainServer.currentAnts / mainServer.NUMBER_OF_PROCESSORS; i < mainServer.currentAnts; ++i) {
+			mainServer.client_id = 2;
+			mainServer.color = (float)mainServer.client_id / (float)mainServer.NUMBER_OF_PROCESSORS;
+			mainServer.ants[i].assignColor(mainServer.color);
 		}
 		System.out.println("Initialized with " + mainServer.currentAnts + " ants and " + mainServer.currentHeaps + " heaps!");
 
@@ -91,6 +111,9 @@ public class MainServer {
 		GUI gui = new GUI(mainServer.board, mainServer.boardSize, mainServer.boardSize, w, h);
 		frame.add(gui);
 		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		//frame.addComponentListener(new ComponentListener());
+		//frame.addComponentListener(this);
 
 		for (int i = 0; i < mainServer.NUM_OF_LOOPS; ++i) { // each step of this
 															// loop is one cycle
@@ -104,6 +127,7 @@ public class MainServer {
 					for (int i = 0; i < mainServer.currentAnts / mainServer.NUMBER_OF_PROCESSORS; ++i) {
 						// System.err.println("T#1: ant #" + i + " position before moving: "
 						// + mainServer.ants[i].getLocation().toString());
+						//mainServer.client_id = 1;
 						mainServer.processAntsOnClient("127.0.0.1", 1099, mainServer.ants[i], mainServer.board);
 						// System.err.println("T#1: ant #" + i + " position after moving: "
 						// + mainServer.ants[i].getLocation().toString());
@@ -119,6 +143,7 @@ public class MainServer {
 					for (int i = mainServer.currentAnts / mainServer.NUMBER_OF_PROCESSORS; i < mainServer.currentAnts; ++i) {
 						// System.err.println("T#2: ant's position before moving: " + mainServer.ants[i].getLocation().getRow()
 						// + ", " + mainServer.ants[i].getLocation().getColumn());
+						//mainServer.client_id = 2;
 						mainServer.processAntsOnClient("127.0.0.1", 2099, mainServer.ants[i], mainServer.board);
 						// System.err.println("T#2: ant's position after moving: " + mainServer.ants[i].getLocation().getRow()
 						// + ", " + mainServer.ants[i].getLocation().getColumn());

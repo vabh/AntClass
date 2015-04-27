@@ -4,14 +4,16 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
 import java.awt.geom.Line2D;
 import java.io.Serializable;
+import java.util.EventListener;
 
 import javax.swing.JPanel;
 
 import shared_classes.Board;
 
-public class GUI extends JPanel implements ActionListener, Serializable {
+public class GUI extends JPanel implements EventListener, Serializable {
 
 	private static final long serialVersionUID = -6465327145108762100L;
 
@@ -39,21 +41,22 @@ public class GUI extends JPanel implements ActionListener, Serializable {
 		// timer.start();
 	}
 
-	public void actionPerformed(ActionEvent e) {
+	//public void actionPerformed(ActionEvent e) {
+	public void componentResized(ComponentEvent e){
 		// // get screen size, to use later maybe
-		// int widthnew = getWidth();
-		// int heightnew = getHeight();
-		//
+		 int widthnew = getWidth();
+		 int heightnew = getHeight();
+		
 		// // recalculate the column/row sizes to have them match the resized
 		// // window area
-		// sizecol = widthnew / board.getColumns();
-		// sizerow = heightnew / board.getRows();
-		// width = widthnew;
-		// height = heightnew;
+		 sizecol = widthnew / board.getColumns();
+		 sizerow = heightnew / board.getRows();
+		 width = widthnew;
+		 height = heightnew;
 		//
 		// // Save the updated board
 		// // cells = board.getBoardCells();
-		// repaint();
+		 repaint();
 	}
 
 	public int getWidth(ActionEvent e) {

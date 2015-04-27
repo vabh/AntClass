@@ -11,13 +11,15 @@ public class Ant implements Serializable, CellEntity {
 	private Location location;
 	private boolean carrying;
 	private int heapElement; // -1 when !carrying
+	private float color;
 
 	// probabilities
 
-	public Ant(int r, int c) {
+	public Ant(int r, int c, float _color) {
 		location = new Location(r, c);
 		this.carrying = false;
 		this.heapElement = -1;
+		this.color = _color;
 	}
 
 	public boolean isCarrying() {
@@ -117,7 +119,10 @@ public class Ant implements Serializable, CellEntity {
 	@Override
 	public void drawOnBoard(Graphics g, int sizecol, int sizerow, Board board) {
 		// Drawing ants from their position on a board
-		g.setColor(Color.orange);
+		//float color = (float) heapelements[k] / (float) getTypes();
+		Color colortype = new Color((int) ((0.7) * 255), (int) ((color) * 255), (int) ((color) * 255));
+		g.setColor(colortype);
+		//g.setColor(Color.orange);
 		int x = getLocation().getRow() * sizecol;
 		int y = getLocation().getColumn() * sizerow;
 		g.fillOval((int) (x + (sizecol - getDrawingSize() * 0.02 * Math.min(sizecol, sizerow)) / 2.0),
@@ -132,6 +137,10 @@ public class Ant implements Serializable, CellEntity {
 
 	public void processPickUpAlgorithm() {
 
+	}
+	
+	public void assignColor(float _color) {
+		color = _color;
 	}
 
 	@Override
