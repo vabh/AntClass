@@ -43,8 +43,8 @@ public class MainServer {
 			// rmiMessage.remoteAntProcessor(ant, board); // call server's method ith parameters
 			// ant.changeLocation(rmiMessage.getAnt().getLocation().getRow(), rmiMessage.getAnt().getLocation().getColumn());
 
-			ant.move(board.getRows(), board.getColumns()); // TODO: this line is only for testing purposes!
-
+			ant.move(board, board.getRows(), board.getColumns()); // TODO: this line is only for testing purposes!
+			
 			System.err.println("position after moving original: " + ant.getLocation().toString());
 
 			System.out.println("IMessage Sent with param 1 to remoteAntProcessor()");
