@@ -13,14 +13,7 @@ public class Ant implements Serializable, CellEntity {
 	private int heapElement; // -1 when !carrying
 	private float color;
 
-	// probabilities
-<<<<<<< HEAD
-
 	public Ant(int r, int c, float _color) {
-=======
-	
-	public Ant(int r, int c) {
->>>>>>> 3ba04d9731ead740de6ff636b3e2eb4b268ff005
 		location = new Location(r, c);
 		this.carrying = false;
 		this.heapElement = -1;

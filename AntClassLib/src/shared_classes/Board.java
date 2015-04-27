@@ -2,7 +2,6 @@ package shared_classes;
 
 import java.io.Serializable;
 
-
 public class Board implements Serializable {
 
 	private static final long serialVersionUID = -8340202074843934794L;
