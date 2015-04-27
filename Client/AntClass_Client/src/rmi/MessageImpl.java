@@ -28,7 +28,7 @@ public class MessageImpl extends UnicastRemoteObject implements IMessage {
 		// parameter)
 
 		// System.err.println("moving an ant from position " + ant.getLocation().getRow() + ", " + ant.getLocation().getColumn());
-		ant.move(board.getRows(), board.getColumns()); // move the ant passed as a parameter
+		ant.move(board, board.getRows(), board.getColumns()); // move the ant passed as a parameter
 		// System.err.println("the new position of ant " + ant.getLocation().getRow() + ", " + ant.getLocation().getColumn());
 
 		Location heapLocation = null;
