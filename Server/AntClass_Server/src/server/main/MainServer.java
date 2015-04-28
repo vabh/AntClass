@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import shared_classes.Ant;
 import shared_classes.Board;
 import shared_classes.Heap;
+import shared_classes.Location;
 import GUI.GUI;
 
 public class MainServer {
@@ -17,7 +18,7 @@ public class MainServer {
 	// declare the member variable for array of objects in order to have
 	// them locked while processing ants with sync methods
 	private int boardSize = 10;
-	private final int NUM_OF_ANTS = 5;
+	private final int NUM_OF_ANTS = 1;
 	private int MAX_HEAP_SIZE = 10;
 	private int NUMBER_OF_INITIAL_HEAPS = 10;
 	private int TYPES_OF_OBJECTS = 3;
@@ -45,13 +46,27 @@ public class MainServer {
 			// Registry rmiRegistry = LocateRegistry.getRegistry(ipAddress, portNumber); // fire to localhost port 1099
 			// IMessage rmiMessage = (IMessage) rmiRegistry.lookup(IMessage.messageTag); // search for service
 			//
-			System.err.println("position before moving original: " + ant.getLocation().toString());
+			//System.err.println("position before moving original: " + ant.getLocation().toString());
 			// rmiMessage.remoteAntProcessor(ant, board); // call server's method ith parameters
 			// ant.changeLocation(rmiMessage.getAnt().getLocation().getRow(), rmiMessage.getAnt().getLocation().getColumn());
 
 			ant.move(board, board.getRows(), board.getColumns()); // TODO: this line is only for testing purposes!
+			//System.err.println("position after moving original: " + ant.getLocation().toString());
 			
-			System.err.println("position after moving original: " + ant.getLocation().toString());
+			Location heapLocation = new Location();
+			boolean isHeapFound = ant.lookAround(board, heapLocation);
+
+			if (isHeapFound) {
+				// pick-up or drop an object
+				System.out.println(isHeapFound + ": "+heapLocation);
+				if (ant.isCarrying()) {
+					ant.processDropAlgorithm(board, heapLocation);
+				} else {
+					ant.processPickUpAlgorithm(board, heapLocation);
+				}
+			}
+			
+			
 
 			System.out.println("IMessage Sent with param 1 to remoteAntProcessor()");
 		} catch (Exception e) {
@@ -164,7 +179,7 @@ public class MainServer {
 			// Note: the GUI class will be updating itself, no need to call any function here!!!
 			synchronized (mainServer) { // lock the object to acquire the monitor
 				try {
-					mainServer.wait(200); // wait a bit to let the GUI update the screen
+					mainServer.wait(1000); // wait a bit to let the GUI update the screen
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

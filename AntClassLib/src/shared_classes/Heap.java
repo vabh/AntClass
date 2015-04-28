@@ -38,6 +38,7 @@ public class Heap implements Serializable, CellEntity {
 		return elements;
 	}
 
+	//returns an upper bound on the types of heap elements
 	public int getTypes() {
 		return types;
 	}

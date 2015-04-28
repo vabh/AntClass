@@ -37,9 +37,9 @@ public class MessageImpl extends UnicastRemoteObject implements IMessage {
 		if (isHeapFound) {
 			// pick-up or drop an object
 			if (ant.isCarrying()) {
-				ant.processDropAlgorithm();
+				ant.processDropAlgorithm(board, heapLocation);
 			} else {
-				ant.processPickUpAlgorithm();
+				ant.processPickUpAlgorithm(board, heapLocation);
 			}
 		}
 

@@ -15,8 +15,9 @@ public class Board implements Serializable {
 
 	public Board(int rows, int columns, int types, int heapSize) {
 
-		this.rows = rows;
-		this.columns = columns;
+		setRows(rows);
+		setColumns(columns);	
+		
 		// this.types = types;
 		// this.maxHeapSize = heapSize;
 
@@ -25,7 +26,6 @@ public class Board implements Serializable {
 			for (int j = 0; j < columns; ++j) {
 				cells[i][j] = new Cell(i, j);
 			}
-
 		}
 	}
 
@@ -52,8 +52,21 @@ public class Board implements Serializable {
 		return cells;
 	}
 
+	public CellEntity getCellEntity(Location location){
+		int r = location.getRow();
+		int c = location.getColumn();
+		
+		return cells[r][c].getEntityOnCell();
+	}
+	
 	// returns -- ant | heap | empty
 	public String getCellObjectType(int r, int c) {
+		return cells[r][c].getEntityType();
+	}
+	public String getCellObjectType(Location location) {
+		int r = location.getRow();
+		int c = location.getColumn();
+		
 		return cells[r][c].getEntityType();
 	}
 

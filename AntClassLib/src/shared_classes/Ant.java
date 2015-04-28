@@ -72,7 +72,9 @@ public class Ant implements Serializable, CellEntity {
 				continue;
 			}
 			if (cells[lookatX][lookatY].getEntityType().equals("heap")) {
-				heapLocation = cells[lookatX][lookatY].getEntityOnCell().getLocation();
+				//heapLocation = new Location(lookatX, lookatY);
+				heapLocation.setRow(lookatX);
+				heapLocation.setColumn(lookatY);
 				// System.out.println("Heap:" + lookatX + "," + lookatY);
 				return true;
 			}
@@ -140,11 +142,17 @@ public class Ant implements Serializable, CellEntity {
 				(int) (getDrawingSize() * (0.02 * Math.min(sizecol, sizerow))));
 	}
 
-	public void processDropAlgorithm() {
-
+	public void processDropAlgorithm(Board board, Location heapLocation) {
+		if(board.getCellObjectType(heapLocation).equals("heap")){
+			Heap heap = (Heap) board.getCellEntity(heapLocation);
+			int heapElements[] = heap.getHeapElements();
+			System.out.println("here");
+			System.out.println(heapElements);
+			
+		}
 	}
 
-	public void processPickUpAlgorithm() {
+	public void processPickUpAlgorithm(Board board, Location heapLocation) {
 
 	}
 	
