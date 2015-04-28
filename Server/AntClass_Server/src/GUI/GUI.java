@@ -4,16 +4,15 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
 import java.awt.geom.Line2D;
 import java.io.Serializable;
-import java.util.EventListener;
 
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import shared_classes.Board;
 
-public class GUI extends JPanel implements EventListener, Serializable {
+public class GUI extends JPanel implements ActionListener, Serializable {
 
 	private static final long serialVersionUID = -6465327145108762100L;
 
@@ -37,25 +36,23 @@ public class GUI extends JPanel implements EventListener, Serializable {
 		sizerow = height / _rows;
 
 		// timer to repaint the board
-		// Timer timer = new Timer(500, this);
-		// timer.start();
+		 Timer timer = new Timer(500, this);
+		 timer.start();
 	}
 
-	//public void actionPerformed(ActionEvent e) {
-	public void componentResized(ComponentEvent e){
-		// // get screen size, to use later maybe
+	public void actionPerformed(ActionEvent e) {
+		 // get screen size, to use later maybe
 		 int widthnew = getWidth();
 		 int heightnew = getHeight();
 		
-		// // recalculate the column/row sizes to have them match the resized
-		// // window area
+		 // recalculate the column/row sizes to have them match the resized
+		 // window area
 		 sizecol = widthnew / board.getColumns();
 		 sizerow = heightnew / board.getRows();
 		 width = widthnew;
 		 height = heightnew;
-		//
-		// // Save the updated board
-		// // cells = board.getBoardCells();
+		
+		 //Recreating board with new width and height
 		 repaint();
 	}
 

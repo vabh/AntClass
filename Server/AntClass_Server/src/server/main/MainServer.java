@@ -34,6 +34,8 @@ public class MainServer {
 	private int currentHeaps;
 	private int client_id;
 	private float color = (float)client_id / (float)NUMBER_OF_PROCESSORS;
+	private int width = 1024;
+	private int height = 600;
 
 	// use this function for processing some ants on the 1st remote
 	// client/processor
@@ -67,7 +69,7 @@ public class MainServer {
 		mainServer.currentHeaps = 0;
 		
 
-		// initialise board
+		// Board initialization
 		for (int i = 0; i < mainServer.boardSize; i++) {
 			for (int j = 0; j < mainServer.boardSize; j++) {
 				int randValue = (int) (Math.random() * 10);
@@ -88,8 +90,7 @@ public class MainServer {
 		}
 		
 
-		//Color
-		
+		//Assigning ants to two clients, creating different colors for better representation
 		for (int i = 0; i < mainServer.currentAnts / mainServer.NUMBER_OF_PROCESSORS; ++i) {
 			mainServer.client_id = 1;
 			mainServer.color = (float)mainServer.client_id / (float)mainServer.NUMBER_OF_PROCESSORS;
@@ -103,17 +104,14 @@ public class MainServer {
 		System.out.println("Initialized with " + mainServer.currentAnts + " ants and " + mainServer.currentHeaps + " heaps!");
 
 		// create the GUI object
-		int w = 1024;
-		int h = 600;
 		JFrame frame = new JFrame("AntClass");
-		frame.setSize(w, h);
+		frame.setSize(mainServer.width, mainServer.height);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		GUI gui = new GUI(mainServer.board, mainServer.boardSize, mainServer.boardSize, w, h);
+		GUI gui = new GUI(mainServer.board, mainServer.boardSize, mainServer.boardSize, mainServer.width, mainServer.height);
 		frame.add(gui);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		//frame.addComponentListener(new ComponentListener());
-		//frame.addComponentListener(this);
+
 
 		for (int i = 0; i < mainServer.NUM_OF_LOOPS; ++i) { // each step of this
 															// loop is one cycle
@@ -159,7 +157,7 @@ public class MainServer {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-
+			//Repainting the board after each ant processing iteration
 			gui.repaint();
 
 			// update the GUI with new positions of ants and objects
