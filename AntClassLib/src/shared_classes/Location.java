@@ -6,14 +6,15 @@ public class Location implements Serializable {
 
 	private static final long serialVersionUID = -6171531016967658900L;
 
-	private transient int column;
-	private transient int row;
+	private int column;
+	private int row;
 
-	//invalid location
-	public Location(){
+	// invalid location
+	public Location() {
 		setRow(-1);
 		setColumn(-1);
 	}
+
 	public Location(int column, int row) {
 		setRow(row);
 		setColumn(column);
