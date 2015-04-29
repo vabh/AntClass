@@ -3,22 +3,34 @@ package client.main;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
-import rmi.MessageImpl;
-import shared_classes.IMessage;
+import shared_classes.IRemoteAnt;
+
 
 public class MainClient {
 
+	private final int clientID = 1; // should start from 0 and be less than the number of clients set in the server
+
 	private void start() {
 		try {
-			// create on port 1099
-			Registry registry = LocateRegistry.createRegistry(1099); // change the port number to 2099 for the second client
+			// connecting to a remote host and looking up for a remote object created by it (remote host)
+			Registry registry = LocateRegistry.getRegistry("127.0.0.1", 1099);
+			IRemoteAnt remoteAnts = (IRemoteAnt) registry.lookup("remoteAnt");
 
-			// create a new service named myMessage
-			registry.rebind(IMessage.messageTag, new MessageImpl());
+			AntProcessor antProc = new AntProcessor();
+
+			while (true) { // loop forever
+				int startIndex = remoteAnts.getStartIndex(clientID);
+				int endIndex = remoteAnts.getEndIndex(clientID);
+				for (int index = startIndex; index < endIndex; ++index) {
+					remoteAnts.changeLocation(
+							antProc.move(remoteAnts.getLocation(index), remoteAnts.getBoardHeight(), remoteAnts.getBoardWidth()),
+							index);
+				}
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("system is ready");
+		System.out.println("Client finished!");
 	}
 
 	public static void main(String[] args) {

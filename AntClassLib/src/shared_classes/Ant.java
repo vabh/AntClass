@@ -72,7 +72,7 @@ public class Ant implements Serializable, CellEntity {
 				continue;
 			}
 			if (cells[lookatX][lookatY].getEntityType().equals("heap")) {
-				//heapLocation = new Location(lookatX, lookatY);
+				// heapLocation = new Location(lookatX, lookatY);
 				heapLocation.setRow(lookatX);
 				heapLocation.setColumn(lookatY);
 				// System.out.println("Heap:" + lookatX + "," + lookatY);
@@ -85,8 +85,8 @@ public class Ant implements Serializable, CellEntity {
 	// this method should be called to make the ant move
 	// called with board size, to make movement toroidal
 	public void move(Board board, int boardRows, int boardColumns) {
-		
-		while(true){
+
+		while (true) {
 			float x = (float) Math.random();
 			float y = (float) Math.random();
 			int r;
@@ -96,21 +96,21 @@ public class Ant implements Serializable, CellEntity {
 			} else {
 				r = (getLocation().getRow() - 1 + boardRows) % boardRows;
 			}
-	
+
 			if (y >= 0.5) {
 				c = (getLocation().getColumn() + 1) % boardColumns;
 			} else {
 				c = (getLocation().getColumn() - 1 + boardColumns) % boardColumns;
 			}
-			//check if new cell contains a heap
-			if(!board.getCellObjectType(r, c).equals("heap")){
+			// check if new cell contains a heap
+			if (!board.getCellObjectType(r, c).equals("heap")) {
 				// System.out.println("location before: " + getLocation().toString());
 				changeLocation(r, c);
 				break;
 			}
-			//move in a new direction if we saw a heap
-			//it should not move on top of a heap
-			else{
+			// move in a new direction if we saw a heap
+			// it should not move on top of a heap
+			else {
 				continue;
 			}
 			// System.out.println("location after: " + getLocation().toString());
@@ -130,10 +130,11 @@ public class Ant implements Serializable, CellEntity {
 	@Override
 	public void drawOnBoard(Graphics g, int sizecol, int sizerow, Board board) {
 		// Drawing ants from their position on a board
-		//float color = (float) heapelements[k] / (float) getTypes();
+		// float color = (float) heapelements[k] / (float) getTypes();
 		Color colortype = new Color((int) ((0.7) * 255), (int) ((color) * 255), (int) ((color) * 255));
 		g.setColor(colortype);
-		//g.setColor(Color.orange);
+		// g.setColor(Color.orange);
+		// System.err.println("ant location from drawOnBoard() function: " + getLocation().toString());
 		int x = getLocation().getRow() * sizecol;
 		int y = getLocation().getColumn() * sizerow;
 		g.fillOval((int) (x + (sizecol - getDrawingSize() * 0.02 * Math.min(sizecol, sizerow)) / 2.0),
@@ -143,19 +144,19 @@ public class Ant implements Serializable, CellEntity {
 	}
 
 	public void processDropAlgorithm(Board board, Location heapLocation) {
-		if(board.getCellObjectType(heapLocation).equals("heap")){
+		if (board.getCellObjectType(heapLocation).equals("heap")) {
 			Heap heap = (Heap) board.getCellEntity(heapLocation);
 			int heapElements[] = heap.getHeapElements();
 			System.out.println("here");
 			System.out.println(heapElements);
-			
+
 		}
 	}
 
 	public void processPickUpAlgorithm(Board board, Location heapLocation) {
 
 	}
-	
+
 	public void assignColor(float _color) {
 		color = _color;
 	}
@@ -170,4 +171,5 @@ public class Ant implements Serializable, CellEntity {
 		this.location.setColumn(col);
 		this.location.setRow(row);
 	}
+
 }
