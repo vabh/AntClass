@@ -22,10 +22,10 @@ public class MainClient {
 				int startIndex = remoteAnts.getStartIndex(clientID);
 				int endIndex = remoteAnts.getEndIndex(clientID);
 				for (int index = startIndex; index < endIndex; ++index) {
-					remoteAnts.changeLocation(
-							antProc.move(remoteAnts.getLocation(index), remoteAnts.getBoardHeight(), remoteAnts.getBoardWidth()),
-							index);
+					remoteAnts.changeLocation(antProc.move(remoteAnts.getLocation(index), remoteAnts.getBoardHeight(),
+							remoteAnts.getBoardWidth(), remoteAnts.getBoard()), index);
 				}
+				remoteAnts.requestRedraw();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

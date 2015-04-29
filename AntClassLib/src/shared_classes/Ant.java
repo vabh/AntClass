@@ -10,7 +10,7 @@ public class Ant implements Serializable, CellEntity {
 
 	private Location location;
 	private boolean carrying;
-	private int heapElement; // -1 when !carrying
+	private int heapElement; // -1 when not carrying any object
 	private float color;
 
 	public Ant(int r, int c, float _color) {
@@ -80,41 +80,6 @@ public class Ant implements Serializable, CellEntity {
 			}
 		}
 		return false;
-	}
-
-	// this method should be called to make the ant move
-	// called with board size, to make movement toroidal
-	public void move(Board board, int boardRows, int boardColumns) {
-
-		while (true) {
-			float x = (float) Math.random();
-			float y = (float) Math.random();
-			int r;
-			int c;
-			if (x >= 0.5) {
-				r = (getLocation().getRow() + 1) % boardRows;
-			} else {
-				r = (getLocation().getRow() - 1 + boardRows) % boardRows;
-			}
-
-			if (y >= 0.5) {
-				c = (getLocation().getColumn() + 1) % boardColumns;
-			} else {
-				c = (getLocation().getColumn() - 1 + boardColumns) % boardColumns;
-			}
-			// check if new cell contains a heap
-			if (!board.getCellObjectType(r, c).equals("heap")) {
-				// System.out.println("location before: " + getLocation().toString());
-				changeLocation(r, c);
-				break;
-			}
-			// move in a new direction if we saw a heap
-			// it should not move on top of a heap
-			else {
-				continue;
-			}
-			// System.out.println("location after: " + getLocation().toString());
-		}
 	}
 
 	@Override

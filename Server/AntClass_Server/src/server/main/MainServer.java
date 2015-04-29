@@ -9,8 +9,8 @@ import javax.swing.JFrame;
 import shared_classes.Ant;
 import shared_classes.AntStub;
 import shared_classes.Board;
+import shared_classes.GUI;
 import shared_classes.Heap;
-import GUI.GUI;
 
 public class MainServer {
 	// declare the member variable for array of objects in order to have
@@ -35,10 +35,6 @@ public class MainServer {
 	private float color = (float) client_id / (float) NUMBER_OF_PROCESSORS;
 	private int width = 1024;
 	private int height = 600;
-
-	public Ant getAnt(int index) {
-		return ants[index];
-	}
 
 	public static void main(String[] args) {
 		final MainServer mainServer = new MainServer(); // object to use
@@ -66,6 +62,7 @@ public class MainServer {
 					mainServer.board.placeHeap(heap);
 					mainServer.heaps[mainServer.currentHeaps++] = heap;
 				}
+
 			}
 		}
 
@@ -80,6 +77,7 @@ public class MainServer {
 			mainServer.color = (float) mainServer.client_id / (float) mainServer.NUMBER_OF_PROCESSORS;
 			mainServer.ants[i].assignColor(mainServer.color);
 		}
+
 		System.out.println("Initialized with " + mainServer.currentAnts + " ants and " + mainServer.currentHeaps + " heaps!");
 
 		// create the GUI object
@@ -94,8 +92,7 @@ public class MainServer {
 		// create the register and the shared/remote object being accessed from the clients
 		try {
 			Registry registry = LocateRegistry.createRegistry(1099);
-			AntStub antsStub = new AntStub(mainServer.ants, mainServer.getBoardWidth(), mainServer.getBoardHeight(),
-					mainServer.NUMBER_OF_PROCESSORS);
+			AntStub antsStub = new AntStub(mainServer.ants, mainServer.NUMBER_OF_PROCESSORS, mainServer.board, gui);
 			registry.rebind("remoteAnt", antsStub);
 			System.out.println("registry created and remote object rebound");
 		} catch (RemoteException e) {
@@ -104,11 +101,4 @@ public class MainServer {
 
 	} // end of the main() function
 
-	public int getBoardWidth() {
-		return board.getColumns();
-	}
-
-	public int getBoardHeight() {
-		return board.getRows();
-	}
 }

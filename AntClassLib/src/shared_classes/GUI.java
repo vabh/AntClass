@@ -1,4 +1,4 @@
-package GUI;
+package shared_classes;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -8,25 +8,15 @@ import java.awt.geom.Line2D;
 import java.io.Serializable;
 
 import javax.swing.JPanel;
-import javax.swing.Timer;
-
-import shared_classes.Board;
 
 public class GUI extends JPanel implements ActionListener, Serializable {
 
 	private static final long serialVersionUID = -6465327145108762100L;
 
-	private static final int /* AntSize = 35, */SPEED = 1/* , ObjSize = 30 */;
-
 	private Board board;
 	private int width, height;
 	private int sizecol = 0;
 	private int sizerow = 0;
-
-	public void setUpdatedBoard(Board board) {
-		this.board = board;
-		repaint();
-	}
 
 	public GUI(Board _board, int _rows, int _cols, int _width, int _height) {
 		this.board = _board;
@@ -36,24 +26,26 @@ public class GUI extends JPanel implements ActionListener, Serializable {
 		sizerow = height / _rows;
 
 		// timer to repaint the board
-		 Timer timer = new Timer(500, this);
-		 timer.start();
+		// Timer timer = new Timer(50, this);
+		// timer.start();
+	}
+
+	private void updateScreenSize() {
+		// get screen size, to use later maybe
+		int widthnew = getWidth();
+		int heightnew = getHeight();
+
+		// recalculate the column/row sizes to have them match the resized
+		// window area
+		sizecol = widthnew / board.getColumns();
+		sizerow = heightnew / board.getRows();
+		width = widthnew;
+		height = heightnew;
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		 // get screen size, to use later maybe
-		 int widthnew = getWidth();
-		 int heightnew = getHeight();
-		
-		 // recalculate the column/row sizes to have them match the resized
-		 // window area
-		 sizecol = widthnew / board.getColumns();
-		 sizerow = heightnew / board.getRows();
-		 width = widthnew;
-		 height = heightnew;
-		
-		 //Recreating board with new width and height
-		 repaint();
+		// Recreating board with new width and height
+		repaint();
 	}
 
 	public int getWidth(ActionEvent e) {
@@ -71,7 +63,7 @@ public class GUI extends JPanel implements ActionListener, Serializable {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
-		System.err.println("painting...");
+		updateScreenSize();
 
 		Graphics2D g2 = (Graphics2D) g;
 

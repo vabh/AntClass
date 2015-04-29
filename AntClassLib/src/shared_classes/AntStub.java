@@ -8,15 +8,15 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 	private static final long serialVersionUID = 5500371245725480160L;
 
 	private Ant[] ants;
-	private int boardColumns;
-	private int boardRows;
 	private int totalNumOfClients;
+	private Board board;
+	private GUI gui;
 
-	public AntStub(Ant[] ants, int boardColumns, int boardRows, int totalNumOfClients) throws RemoteException {
+	public AntStub(Ant[] ants, int totalNumOfClients, Board board, GUI gui) throws RemoteException {
 		this.ants = ants;
-		this.boardColumns = boardColumns;
-		this.boardRows = boardRows;
 		this.totalNumOfClients = totalNumOfClients;
+		this.board = board;
+		this.gui = gui;
 	}
 
 	@Override
@@ -32,12 +32,12 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 
 	@Override
 	public int getBoardWidth() throws RemoteException {
-		return this.boardColumns;
+		return board.getColumns();
 	}
 
 	@Override
 	public int getBoardHeight() throws RemoteException {
-		return this.boardRows;
+		return board.getRows();
 	}
 
 	@Override
@@ -64,6 +64,21 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 			return getTotalNumOfAnts();
 		} else {
 			return (clientID + 1) * (getTotalNumOfAnts() / getTotalNumOfClients());
+		}
+	}
+
+	@Override
+	public Board getBoard() throws RemoteException {
+		return this.board;
+	}
+
+	@Override
+	public synchronized void requestRedraw() throws RemoteException {
+		this.gui.repaint();
+		try {
+			wait(1000); // force waiting period to synchronise after each repaint
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 }

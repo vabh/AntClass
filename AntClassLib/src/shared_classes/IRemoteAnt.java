@@ -19,4 +19,8 @@ public interface IRemoteAnt extends Remote {
 	public int getStartIndex(int clientID) throws RemoteException;
 
 	public int getEndIndex(int clientID) throws RemoteException;
+
+	public Board getBoard() throws RemoteException;
+
+	public void requestRedraw() throws RemoteException;
 }
