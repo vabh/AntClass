@@ -59,9 +59,10 @@ public class Heap implements Serializable, CellEntity {
 		// Heap heap = (Heap) board.getBoardCells()[r][c].getEntityOnCell();
 		int[] heapelements = getHeapElements();
 		for (int k = 0; k < getSize(); k++) {
-			float color = (float) heapelements[k] / (float) getTypes();
-			Color colortype = new Color((int) ((color) * 255), (int) ((color) * 255), (int) ((0.7) * 255));
-			g.setColor(colortype);
+			//float color = (float) heapelements[k] / (float) getTypes();
+			Color colorHeap = new Color((int) (((float) heapelements[k] / (float) getTypes()) * 255), 
+					(int) (((float) heapelements[k] / (float) getTypes()) * 255), (int) ((0.7) * 255));
+			g.setColor(colorHeap);
 			int x = getLocation().getRow() * sizecol;
 			int y = getLocation().getColumn() * sizerow;
 			g.fillRect((int) (x + (k) * (sizecol / getSize())), (int) (y + (sizerow * 0.1)), sizecol / getSize(),

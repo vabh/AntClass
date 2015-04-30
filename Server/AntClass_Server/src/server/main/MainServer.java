@@ -51,7 +51,7 @@ public class MainServer {
 				int randValue = (int) (Math.random() * 10);
 
 				if (mainServer.currentAnts < mainServer.NUM_OF_ANTS && randValue > mainServer.ANT_PROBABILITY) {// ant
-					Ant ant = new Ant(i, j, mainServer.color);
+					Ant ant = new Ant(i, j, mainServer.color, mainServer.TYPES_OF_OBJECTS);
 					System.out.print(mainServer.client_id + " " + mainServer.color);
 					mainServer.ants[mainServer.currentAnts++] = ant;
 					mainServer.board.placeAnt(ant);
