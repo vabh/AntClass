@@ -4,6 +4,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 import shared_classes.IRemoteAnt;
+import shared_classes.Location;
 
 
 public class MainClient {
@@ -22,8 +23,22 @@ public class MainClient {
 				int startIndex = remoteAnts.getStartIndex(clientID);
 				int endIndex = remoteAnts.getEndIndex(clientID);
 				for (int index = startIndex; index < endIndex; ++index) {
-					remoteAnts.changeLocation(antProc.move(remoteAnts.getLocation(index), remoteAnts.getBoardHeight(),
-							remoteAnts.getBoardWidth(), remoteAnts.getBoard()), index);
+					// move the ant[index]
+					remoteAnts.changeLocation(
+							antProc.move(remoteAnts.getAnt(index).getLocation(), remoteAnts.getBoardHeight(),
+									remoteAnts.getBoardWidth(), remoteAnts.getBoard()), index);
+
+					// look around of the ant[index]
+					Location heapLocation = remoteAnts.lookAround(index);
+					if (heapLocation != null) {
+						// pick-up or drop an object
+						if (remoteAnts.getAnt(index).isCarrying()) {
+							antProc.processDropAlgorithm(remoteAnts.getBoard(), heapLocation, remoteAnts.getAnt(index));
+						} else {
+							antProc.processPickUpAlgorithm(remoteAnts.getBoard(), heapLocation, remoteAnts.getAnt(index));
+						}
+					}
+
 				}
 				remoteAnts.requestRedraw();
 			}
