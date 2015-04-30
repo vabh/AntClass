@@ -28,13 +28,19 @@ public class MainClient {
 							antProc.move(remoteAnts.getAnt(index).getLocation(), remoteAnts.getBoardHeight(),
 									remoteAnts.getBoardWidth(), remoteAnts.getBoard()), index);
 
+					remoteAnts.getAnt(index).printStatus();
+
 					// look around of the ant[index]
-					Location heapLocation = remoteAnts.lookAround(index);
+					Location heapLocation = antProc.lookAround(remoteAnts.getAnt(index), remoteAnts.getBoard());
+					System.out.println("Milestone #1");
 					if (heapLocation != null) {
+						System.out.println("Milestone #2");
 						// pick-up or drop an object
 						if (remoteAnts.getAnt(index).isCarrying()) {
+							System.out.println("Milestone #3");
 							antProc.processDropAlgorithm(remoteAnts.getBoard(), heapLocation, remoteAnts.getAnt(index));
 						} else {
+							System.out.println("Milestone #4");
 							antProc.processPickUpAlgorithm(remoteAnts.getBoard(), heapLocation, remoteAnts.getAnt(index));
 						}
 					}

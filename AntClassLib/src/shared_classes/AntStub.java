@@ -84,43 +84,5 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 		}
 	}
 
-	// returns a nearby heap location if found any, otherwise returns null
-	// index parameter is the index of the ant in the ants[] array which needs to look around itself
-	@Override
-	public synchronized Location lookAround(int index) throws RemoteException {
-		Location resultLocation = new Location();
 
-		// direction to look at
-		int xPos[] = { -1, -1, 0, 1, 1, 1, 0, -1 };
-		int yPos[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
-
-		Cell[][] cells = board.getBoardCells();
-		int rows = board.getRows();
-		int columns = board.getColumns();
-
-		for (int i = 0; i < xPos.length; i++) {
-			int lookatX = getAnt(index).getLocation().getRow() + xPos[i];
-			int lookatY = getAnt(index).getLocation().getColumn() + yPos[i];
-			if (lookatX >= 0) {
-				lookatX %= rows;
-			} else if (lookatX < 0) {
-				lookatX = rows - 1;
-			}
-
-			if (lookatY >= 0) {
-				lookatY %= columns;
-			} else if (lookatY < 0) {
-				lookatY = columns - 1;
-			}
-			if (cells[lookatX][lookatY] == null) {
-				continue;
-			}
-			if (cells[lookatX][lookatY].getEntityType().equals("heap")) {
-				resultLocation.setRow(lookatX);
-				resultLocation.setColumn(lookatY);
-				return resultLocation;
-			}
-		}
-		return null;
-	}
 }

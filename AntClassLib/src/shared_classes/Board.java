@@ -16,8 +16,8 @@ public class Board implements Serializable {
 	public Board(int rows, int columns, int types, int heapSize) {
 
 		setRows(rows);
-		setColumns(columns);	
-		
+		setColumns(columns);
+
 		// this.types = types;
 		// this.maxHeapSize = heapSize;
 
@@ -52,21 +52,31 @@ public class Board implements Serializable {
 		return cells;
 	}
 
-	public CellEntity getCellEntity(Location location){
+	public CellEntity getCellEntity(Location location) {
 		int r = location.getRow();
 		int c = location.getColumn();
-		
+
 		return cells[r][c].getEntityOnCell();
 	}
-	
+
+	public void destroyHeap(Location location) {
+		if (!cells[location.getRow()][location.getColumn()].getEntityType().equalsIgnoreCase("heap")) {
+			System.err.println("No heap found at " + location.toString());
+			return;
+		}
+		cells[location.getRow()][location.getColumn()].setEntityOnCell(new EmptyCellEntity(location.getRow(), location
+				.getColumn()));
+	}
+
 	// returns -- ant | heap | empty
 	public String getCellObjectType(int r, int c) {
 		return cells[r][c].getEntityType();
 	}
+
 	public String getCellObjectType(Location location) {
 		int r = location.getRow();
 		int c = location.getColumn();
-		
+
 		return cells[r][c].getEntityType();
 	}
 

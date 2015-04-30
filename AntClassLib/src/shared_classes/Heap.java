@@ -3,6 +3,7 @@ package shared_classes;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.io.Serializable;
+import java.util.LinkedList;
 
 public class Heap implements Serializable, CellEntity {
 
@@ -11,8 +12,7 @@ public class Heap implements Serializable, CellEntity {
 	// private int r; // location on board
 	// private int c;
 	private Location location;
-	private int elements[];
-	private int size;
+	private LinkedList<Integer> elements;
 	private int types; // the different types of heap elements
 
 
@@ -20,21 +20,20 @@ public class Heap implements Serializable, CellEntity {
 
 	public Heap(int r, int c, int size, int types) {
 		location = new Location(r, c);
-		this.size = size;
 		this.types = types;
-		elements = new int[size];
+		elements = new LinkedList<Integer>();
 
 		// populating the heap
-		for (int i = 0; i < elements.length; i++) {
-			elements[i] = (int) (Math.random() * types);
+		for (int i = 0; i < size; i++) {
+			elements.add((int) (Math.random() * types));
 		}
 	}
 
 	public int getSize() {
-		return size;
+		return elements.size();
 	}
 
-	public int[] getHeapElements() {
+	public LinkedList<Integer> getHeapElements() {
 		return elements;
 	}
 
@@ -57,11 +56,9 @@ public class Heap implements Serializable, CellEntity {
 	public void drawOnBoard(Graphics g, int sizecol, int sizerow, Board board) {
 		// Drawing heap objects of different types with different colors
 		// Heap heap = (Heap) board.getBoardCells()[r][c].getEntityOnCell();
-		int[] heapelements = getHeapElements();
 		for (int k = 0; k < getSize(); k++) {
-			//float color = (float) heapelements[k] / (float) getTypes();
-			Color colorHeap = new Color((int) (((float) heapelements[k] / (float) getTypes()) * 255), 
-					(int) (((float) heapelements[k] / (float) getTypes()) * 255), (int) ((0.7) * 255));
+			Color colorHeap = new Color((int) (((float) elements.get(k) / (float) getTypes()) * 255),
+					(int) (((float) elements.get(k) / (float) getTypes()) * 255), (int) ((0.7) * 255));
 			g.setColor(colorHeap);
 			int x = getLocation().getRow() * sizecol;
 			int y = getLocation().getColumn() * sizerow;
@@ -75,11 +72,10 @@ public class Heap implements Serializable, CellEntity {
 	}
 
 	// modified after the pickup and dropping operations
-	public void updateHeap(int heap[]) {
-		this.size = heap.length;
-		this.elements = new int[size];
-		for (int i = 0; i < heap.length; i++) {
-			this.elements[i] = heap[i];
+	public void updateHeap(LinkedList<Integer> heap) {
+		this.elements = new LinkedList<Integer>();
+		for (int i = 0; i < heap.size(); i++) {
+			this.elements.add(heap.get(i)); // TODO: make sure it's consistent with the .pdf document description
 		}
 	}
 

@@ -24,5 +24,5 @@ public interface IRemoteAnt extends Remote {
 
 	public void requestRedraw() throws RemoteException;
 
-	public Location lookAround(int index) throws RemoteException;
+	// public Location lookAround(int index) throws RemoteException;
 }
