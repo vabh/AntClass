@@ -1,11 +1,13 @@
 package client.main;
 
+import shared_classes.Ant;
 import shared_classes.Board;
+import shared_classes.Heap;
 import shared_classes.Location;
 
 public class AntProcessor {
 	public Location move(Location antLocation, int boardRows, int boardColumns, Board board) {
-		while (true) {
+		while (true) { // TODO: what if there's no way to go? (i.e. surrounded with the heaps and other ants)
 			float x = (float) Math.random();
 			float y = (float) Math.random();
 			int r;
@@ -30,4 +32,19 @@ public class AntProcessor {
 		}
 	}
 
+	public void processDropAlgorithm(Board board, Location heapLocation, Ant ant) {
+		Heap heap = (Heap) board.getCellEntity(heapLocation);
+		int heapElements[] = heap.getHeapElements();
+
+		// TODO:
+
+	}
+
+	public void processPickUpAlgorithm(Board board, Location heapLocation, Ant ant) {
+		Heap heap = (Heap) board.getCellEntity(heapLocation);
+		int heapElements[] = heap.getHeapElements();
+
+		// TODO:
+
+	}
 }

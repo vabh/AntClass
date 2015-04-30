@@ -4,7 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 public interface IRemoteAnt extends Remote {
-	public Location getLocation(int antIndex) throws RemoteException;
+	public Ant getAnt(int antIndex) throws RemoteException;
 
 	public void changeLocation(Location location, int antIndex) throws RemoteException;
 
@@ -23,4 +23,6 @@ public interface IRemoteAnt extends Remote {
 	public Board getBoard() throws RemoteException;
 
 	public void requestRedraw() throws RemoteException;
+
+	public Location lookAround(int index) throws RemoteException;
 }
