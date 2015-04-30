@@ -33,18 +33,22 @@ public class AntProcessor {
 	}
 
 	public void processDropAlgorithm(Board board, Location heapLocation, Ant ant) {
-		Heap heap = (Heap) board.getCellEntity(heapLocation);
-		int heapElements[] = heap.getHeapElements();
+		synchronized (board) {
+			Heap heap = (Heap) board.getCellEntity(heapLocation);
+			int heapElements[] = heap.getHeapElements();
 
-		// TODO:
+			// TODO:
 
+		}
 	}
 
 	public void processPickUpAlgorithm(Board board, Location heapLocation, Ant ant) {
-		Heap heap = (Heap) board.getCellEntity(heapLocation);
-		int heapElements[] = heap.getHeapElements();
+		synchronized (board) {
+			Heap heap = (Heap) board.getCellEntity(heapLocation);
+			int heapElements[] = heap.getHeapElements();
 
-		// TODO:
+			// TODO:
 
+		}
 	}
 }
