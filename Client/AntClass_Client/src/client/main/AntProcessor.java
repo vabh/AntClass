@@ -14,6 +14,7 @@ public class AntProcessor {
 
 	public Location move(Location antLocation, int boardRows, int boardColumns, Board board) {
 		while (true) { // TODO: what if there's no way to go? (i.e. surrounded with the heaps and other ants)
+			System.err.println("yahoo!!!!!");
 			float x = (float) Math.random();
 			float y = (float) Math.random();
 			int r;
@@ -93,13 +94,13 @@ public class AntProcessor {
 			case 1:
 				// TODO: apply the drop algorithm according to the reference .pdf file
 				heapElements.add(ant.getHeapElementType());
-				ant.drop();
+				// ant.drop();
 				antStub.updateHeap(heapLocation, heap); // update the heap object on the server side
 				return;
 			default:
 				// TODO: apply the drop algorithm according to the reference .pdf file
 				heapElements.add(ant.getHeapElementType());
-				ant.drop();
+				// ant.drop();
 				antStub.updateHeap(heapLocation, heap); // update the heap object on the server side
 				return;
 			}
@@ -117,16 +118,16 @@ public class AntProcessor {
 
 			Heap heap = (Heap) board.getCellEntity(heapLocation);
 			LinkedList<Integer> heapElements = heap.getHeapElements();
-			int element = -1; // return -1 if  it is not carrying anything
+			int element = -1; // return -1 if it is not carrying anything
 			switch (heapElements.size()) {
 			case 0: // nothing to do [but remove heap from board]
-				board.destroyHeap(heapLocation);				
-				break;
-			case 1://pickup object, destroy heap
-				ant.pickUp(heapElements.get(0));
-				element = heapElements.remove(0); // set type of object to be returned
 				board.destroyHeap(heapLocation);
-				antStub.updateHeap(heapLocation, heap); // update the heap object on the server side
+				break;
+			case 1:// pickup object, destroy heap
+					// ant.pickUp(heapElements.get(0));
+				element = heapElements.remove(0); // set type of object to be returned
+				antStub.destroyHeap(heapLocation);
+				// antStub.updateHeap(heapLocation, heap); // update the heap object on the server side
 				break;
 			case 2: // pickup object, update heap
 				element = heapElements.remove(0); // TODO: adjust according to the .pdf reference document

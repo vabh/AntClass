@@ -12,6 +12,8 @@ public interface IRemoteAnt extends Remote {
 
 	public void updateHeap(Location heapLocation, Heap newHeap) throws RemoteException;
 
+	public void destroyHeap(Location heapLocation) throws RemoteException;
+
 	public int getBoardWidth() throws RemoteException;
 
 	public int getBoardHeight() throws RemoteException;

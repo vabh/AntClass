@@ -16,11 +16,11 @@ public class MainServer {
 	// declare the member variable for array of objects in order to have
 	// them locked while processing ants with sync methods
 	private int boardSize = 10;
-	private final int NUM_OF_ANTS = 8;
+	private final int NUM_OF_ANTS = 30;
 	private int MAX_HEAP_SIZE = 3;
-	private int NUMBER_OF_INITIAL_HEAPS = 2;
+	private int NUMBER_OF_INITIAL_HEAPS = 10;
 	private int TYPES_OF_OBJECTS = 2;
-	private final int NUMBER_OF_PROCESSORS = 8;
+	private final int NUMBER_OF_PROCESSORS = 2;
 
 	private final int ANT_PROBABILITY = 5;
 	private final int HEAP_PROBABILITY = 2;
@@ -33,7 +33,7 @@ public class MainServer {
 	private int currentHeaps;
 	private int client_id;
 	private float color = 0;
-			//(float) client_id / (float) NUMBER_OF_PROCESSORS;
+	// (float) client_id / (float) NUMBER_OF_PROCESSORS;
 	private int width = 1024;
 	private int height = 600;
 
@@ -44,19 +44,19 @@ public class MainServer {
 
 		// initialise the grid with objects and ants in it
 		mainServer.currentAnts = 0;
-		mainServer.currentHeaps = 0;		
+		mainServer.currentHeaps = 0;
 
 		int counter = mainServer.NUM_OF_ANTS;
-		while(counter > 0){
+		while (counter > 0) {
 			int randValue = (int) (Math.random() * 10);
-			if(randValue < mainServer.ANT_PROBABILITY){
+			if (randValue < mainServer.ANT_PROBABILITY) {
 				continue;
 			}
-			
-			int r = (int)(Math.random() * mainServer.boardSize);
-			int c = (int)(Math.random() * mainServer.boardSize);
-			
-			if(mainServer.board.getCellObjectType(r, c).equals("empty")){
+
+			int r = (int) (Math.random() * mainServer.boardSize);
+			int c = (int) (Math.random() * mainServer.boardSize);
+
+			if (mainServer.board.getCellObjectType(r, c).equals("empty")) {
 				Ant ant = new Ant(r, c, mainServer.color, mainServer.TYPES_OF_OBJECTS);
 				System.out.print(mainServer.client_id + " " + mainServer.color);
 				mainServer.ants[mainServer.currentAnts++] = ant;
@@ -64,18 +64,18 @@ public class MainServer {
 				counter--;
 			}
 		}
-		
+
 		counter = mainServer.NUMBER_OF_INITIAL_HEAPS;
-		while(counter > 0){
+		while (counter > 0) {
 			int randValue = (int) (Math.random() * 10);
-			if(randValue < mainServer.HEAP_PROBABILITY){
+			if (randValue < mainServer.HEAP_PROBABILITY) {
 				continue;
 			}
-			
-			int r = (int)(Math.random() * mainServer.boardSize);
-			int c = (int)(Math.random() * mainServer.boardSize);
-			
-			if(mainServer.board.getCellObjectType(r, c).equals("empty")){
+
+			int r = (int) (Math.random() * mainServer.boardSize);
+			int c = (int) (Math.random() * mainServer.boardSize);
+
+			if (mainServer.board.getCellObjectType(r, c).equals("empty")) {
 				int hSize = (int) (Math.random() * mainServer.MAX_HEAP_SIZE + 1);
 				Heap heap = new Heap(r, c, hSize, mainServer.TYPES_OF_OBJECTS);
 				mainServer.board.placeHeap(heap);

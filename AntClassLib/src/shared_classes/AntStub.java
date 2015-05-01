@@ -51,6 +51,16 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 	}
 
 	@Override
+	public void destroyHeap(Location heapLocation) throws RemoteException {
+		// check if the heap is there
+		if (board.getBoardCells()[heapLocation.getRow()][heapLocation.getColumn()].getEntityOnCell().getEntityType()
+				.equalsIgnoreCase("heap")) {
+			board.getBoardCells()[heapLocation.getRow()][heapLocation.getColumn()].setEntityOnCell(new EmptyCellEntity(
+					heapLocation.getRow(), heapLocation.getColumn()));
+		}
+	}
+
+	@Override
 	public int getBoardWidth() throws RemoteException {
 		return board.getColumns();
 	}
@@ -101,13 +111,15 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 			e.printStackTrace();
 		}
 	}
+
 	@Override
 	public void assignColor(int antIndex, int _clientID) throws RemoteException {
 		this.clientID = _clientID;
-		ants[antIndex].assignColor((float)clientID/(float)totalNumOfClients);
+		ants[antIndex].assignColor((float) clientID / (float) totalNumOfClients);
 	}
+
 	@Override
-	public void assignAntsClientID(int antIndex, int clientID)throws RemoteException {
+	public void assignAntsClientID(int antIndex, int clientID) throws RemoteException {
 		ants[antIndex].assignAntsClientID(clientID);
 	}
 
