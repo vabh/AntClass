@@ -11,6 +11,8 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 	private int totalNumOfClients;
 	private Board board;
 	private GUI gui;
+	private int clientID;
+
 
 	public AntStub(Ant[] ants, int totalNumOfClients, Board board, GUI gui) throws RemoteException {
 		this.ants = ants;
@@ -99,5 +101,15 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 			e.printStackTrace();
 		}
 	}
+	@Override
+	public void assignColor(int antIndex, int _clientID) throws RemoteException {
+		this.clientID = _clientID;
+		ants[antIndex].assignColor((float)clientID/(float)totalNumOfClients);
+	}
+	@Override
+	public int getAntsClientID(){
+		return this.clientID;
+	}
+
 
 }

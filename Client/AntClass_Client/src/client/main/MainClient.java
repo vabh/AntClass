@@ -9,7 +9,7 @@ import shared_classes.Location;
 
 public class MainClient {
 
-	private final int clientID = 1; // should start from 0 and be less than the number of clients set in the server
+	private final int clientID = 0; // should start from 0 and be less than the number of clients set in the server
 
 	private void start() {
 		try {
@@ -32,6 +32,8 @@ public class MainClient {
 
 					// look around of the ant[index]
 					Location heapLocation = antProc.lookAround(remoteAnts.getAnt(index), remoteAnts.getBoard());
+					//Assigning color to Ant depending on the client ID
+					remoteAnts.assignColor(index, clientID);
 					if (heapLocation != null) {
 						// pick-up or drop an object
 						if (remoteAnts.getAnt(index).isCarrying()) {

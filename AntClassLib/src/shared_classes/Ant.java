@@ -56,23 +56,21 @@ public class Ant implements Serializable, CellEntity {
 	@Override
 	public void drawOnBoard(Graphics g, int sizecol, int sizerow, Board board) {
 		// Drawing ants from their position on a board
-		// float color = (float) heapelements[k] / (float) getTypes();
-		Color colorAnt = new Color((int) ((0.7) * 255), (int) ((color) * 255), (int) ((color) * 255));
+		Color colorAnt = new Color((int) ((0.9) * 255), (int) ((color) * 255), (int) ((color/2.0) * 255));
 		g.setColor(colorAnt);
-		// g.setColor(Color.orange);
-		// System.err.println("ant location from drawOnBoard() function: " + getLocation().toString());
 		int x = getLocation().getRow() * sizecol;
 		int y = getLocation().getColumn() * sizerow;
 		g.fillOval((int) (x + (sizecol - getDrawingSize() * 0.02 * Math.min(sizecol, sizerow)) / 2.0),
 				(int) (y + (sizerow - getDrawingSize() * 0.02 * Math.min(sizecol, sizerow)) / 2.0),
 				(int) (getDrawingSize() * (0.02 * Math.min(sizecol, sizerow))),
 				(int) (getDrawingSize() * (0.02 * Math.min(sizecol, sizerow))));
-
+		
+		//Drawing heap object on Ant if carrying
 		if (carrying) {
 			float colorheapvalue = (float) heapElement / (float) typesOfObjects;
 			Color colorHeap = new Color((int) ((colorheapvalue) * 255), (int) ((colorheapvalue) * 255), (int) ((0.7) * 255));
 			g.setColor(colorHeap);
-			g.fillOval((int) (x + (sizecol - getDrawingSize() / 2 * 0.02 * Math.min(sizecol, sizerow)) / 2.0),
+			g.fillRect((int) (x + (sizecol - getDrawingSize() / 2 * 0.02 * Math.min(sizecol, sizerow)) / 2.0),
 					(int) (y + (sizerow - getDrawingSize() / 2 * 0.02 * Math.min(sizecol, sizerow)) / 2.0),
 					(int) (getDrawingSize() / 2 * (0.02 * Math.min(sizecol, sizerow))),
 					(int) (getDrawingSize() / 2 * (0.02 * Math.min(sizecol, sizerow))));

@@ -16,11 +16,11 @@ public class MainServer {
 	// declare the member variable for array of objects in order to have
 	// them locked while processing ants with sync methods
 	private int boardSize = 10;
-	private final int NUM_OF_ANTS = 5;
+	private final int NUM_OF_ANTS = 4;
 	private int MAX_HEAP_SIZE = 10;
 	private int NUMBER_OF_INITIAL_HEAPS = 5;
 	private int TYPES_OF_OBJECTS = 3;
-	private final int NUMBER_OF_PROCESSORS = 2;
+	private final int NUMBER_OF_PROCESSORS = 3;
 
 	private final int ANT_PROBABILITY = 5;
 	private final int HEAP_PROBABILITY = 2;
@@ -81,18 +81,6 @@ public class MainServer {
 				mainServer.heaps[mainServer.currentHeaps++] = heap;
 				counter--;
 			}
-		}
-		
-		// Assigning ants to two clients, creating different colors for better representation
-		for (int i = 0; i < mainServer.currentAnts / mainServer.NUMBER_OF_PROCESSORS; ++i) {
-			mainServer.client_id = 1;
-			mainServer.color = (float) mainServer.client_id / (float) mainServer.NUMBER_OF_PROCESSORS;
-			mainServer.ants[i].assignColor(mainServer.color);
-		}
-		for (int i = mainServer.currentAnts / mainServer.NUMBER_OF_PROCESSORS; i < mainServer.currentAnts; ++i) {
-			mainServer.client_id = 2;
-			mainServer.color = (float) mainServer.client_id / (float) mainServer.NUMBER_OF_PROCESSORS;
-			mainServer.ants[i].assignColor(mainServer.color);
 		}
 
 		System.out.println("Initialized with " + mainServer.currentAnts + " ants and " + mainServer.currentHeaps + " heaps!");

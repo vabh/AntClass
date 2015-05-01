@@ -11,6 +11,7 @@ import shared_classes.IRemoteAnt;
 import shared_classes.Location;
 
 public class AntProcessor {
+
 	public Location move(Location antLocation, int boardRows, int boardColumns, Board board) {
 		while (true) { // TODO: what if there's no way to go? (i.e. surrounded with the heaps and other ants)
 			float x = (float) Math.random();
@@ -143,4 +144,5 @@ public class AntProcessor {
 			return element; // return the type of the picked-up object
 		}
 	}
+
 }
