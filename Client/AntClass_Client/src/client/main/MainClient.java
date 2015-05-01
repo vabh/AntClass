@@ -35,7 +35,13 @@ public class MainClient {
 					if (heapLocation != null) {
 						// pick-up or drop an object
 						if (remoteAnts.getAnt(index).isCarrying()) {
-							antProc.processDropAlgorithm(remoteAnts.getBoard(), heapLocation, remoteAnts.getAnt(index));
+							// drop the carrying object according to the drop algorithm (do the heavy computation on client side)
+							// the heap will be updated on the server side, that's why passing remoteAnts stub object here
+							antProc.processDropAlgorithm(remoteAnts.getBoard(), heapLocation, remoteAnts.getAnt(index),
+									remoteAnts);
+
+							// update the ant object on the server side
+							remoteAnts.updateCarryingObject(index, -1);
 						} else {
 							// find the pickup object (do the heavy processing on client side), heap update will be called inside
 							// pickup algorithm but again on client side, that's why passing remoteAnts stub object here

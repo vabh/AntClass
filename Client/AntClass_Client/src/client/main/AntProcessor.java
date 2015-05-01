@@ -76,12 +76,32 @@ public class AntProcessor {
 		return null;
 	}
 
-	public void processDropAlgorithm(Board board, Location heapLocation, Ant ant) {
+	public void processDropAlgorithm(Board board, Location heapLocation, Ant ant, IRemoteAnt antStub) throws RemoteException {
 		synchronized (board) {
+			// first, check if the heap is still there (because it may have disappeared because of other clients' ants)
+			if (!board.getBoardCells()[heapLocation.getRow()][heapLocation.getColumn()].getEntityType().equalsIgnoreCase("heap")) {
+				return; // do nothing
+			}
+
 			Heap heap = (Heap) board.getCellEntity(heapLocation);
 			LinkedList<Integer> heapElements = heap.getHeapElements();
 
-			// TODO:
+			switch (heapElements.size()) {
+			case 0: // TODO: according to the reference .pdf file, there should be such a case
+				return;
+			case 1:
+				// TODO: apply the drop algorithm according to the reference .pdf file
+				heapElements.add(ant.getHeapElementType());
+				ant.drop();
+				antStub.updateHeap(heapLocation, heap); // update the heap object on the server side
+				return;
+			default:
+				// TODO: apply the drop algorithm according to the reference .pdf file
+				heapElements.add(ant.getHeapElementType());
+				ant.drop();
+				antStub.updateHeap(heapLocation, heap); // update the heap object on the server side
+				return;
+			}
 
 		}
 	}
@@ -102,19 +122,19 @@ public class AntProcessor {
 				ant.pickUp(heapElements.get(0));
 				heapElements.remove(0);
 				board.destroyHeap(heapLocation);
-				antStub.updateHeap(heapLocation, heap); // update the ant object on the server side
+				antStub.updateHeap(heapLocation, heap); // update the heap object on the server side
 				return heapElements.get(0); // return the type of the picked-up object
 			case 2:
 				heapElements.remove(0); // TODO: adjust according to the .pdf reference document
 
 				heap.updateHeap(heapElements);
-				antStub.updateHeap(heapLocation, heap); // update the ant object on the server side
+				antStub.updateHeap(heapLocation, heap); // update the heap object on the server side
 				return heapElements.get(0); // return the type of the picked-up object
 			default:
 				heapElements.remove(0); // TODO: adjust according to the .pdf reference document as well
 
 				heap.updateHeap(heapElements);
-				antStub.updateHeap(heapLocation, heap); // update the ant object on the server side
+				antStub.updateHeap(heapLocation, heap); // update the heap object on the server side
 				return heapElements.get(0); // return the type of the picked-up object
 			}
 		}

@@ -34,7 +34,11 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 
 	@Override
 	public void updateCarryingObject(int antIndex, int carryingObjectType) throws RemoteException {
-		ants[antIndex].pickUp(carryingObjectType);
+		if (carryingObjectType == -1) {
+			ants[antIndex].drop();
+		} else {
+			ants[antIndex].pickUp(carryingObjectType);
+		}
 	}
 
 	@Override
