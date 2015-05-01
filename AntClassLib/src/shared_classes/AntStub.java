@@ -19,8 +19,6 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 		this.gui = gui;
 	}
 
-
-
 	@Override
 	public Ant getAnt(int antIndex) throws RemoteException {
 		return ants[antIndex];
@@ -101,6 +99,5 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 			e.printStackTrace();
 		}
 	}
-
 
 }

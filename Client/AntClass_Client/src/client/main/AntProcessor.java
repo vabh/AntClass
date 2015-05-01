@@ -116,27 +116,32 @@ public class AntProcessor {
 
 			Heap heap = (Heap) board.getCellEntity(heapLocation);
 			LinkedList<Integer> heapElements = heap.getHeapElements();
-
+			int element = -1;
 			switch (heapElements.size()) {
-			case 1:
-				ant.pickUp(heapElements.get(0));
-				heapElements.remove(0);
+			case 0:
 				board.destroyHeap(heapLocation);
 				antStub.updateHeap(heapLocation, heap); // update the heap object on the server side
-				return heapElements.get(0); // return the type of the picked-up object
+				break; // return the type of the picked-up object
+			case 1:
+				ant.pickUp(heapElements.get(0));
+				element = heapElements.remove(0);
+				board.destroyHeap(heapLocation);
+				antStub.updateHeap(heapLocation, heap); // update the heap object on the server side
+				break; // return the type of the picked-up object
 			case 2:
-				heapElements.remove(0); // TODO: adjust according to the .pdf reference document
+				element = heapElements.remove(0); // TODO: adjust according to the .pdf reference document
 
 				heap.updateHeap(heapElements);
 				antStub.updateHeap(heapLocation, heap); // update the heap object on the server side
-				return heapElements.get(0); // return the type of the picked-up object
+				break; // return the type of the picked-up object
 			default:
-				heapElements.remove(0); // TODO: adjust according to the .pdf reference document as well
+				element = heapElements.remove(0); // TODO: adjust according to the .pdf reference document as well
 
 				heap.updateHeap(heapElements);
 				antStub.updateHeap(heapLocation, heap); // update the heap object on the server side
-				return heapElements.get(0); // return the type of the picked-up object
+				break;// return the type of the picked-up object
 			}
+			return element;
 		}
 	}
 }
