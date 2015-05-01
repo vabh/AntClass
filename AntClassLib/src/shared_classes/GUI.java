@@ -80,6 +80,7 @@ public class GUI extends JPanel implements ActionListener, Serializable {
 		// Traversing the board and drawing each entity on it (if any)
 		for (int i = 0; i < board.getRows(); i++) {
 			for (int j = 0; j < board.getColumns(); j++) {
+				System.out.println("" + board + " i = " + i + " j = " + j);
 				board.getBoardCells()[i][j].getEntityOnCell().drawOnBoard(g, sizecol, sizerow, board);
 			}
 		}
