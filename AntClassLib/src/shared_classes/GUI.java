@@ -1,5 +1,6 @@
 package shared_classes;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -70,10 +71,12 @@ public class GUI extends JPanel implements ActionListener, Serializable {
 		// Drawing lines
 		for (int i = 0; i < board.getRows(); i++) {
 			Line2D lin = new Line2D.Float(0, i * sizerow, width, i * sizerow);
+			g.setColor(Color.red);
 			g2.draw(lin);
 		}
 		for (int j = 0; j < board.getColumns(); j++) {
 			Line2D lin = new Line2D.Float(j * sizecol, 0, j * sizecol, height);
+			g.setColor(Color.black);
 			g2.draw(lin);
 		}
 

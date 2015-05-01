@@ -22,6 +22,7 @@ public class Cell implements Serializable {
 	}
 
 	public void setEntityOnCell(CellEntity cellEntity) {
+		this.cellEntity = null;
 		this.cellEntity = cellEntity;
 	}
 

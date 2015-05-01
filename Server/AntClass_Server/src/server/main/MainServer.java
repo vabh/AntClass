@@ -16,11 +16,11 @@ public class MainServer {
 	// declare the member variable for array of objects in order to have
 	// them locked while processing ants with sync methods
 	private int boardSize = 10;
-	private final int NUM_OF_ANTS = 30;
+	private final int NUM_OF_ANTS = 10;
 	private int MAX_HEAP_SIZE = 3;
 	private int NUMBER_OF_INITIAL_HEAPS = 10;
 	private int TYPES_OF_OBJECTS = 2;
-	private final int NUMBER_OF_PROCESSORS = 2;
+	private final int NUMBER_OF_PROCESSORS = 1;
 
 	private final int ANT_PROBABILITY = 5;
 	private final int HEAP_PROBABILITY = 2;
@@ -92,6 +92,9 @@ public class MainServer {
 				System.out.print(mainServer.board.getCellObjectType(i, j) + "--|");
 			}
 			System.out.println();
+		}
+		for (int i = 0; i < mainServer.ants.length; i++) {
+			System.out.println(mainServer.ants[i].getLocation());
 		}
 		// create the GUI object
 		JFrame frame = new JFrame("AntClass");

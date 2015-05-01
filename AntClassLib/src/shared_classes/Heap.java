@@ -60,8 +60,8 @@ public class Heap implements Serializable, CellEntity {
 			Color colorHeap = new Color((int) (((float) elements.get(k) / (float) getTypes()) * 255),
 					(int) (((float) elements.get(k) / (float) getTypes()) * 255), (int) ((0.7) * 255));
 			g.setColor(colorHeap);
-			int x = getLocation().getRow() * sizecol;
-			int y = getLocation().getColumn() * sizerow;
+			int y = getLocation().getRow() * sizerow;
+			int x = getLocation().getColumn() * sizecol;
 			g.fillRect((int) (x + (k) * (sizecol / getSize())), (int) (y + (sizerow * 0.1)), sizecol / getSize(),
 					(int) (sizerow * 0.8));
 			// Drawing an edge for a heap element, to differentiate their quantity

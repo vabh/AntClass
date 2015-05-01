@@ -21,6 +21,7 @@ public class Ant implements Serializable, CellEntity {
 		Color.orange, Color.pink, Color.red, Color.gray, Color.yellow};
 
 	public Ant(int r, int c, float _color, int _typesOfObjects) {
+		System.out.println("ant born");
 		location = new Location(r, c);
 		this.carrying = false;
 		this.heapElement = -1;
@@ -68,8 +69,11 @@ public class Ant implements Serializable, CellEntity {
 			Color colorAnt = new Color((int) ((0.7) * 255), (int) ((color) * 255), (int) ((color/2.0) * 255));
 			g.setColor(colorAnt);
 		}
-		int x = getLocation().getRow() * sizecol;
-		int y = getLocation().getColumn() * sizerow;
+		int y = getLocation().getRow() * sizerow;
+		int x = getLocation().getColumn() * sizecol;
+		System.out.println("("+x+" ,"+y+")");
+		System.out.println("("+location.getRow() +" ,"+location.getColumn()+")");
+		//g.fillOval(x, y, 25, 25);
 		g.fillOval((int) (x + (sizecol - getDrawingSize() * 0.02 * Math.min(sizecol, sizerow)) / 2.0),
 				(int) (y + (sizerow - getDrawingSize() * 0.02 * Math.min(sizecol, sizerow)) / 2.0),
 				(int) (getDrawingSize() * (0.02 * Math.min(sizecol, sizerow))),

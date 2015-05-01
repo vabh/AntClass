@@ -23,10 +23,11 @@ public class EmptyCellEntity implements Serializable, CellEntity {
 	@Override
 	public void drawOnBoard(Graphics g, int sizecol, int sizerow, Board board) {
 		// do nothing for now
-		int x = getLocation().getRow() * sizecol;
-		int y = getLocation().getColumn() * sizerow;
+		int y = location.getRow() * sizerow;
+		int x = location.getColumn() * sizecol;
 		g.setColor(Color.orange);
-		g.drawRect((int) (x + (sizecol / 7)), (int) (y + (sizerow * 0.1)), sizecol / 7, (int) (sizerow * 0.8));
+		g.drawOval(x, y, 30, 30);
+//		g.drawRect((int) (x + (sizecol / 7)), (int) (y + (sizerow * 0.1)), sizecol / 7, (int) (sizerow * 0.8));
 	}
 
 	@Override

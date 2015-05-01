@@ -15,7 +15,7 @@ public class Location implements Serializable {
 		setColumn(-1);
 	}
 
-	public Location(int column, int row) {
+	public Location(int row, int column) {
 		setRow(row);
 		setColumn(column);
 	}
