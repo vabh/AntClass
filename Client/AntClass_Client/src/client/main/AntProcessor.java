@@ -118,7 +118,7 @@ public class AntProcessor {
 			LinkedList<Integer> heapElements = heap.getHeapElements();
 			int element = -1; // return -1 if  it is not carrying anything
 			switch (heapElements.size()) {
-			case 0: // nothing to do
+			case 0: // nothing to do [but remove heap from board]
 				board.destroyHeap(heapLocation);				
 				break;
 			case 1://pickup object, destroy heap

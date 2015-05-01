@@ -16,9 +16,9 @@ public class MainServer {
 	// declare the member variable for array of objects in order to have
 	// them locked while processing ants with sync methods
 	private int boardSize = 10;
-	private final int NUM_OF_ANTS = 3;
+	private final int NUM_OF_ANTS = 5;
 	private int MAX_HEAP_SIZE = 10;
-	private int NUMBER_OF_INITIAL_HEAPS = 10;
+	private int NUMBER_OF_INITIAL_HEAPS = 5;
 	private int TYPES_OF_OBJECTS = 3;
 	private final int NUMBER_OF_PROCESSORS = 2;
 
@@ -43,29 +43,46 @@ public class MainServer {
 
 		// initialise the grid with objects and ants in it
 		mainServer.currentAnts = 0;
-		mainServer.currentHeaps = 0;
+		mainServer.currentHeaps = 0;		
 
-		// Board initialisation
-		for (int i = 0; i < mainServer.boardSize; i++) {
-			for (int j = 0; j < mainServer.boardSize; j++) {
-				int randValue = (int) (Math.random() * 10);
-
-				if (mainServer.currentAnts < mainServer.NUM_OF_ANTS && randValue > mainServer.ANT_PROBABILITY) {// ant
-					Ant ant = new Ant(i, j, mainServer.color, mainServer.TYPES_OF_OBJECTS);
-					System.out.print(mainServer.client_id + " " + mainServer.color);
-					mainServer.ants[mainServer.currentAnts++] = ant;
-					mainServer.board.placeAnt(ant);
-				} else if (mainServer.currentHeaps < mainServer.NUMBER_OF_INITIAL_HEAPS
-						&& randValue < mainServer.HEAP_PROBABILITY) {// heap
-					int hSize = (int) (Math.random() * mainServer.MAX_HEAP_SIZE + 1);
-					Heap heap = new Heap(i, j, hSize, mainServer.TYPES_OF_OBJECTS);
-					mainServer.board.placeHeap(heap);
-					mainServer.heaps[mainServer.currentHeaps++] = heap;
-				}
-
+		int counter = mainServer.NUM_OF_ANTS;
+		while(counter > 0){
+			int randValue = (int) (Math.random() * 10);
+			if(randValue < mainServer.ANT_PROBABILITY){
+				continue;
+			}
+			
+			int r = (int)(Math.random() * mainServer.boardSize);
+			int c = (int)(Math.random() * mainServer.boardSize);
+			
+			if(mainServer.board.getCellObjectType(r, c).equals("empty")){
+				Ant ant = new Ant(r, c, mainServer.color, mainServer.TYPES_OF_OBJECTS);
+				System.out.print(mainServer.client_id + " " + mainServer.color);
+				mainServer.ants[mainServer.currentAnts++] = ant;
+				mainServer.board.placeAnt(ant);
+				counter--;
 			}
 		}
-
+		
+		counter = mainServer.NUMBER_OF_INITIAL_HEAPS;
+		while(counter > 0){
+			int randValue = (int) (Math.random() * 10);
+			if(randValue < mainServer.HEAP_PROBABILITY){
+				continue;
+			}
+			
+			int r = (int)(Math.random() * mainServer.boardSize);
+			int c = (int)(Math.random() * mainServer.boardSize);
+			
+			if(mainServer.board.getCellObjectType(r, c).equals("empty")){
+				int hSize = (int) (Math.random() * mainServer.MAX_HEAP_SIZE + 1);
+				Heap heap = new Heap(r, c, hSize, mainServer.TYPES_OF_OBJECTS);
+				mainServer.board.placeHeap(heap);
+				mainServer.heaps[mainServer.currentHeaps++] = heap;
+				counter--;
+			}
+		}
+		
 		// Assigning ants to two clients, creating different colors for better representation
 		for (int i = 0; i < mainServer.currentAnts / mainServer.NUMBER_OF_PROCESSORS; ++i) {
 			mainServer.client_id = 1;
