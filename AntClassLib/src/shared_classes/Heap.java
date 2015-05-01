@@ -56,6 +56,13 @@ public class Heap implements Serializable, CellEntity {
 	public void drawOnBoard(Graphics g, int sizecol, int sizerow, Board board) {
 		// Drawing heap objects of different types with different colors
 		// Heap heap = (Heap) board.getBoardCells()[r][c].getEntityOnCell();
+		if (getSize() == 0){
+			int y = getLocation().getRow() * sizerow;
+			int x = getLocation().getColumn() * sizecol;
+			g.fillRect((int) (x * (sizecol / getSize())), (int) (y + (sizerow * 0.1)), sizecol / getSize(),
+					(int) (sizerow * 0.8));
+			g.setColor(Color.red);
+		} else {
 		for (int k = 0; k < getSize(); k++) {
 			Color colorHeap = new Color((int) (((float) elements.get(k) / (float) getTypes()) * 255),
 					(int) (((float) elements.get(k) / (float) getTypes()) * 255), (int) ((0.7) * 255));
@@ -68,6 +75,7 @@ public class Heap implements Serializable, CellEntity {
 			g.setColor(Color.white);
 			g.drawRect((int) (x + (k) * (sizecol / getSize())), (int) (y + (sizerow * 0.1)), sizecol / getSize(),
 					(int) (sizerow * 0.8));
+		}
 		}
 	}
 

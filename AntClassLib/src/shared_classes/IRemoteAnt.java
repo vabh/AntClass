@@ -34,6 +34,10 @@ public interface IRemoteAnt extends Remote {
 
 	public void assignAntsClientID(int antIndex, int clientID) throws RemoteException;
 
+	public void destroyAnt(Location oldLocation) throws RemoteException;
+
+	public void placeAntObject(int r, int c) throws RemoteException;
+
 
 
 	// public Location lookAround(int index) throws RemoteException;

@@ -21,7 +21,7 @@ public class Ant implements Serializable, CellEntity {
 		Color.orange, Color.pink, Color.red, Color.gray, Color.yellow};
 
 	public Ant(int r, int c, float _color, int _typesOfObjects) {
-		System.out.println("ant born");
+		//System.out.println("ant born");
 		location = new Location(r, c);
 		this.carrying = false;
 		this.heapElement = -1;
@@ -29,6 +29,11 @@ public class Ant implements Serializable, CellEntity {
 		this.typesOfObjects = _typesOfObjects;
 
 	}
+	public Ant(int r, int c){
+		location = new Location(r, c);
+		this.carrying = false;
+		this.heapElement = -1;
+	};
 
 	public boolean isCarrying() {
 		return carrying;
@@ -45,7 +50,7 @@ public class Ant implements Serializable, CellEntity {
 	}
 
 	public void pickUp(int heapElement) {
-		System.err.println("inside pickUp() with parameter " + heapElement);
+		//System.err.println("inside pickUp() with parameter " + heapElement);
 		carrying = true;
 		this.heapElement = heapElement;
 	}
@@ -71,8 +76,8 @@ public class Ant implements Serializable, CellEntity {
 		}
 		int y = getLocation().getRow() * sizerow;
 		int x = getLocation().getColumn() * sizecol;
-		System.out.println("("+x+" ,"+y+")");
-		System.out.println("("+location.getRow() +" ,"+location.getColumn()+")");
+		//System.out.println("("+x+" ,"+y+")");
+		//System.out.println("("+location.getRow() +" ,"+location.getColumn()+")");
 		//g.fillOval(x, y, 25, 25);
 		g.fillOval((int) (x + (sizecol - getDrawingSize() * 0.02 * Math.min(sizecol, sizerow)) / 2.0),
 				(int) (y + (sizerow - getDrawingSize() * 0.02 * Math.min(sizecol, sizerow)) / 2.0),
@@ -116,7 +121,7 @@ public class Ant implements Serializable, CellEntity {
 	}
 
 	public void printStatus() {
-		System.out.println(carrying + ":" + heapElement);
+		//System.out.println(carrying + ":" + heapElement);
 	}
 
 }

@@ -98,4 +98,14 @@ public class Board implements Serializable {
 		}
 	}
 
+	public void destroyAnt(Location location) {
+		if (!cells[location.getRow()][location.getColumn()].getEntityType().equalsIgnoreCase("ant")) {
+			System.err.println("No ant found at " + location.toString());
+			return;
+		}
+		cells[location.getRow()][location.getColumn()].setEntityOnCell(new EmptyCellEntity(location.getRow(), location
+				.getColumn()));
+		
+	}
+
 }

@@ -71,19 +71,17 @@ public class GUI extends JPanel implements ActionListener, Serializable {
 		// Drawing lines
 		for (int i = 0; i < board.getRows(); i++) {
 			Line2D lin = new Line2D.Float(0, i * sizerow, width, i * sizerow);
-			g.setColor(Color.red);
 			g2.draw(lin);
 		}
 		for (int j = 0; j < board.getColumns(); j++) {
 			Line2D lin = new Line2D.Float(j * sizecol, 0, j * sizecol, height);
-			g.setColor(Color.black);
 			g2.draw(lin);
 		}
 
 		// Traversing the board and drawing each entity on it (if any)
 		for (int i = 0; i < board.getRows(); i++) {
 			for (int j = 0; j < board.getColumns(); j++) {
-				System.out.println("" + board + " i = " + i + " j = " + j);
+				//System.out.println("" + board + " i = " + i + " j = " + j);
 				board.getBoardCells()[i][j].getEntityOnCell().drawOnBoard(g, sizecol, sizerow, board);
 			}
 		}

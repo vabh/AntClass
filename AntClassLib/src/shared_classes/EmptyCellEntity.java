@@ -26,8 +26,7 @@ public class EmptyCellEntity implements Serializable, CellEntity {
 		int y = location.getRow() * sizerow;
 		int x = location.getColumn() * sizecol;
 		g.setColor(Color.orange);
-		g.drawOval(x, y, 30, 30);
-//		g.drawRect((int) (x + (sizecol / 7)), (int) (y + (sizerow * 0.1)), sizecol / 7, (int) (sizerow * 0.8));
+		g.fillOval(x, y, 30, 30);
 	}
 
 	@Override

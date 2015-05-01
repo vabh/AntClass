@@ -26,7 +26,7 @@ public class MainClient {
 					// move the ant[index]
 					remoteAnts.changeLocation(
 							antProc.move(remoteAnts.getAnt(index).getLocation(), remoteAnts.getBoardHeight(),
-									remoteAnts.getBoardWidth(), remoteAnts.getBoard()), index);
+									remoteAnts.getBoardWidth(), remoteAnts.getBoard(), remoteAnts), index);
 
 					remoteAnts.getAnt(index).printStatus();
 

@@ -106,7 +106,7 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 	public synchronized void requestRedraw() throws RemoteException {
 		this.gui.repaint();
 		try {
-			wait(1000); // force waiting period to synchronise after each repaint
+			wait(900); // force waiting period to synchronise after each repaint
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -121,6 +121,25 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 	@Override
 	public void assignAntsClientID(int antIndex, int clientID) throws RemoteException {
 		ants[antIndex].assignAntsClientID(clientID);
+	}
+
+	@Override
+	public void destroyAnt(Location oldLocation) throws RemoteException {
+		if (board.getBoardCells()[oldLocation.getRow()][oldLocation.getColumn()].getEntityOnCell().getEntityType()
+				.equalsIgnoreCase("ant")) {
+			board.getBoardCells()[oldLocation.getRow()][oldLocation.getColumn()].setEntityOnCell(new EmptyCellEntity(
+					oldLocation.getRow(), oldLocation.getColumn()));
+		}
+		
+	}
+	@Override
+	public void placeAntObject(int r, int c) throws RemoteException {
+		if (board.getBoardCells()[r][c].getEntityOnCell().getEntityType()
+				.equalsIgnoreCase("empty")) {
+			board.getBoardCells()[r][c].setEntityOnCell(new Ant(
+					r, c));
+		}
+		
 	}
 
 
