@@ -107,8 +107,8 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 		ants[antIndex].assignColor((float)clientID/(float)totalNumOfClients);
 	}
 	@Override
-	public int getAntsClientID(){
-		return this.clientID;
+	public void assignAntsClientID(int antIndex, int clientID)throws RemoteException {
+		ants[antIndex].assignAntsClientID(clientID);
 	}
 
 

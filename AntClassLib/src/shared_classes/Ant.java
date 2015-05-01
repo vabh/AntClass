@@ -13,6 +13,12 @@ public class Ant implements Serializable, CellEntity {
 	private int heapElement; // -1 when not carrying any object
 	private float color;
 	private int typesOfObjects;
+	private int clientID;
+	
+	//Declare an Array of Colors
+	private static Color[] ColorArray = {Color.black, Color.blue, Color.cyan, 		
+		Color.green, Color.lightGray, Color.magenta, Color.darkGray, 
+		Color.orange, Color.pink, Color.red, Color.gray, Color.yellow};
 
 	public Ant(int r, int c, float _color, int _typesOfObjects) {
 		location = new Location(r, c);
@@ -55,9 +61,13 @@ public class Ant implements Serializable, CellEntity {
 
 	@Override
 	public void drawOnBoard(Graphics g, int sizecol, int sizerow, Board board) {
-		// Drawing ants from their position on a board
-		Color colorAnt = new Color((int) ((0.9) * 255), (int) ((color) * 255), (int) ((color/2.0) * 255));
-		g.setColor(colorAnt);
+
+		if (clientID < 12) {
+			g.setColor(ColorArray[clientID]);
+		} else {
+			Color colorAnt = new Color((int) ((0.7) * 255), (int) ((color) * 255), (int) ((color/2.0) * 255));
+			g.setColor(colorAnt);
+		}
 		int x = getLocation().getRow() * sizecol;
 		int y = getLocation().getColumn() * sizerow;
 		g.fillOval((int) (x + (sizecol - getDrawingSize() * 0.02 * Math.min(sizecol, sizerow)) / 2.0),
@@ -74,11 +84,20 @@ public class Ant implements Serializable, CellEntity {
 					(int) (y + (sizerow - getDrawingSize() / 2 * 0.02 * Math.min(sizecol, sizerow)) / 2.0),
 					(int) (getDrawingSize() / 2 * (0.02 * Math.min(sizecol, sizerow))),
 					(int) (getDrawingSize() / 2 * (0.02 * Math.min(sizecol, sizerow))));
+			g.setColor(Color.white);
+			g.drawRect((int) (x + (sizecol - getDrawingSize() / 2 * 0.02 * Math.min(sizecol, sizerow)) / 2.0),
+					(int) (y + (sizerow - getDrawingSize() / 2 * 0.02 * Math.min(sizecol, sizerow)) / 2.0),
+					(int) (getDrawingSize() / 2 * (0.02 * Math.min(sizecol, sizerow))),
+					(int) (getDrawingSize() / 2 * (0.02 * Math.min(sizecol, sizerow))));
 		}
 	}
 
 	public void assignColor(float _color) {
 		color = _color;
+	}
+	
+	public void assignAntsClientID(int _clientID){
+		clientID = _clientID;
 	}
 
 	@Override

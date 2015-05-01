@@ -16,11 +16,11 @@ public class MainServer {
 	// declare the member variable for array of objects in order to have
 	// them locked while processing ants with sync methods
 	private int boardSize = 10;
-	private final int NUM_OF_ANTS = 4;
-	private int MAX_HEAP_SIZE = 10;
-	private int NUMBER_OF_INITIAL_HEAPS = 5;
-	private int TYPES_OF_OBJECTS = 3;
-	private final int NUMBER_OF_PROCESSORS = 3;
+	private final int NUM_OF_ANTS = 8;
+	private int MAX_HEAP_SIZE = 3;
+	private int NUMBER_OF_INITIAL_HEAPS = 2;
+	private int TYPES_OF_OBJECTS = 2;
+	private final int NUMBER_OF_PROCESSORS = 8;
 
 	private final int ANT_PROBABILITY = 5;
 	private final int HEAP_PROBABILITY = 2;
@@ -32,7 +32,8 @@ public class MainServer {
 	private int currentAnts;
 	private int currentHeaps;
 	private int client_id;
-	private float color = (float) client_id / (float) NUMBER_OF_PROCESSORS;
+	private float color = 0;
+			//(float) client_id / (float) NUMBER_OF_PROCESSORS;
 	private int width = 1024;
 	private int height = 600;
 

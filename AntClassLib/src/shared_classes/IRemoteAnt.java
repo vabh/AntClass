@@ -30,7 +30,8 @@ public interface IRemoteAnt extends Remote {
 
 	public void assignColor(int antIndex, int clientID) throws RemoteException;
 
-	public int getAntsClientID() throws RemoteException;
+	public void assignAntsClientID(int antIndex, int clientID) throws RemoteException;
+
 
 
 	// public Location lookAround(int index) throws RemoteException;
