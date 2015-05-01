@@ -116,21 +116,20 @@ public class AntProcessor {
 
 			Heap heap = (Heap) board.getCellEntity(heapLocation);
 			LinkedList<Integer> heapElements = heap.getHeapElements();
-			int element = -1;
+			int element = -1; // return -1 if  it is not carrying anything
 			switch (heapElements.size()) {
-			case 0:
-				board.destroyHeap(heapLocation);
-				antStub.updateHeap(heapLocation, heap); // update the heap object on the server side
-				break; // return the type of the picked-up object
-			case 1:
+			case 0: // nothing to do
+				board.destroyHeap(heapLocation);				
+				break;
+			case 1://pickup object, destroy heap
 				ant.pickUp(heapElements.get(0));
-				element = heapElements.remove(0);
+				element = heapElements.remove(0); // set type of object to be returned
 				board.destroyHeap(heapLocation);
 				antStub.updateHeap(heapLocation, heap); // update the heap object on the server side
-				break; // return the type of the picked-up object
-			case 2:
+				break;
+			case 2: // pickup object, update heap
 				element = heapElements.remove(0); // TODO: adjust according to the .pdf reference document
-
+													// set type of object to be returned
 				heap.updateHeap(heapElements);
 				antStub.updateHeap(heapLocation, heap); // update the heap object on the server side
 				break; // return the type of the picked-up object
@@ -139,9 +138,9 @@ public class AntProcessor {
 
 				heap.updateHeap(heapElements);
 				antStub.updateHeap(heapLocation, heap); // update the heap object on the server side
-				break;// return the type of the picked-up object
+				break;
 			}
-			return element;
+			return element; // return the type of the picked-up object
 		}
 	}
 }
