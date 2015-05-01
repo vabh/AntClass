@@ -24,9 +24,10 @@ public class MainClient {
 				int endIndex = remoteAnts.getEndIndex(clientID);
 				for (int index = startIndex; index < endIndex; ++index) {
 					// move the ant[index]
-					remoteAnts.changeLocation(
-							antProc.move(remoteAnts.getAnt(index).getLocation(), remoteAnts.getBoardHeight(),
-									remoteAnts.getBoardWidth(), remoteAnts.getBoard(), remoteAnts), index);
+					
+					Location current = remoteAnts.getAnt(index).getLocation();
+					Location next = antProc.move(current, remoteAnts.getBoardHeight(), remoteAnts.getBoardWidth(), remoteAnts.getBoard());
+					remoteAnts.changeLocation(current, next, index);							
 
 					remoteAnts.getAnt(index).printStatus();
 

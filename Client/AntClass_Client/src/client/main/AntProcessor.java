@@ -12,7 +12,7 @@ import shared_classes.Location;
 
 public class AntProcessor {
 
-	public Location move(Location antLocation, int boardRows, int boardColumns, Board board, IRemoteAnt antStub) throws RemoteException {
+	public Location move(Location antLocation, int boardRows, int boardColumns, Board board) throws RemoteException {
 		while (true) { // TODO: what if there's no way to go? (i.e. surrounded with the heaps and other ants)
 			//System.err.println("yahoo!!!!!");
 			Location oldLocation = antLocation;
@@ -32,12 +32,12 @@ public class AntProcessor {
 			}
 
 			// check if new cell contains a heap
-			if (board.getCellObjectType(r, c).equalsIgnoreCase("empty")) {
-				antStub.destroyAnt(oldLocation);
+			if (board.getCellObjectType(r, c).equalsIgnoreCase("empty")) {				
+				//antStub.destroyAnt(oldLocation);
 				//Location newLocation = null;
 				//newLocation.setRow(r);
 				//newLocation.setColumn(c);
-				antStub.placeAntObject(r, c);
+				//antStub.placeAntObject(r, c);
 				
 				return new Location(r, c);
 			} else { // move in a new direction if we saw a heap it should not move on top of a heap

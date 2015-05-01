@@ -27,9 +27,12 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 	}
 
 	@Override
-	public synchronized void changeLocation(Location location, int antIndex) throws RemoteException {
-		ants[antIndex].getLocation().setColumn(location.getColumn());
-		ants[antIndex].getLocation().setRow(location.getRow());
+	public synchronized void changeLocation(Location current, Location next, int antIndex) throws RemoteException {
+		destroyAnt(current);
+		ants[antIndex].getLocation().setColumn(next.getColumn());
+		ants[antIndex].getLocation().setRow(next.getRow());
+		placeAnt(ants[antIndex]);
+		
 	}
 
 	@Override
@@ -133,12 +136,13 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 		
 	}
 	@Override
-	public void placeAntObject(int r, int c) throws RemoteException {
+	public void placeAnt(Ant ant) throws RemoteException {
+		int r = ant.getLocation().getRow();
+		int c = ant.getLocation().getColumn();
 		if (board.getBoardCells()[r][c].getEntityOnCell().getEntityType()
 				.equalsIgnoreCase("empty")) {
-			board.getBoardCells()[r][c].setEntityOnCell(new Ant(
-					r, c));
-		}
+			board.getBoardCells()[r][c].setEntityOnCell(ant);
+		}		
 		
 	}
 

@@ -6,7 +6,7 @@ import java.rmi.RemoteException;
 public interface IRemoteAnt extends Remote {
 	public Ant getAnt(int antIndex) throws RemoteException;
 
-	public void changeLocation(Location location, int antIndex) throws RemoteException;
+	public void changeLocation(Location current, Location next, int antIndex) throws RemoteException;
 
 	public void updateCarryingObject(int antIndex, int carryingObjectType) throws RemoteException;
 
@@ -36,7 +36,7 @@ public interface IRemoteAnt extends Remote {
 
 	public void destroyAnt(Location oldLocation) throws RemoteException;
 
-	public void placeAntObject(int r, int c) throws RemoteException;
+	public void placeAnt(Ant ant) throws RemoteException;
 
 
 
