@@ -32,16 +32,18 @@ public class MainClient {
 
 					// look around of the ant[index]
 					Location heapLocation = antProc.lookAround(remoteAnts.getAnt(index), remoteAnts.getBoard());
-					System.out.println("Milestone #1");
 					if (heapLocation != null) {
-						System.out.println("Milestone #2");
 						// pick-up or drop an object
 						if (remoteAnts.getAnt(index).isCarrying()) {
-							System.out.println("Milestone #3");
 							antProc.processDropAlgorithm(remoteAnts.getBoard(), heapLocation, remoteAnts.getAnt(index));
 						} else {
-							System.out.println("Milestone #4");
-							antProc.processPickUpAlgorithm(remoteAnts.getBoard(), heapLocation, remoteAnts.getAnt(index));
+							// find the pickup object (do the heavy processing on client side), heap update will be called inside
+							// pickup algorithm but again on client side, that's why passing remoteAnts stub object here
+							int pickupObject = antProc.processPickUpAlgorithm(remoteAnts.getBoard(), heapLocation,
+									remoteAnts.getAnt(index), remoteAnts);
+
+							// update the ant object on the server side
+							remoteAnts.updateCarryingObject(index, pickupObject);
 						}
 					}
 

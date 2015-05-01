@@ -8,6 +8,10 @@ public interface IRemoteAnt extends Remote {
 
 	public void changeLocation(Location location, int antIndex) throws RemoteException;
 
+	public void updateCarryingObject(int antIndex, int carryingObjectType) throws RemoteException;
+
+	public void updateHeap(Location heapLocation, Heap newHeap) throws RemoteException;
+
 	public int getBoardWidth() throws RemoteException;
 
 	public int getBoardHeight() throws RemoteException;

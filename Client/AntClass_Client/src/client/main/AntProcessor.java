@@ -1,11 +1,13 @@
 package client.main;
 
+import java.rmi.RemoteException;
 import java.util.LinkedList;
 
 import shared_classes.Ant;
 import shared_classes.Board;
 import shared_classes.Cell;
 import shared_classes.Heap;
+import shared_classes.IRemoteAnt;
 import shared_classes.Location;
 
 public class AntProcessor {
@@ -84,42 +86,37 @@ public class AntProcessor {
 		}
 	}
 
-	public void processPickUpAlgorithm(Board board, Location heapLocation, Ant ant) {
-		System.out.println("inside processPickUpAlgorithm() function Milestone #1");
+	// returns the type of the picked-up object
+	public int processPickUpAlgorithm(Board board, Location heapLocation, Ant ant, IRemoteAnt antStub) throws RemoteException {
 		synchronized (board) {
-			System.out.println("inside processPickUpAlgorithm() synchronized scope Milestone #2");
 			// first, check if the heap is still there (because it may have disappeared because of other clients' ants)
 			if (!board.getBoardCells()[heapLocation.getRow()][heapLocation.getColumn()].getEntityType().equalsIgnoreCase("heap")) {
-				return; // do nothing and just exit the function
+				return -1; // return an empty object (carrying nothing)
 			}
-
-			System.out.println("inside processPickUpAlgorithm() synchronized scope Milestone #3");
 
 			Heap heap = (Heap) board.getCellEntity(heapLocation);
 			LinkedList<Integer> heapElements = heap.getHeapElements();
 
-			// TODO:
 			switch (heapElements.size()) {
 			case 1:
-				System.out.println("inside case 1");
 				ant.pickUp(heapElements.get(0));
 				heapElements.remove(0);
 				board.destroyHeap(heapLocation);
-				break;
+				antStub.updateHeap(heapLocation, heap); // update the ant object on the server side
+				return heapElements.get(0); // return the type of the picked-up object
 			case 2:
-				System.out.println("inside case 2");
-				ant.pickUp(heapElements.get(0));
-				heapElements.remove(0); // TODO: adjust accordint to the .pdf reference document
-				heap.updateHeap(heapElements);
-				break;
-			default:
-				System.out.println("inside case 3");
-				ant.pickUp(heapElements.get(0));
-				heapElements.remove(0); // TODO: adjust accordint to the .pdf reference document as well
-				heap.updateHeap(heapElements);
-			}
+				heapElements.remove(0); // TODO: adjust according to the .pdf reference document
 
+				heap.updateHeap(heapElements);
+				antStub.updateHeap(heapLocation, heap); // update the ant object on the server side
+				return heapElements.get(0); // return the type of the picked-up object
+			default:
+				heapElements.remove(0); // TODO: adjust according to the .pdf reference document as well
+
+				heap.updateHeap(heapElements);
+				antStub.updateHeap(heapLocation, heap); // update the ant object on the server side
+				return heapElements.get(0); // return the type of the picked-up object
+			}
 		}
-		System.out.println("after the synchronized block");
 	}
 }

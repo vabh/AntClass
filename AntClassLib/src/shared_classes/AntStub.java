@@ -33,6 +33,20 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 	}
 
 	@Override
+	public void updateCarryingObject(int antIndex, int carryingObjectType) throws RemoteException {
+		ants[antIndex].pickUp(carryingObjectType);
+	}
+
+	@Override
+	public synchronized void updateHeap(Location heapLocation, Heap newHeap) throws RemoteException {
+		// check if the heap is there
+		if (board.getBoardCells()[heapLocation.getRow()][heapLocation.getColumn()].getEntityOnCell().getEntityType()
+				.equalsIgnoreCase("heap")) {
+			board.getBoardCells()[heapLocation.getRow()][heapLocation.getColumn()].setEntityOnCell(newHeap);
+		}
+	}
+
+	@Override
 	public int getBoardWidth() throws RemoteException {
 		return board.getColumns();
 	}
