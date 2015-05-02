@@ -41,7 +41,7 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 	@Override
 	public void updateCarryingObject(int antIndex, int carryingObjectType) throws RemoteException {
 		if (carryingObjectType == -1) {
-			ants[antIndex].drop();
+			ants[antIndex].dropCarriedObject();
 		} else {
 			ants[antIndex].pickUp(carryingObjectType);
 		}
@@ -56,6 +56,9 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 		}
 	}
 
+	/**
+	 * heapLocation is a parameter for heap location
+	 */
 	@Override
 	public void destroyHeap(Location heapLocation) throws RemoteException {
 		// check if the heap is there
