@@ -13,7 +13,7 @@ public interface IRemoteAnt extends Remote {
 	public void updateHeap(Location heapLocation, Heap newHeap) throws RemoteException;
 
 	public void destroyHeap(Location heapLocation) throws RemoteException;
-	
+
 	public void placeHeap(Heap heap) throws RemoteException;
 
 	public int getBoardWidth() throws RemoteException;
@@ -40,7 +40,7 @@ public interface IRemoteAnt extends Remote {
 
 	public void placeAnt(Ant ant) throws RemoteException;
 
+	public void clientConnected(int clientID) throws RemoteException;
 
-
-	// public Location lookAround(int index) throws RemoteException;
+	public int getTypesOfObjects() throws RemoteException;
 }

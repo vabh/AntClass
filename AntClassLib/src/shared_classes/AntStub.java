@@ -12,13 +12,16 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 	private Board board;
 	private GUI gui;
 	private int clientID;
+	private static int numOfActiveClients;
+	private int typesOfObjects;
 
-
-	public AntStub(Ant[] ants, int totalNumOfClients, Board board, GUI gui) throws RemoteException {
+	public AntStub(Ant[] ants, int totalNumOfClients, Board board, GUI gui, int typesOfObjects) throws RemoteException {
 		this.ants = ants;
 		this.totalNumOfClients = totalNumOfClients;
 		this.board = board;
 		this.gui = gui;
+		AntStub.numOfActiveClients = 0;
+		this.typesOfObjects = typesOfObjects;
 	}
 
 	@Override
@@ -32,7 +35,7 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 		ants[antIndex].getLocation().setColumn(next.getColumn());
 		ants[antIndex].getLocation().setRow(next.getRow());
 		placeAnt(ants[antIndex]);
-		
+
 	}
 
 	@Override
@@ -62,7 +65,7 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 					heapLocation.getRow(), heapLocation.getColumn()));
 		}
 	}
-	
+
 	public void placeHeap(Heap heap) throws RemoteException {
 		// check if the heap is there
 		Location heapLocation = heap.getLocation();
@@ -95,17 +98,20 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 	@Override
 	public int getStartIndex(int clientID) throws RemoteException {
 		// clientID should start from 0
-		return clientID * (getTotalNumOfAnts() / getTotalNumOfClients());
+		// return clientID * (getTotalNumOfAnts() / getTotalNumOfClients());
+		return clientID * (getTotalNumOfAnts() / numOfActiveClients);
 	}
 
 	@Override
 	public int getEndIndex(int clientID) throws RemoteException {
 		// clientID should start from 0
-		if (clientID + 1 == getTotalNumOfClients()) { // check if this is the last client (i.e. with the highest ID)
+		// if (clientID + 1 == getTotalNumOfClients()) { // check if this is the last client (i.e. with the highest ID)
+		if (clientID + 1 == numOfActiveClients) { // check if this is the last client (i.e. with the highest ID)
 			// assign until the last ant
 			return getTotalNumOfAnts();
 		} else {
-			return (clientID + 1) * (getTotalNumOfAnts() / getTotalNumOfClients());
+			// return (clientID + 1) * (getTotalNumOfAnts() / getTotalNumOfClients());
+			return (clientID + 1) * (getTotalNumOfAnts() / numOfActiveClients);
 		}
 	}
 
@@ -127,7 +133,8 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 	@Override
 	public void assignColor(int antIndex, int _clientID) throws RemoteException {
 		this.clientID = _clientID;
-		ants[antIndex].assignColor((float) clientID / (float) totalNumOfClients);
+		// ants[antIndex].assignColor((float) clientID / (float) totalNumOfClients);
+		ants[antIndex].assignColor((float) clientID / (float) numOfActiveClients);
 	}
 
 	@Override
@@ -139,21 +146,30 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 	public void destroyAnt(Location oldLocation) throws RemoteException {
 		if (board.getBoardCells()[oldLocation.getRow()][oldLocation.getColumn()].getEntityOnCell().getEntityType()
 				.equalsIgnoreCase("ant")) {
-			board.getBoardCells()[oldLocation.getRow()][oldLocation.getColumn()].setEntityOnCell(new EmptyCellEntity(
-					oldLocation.getRow(), oldLocation.getColumn()));
+			board.getBoardCells()[oldLocation.getRow()][oldLocation.getColumn()].setEntityOnCell(new EmptyCellEntity(oldLocation
+					.getRow(), oldLocation.getColumn()));
 		}
-		
+
 	}
+
 	@Override
 	public void placeAnt(Ant ant) throws RemoteException {
 		int r = ant.getLocation().getRow();
 		int c = ant.getLocation().getColumn();
-		if (board.getBoardCells()[r][c].getEntityOnCell().getEntityType()
-				.equalsIgnoreCase("empty")) {
+		if (board.getBoardCells()[r][c].getEntityOnCell().getEntityType().equalsIgnoreCase("empty")) {
 			board.getBoardCells()[r][c].setEntityOnCell(ant);
-		}		
-		
+		}
+
 	}
 
+	@Override
+	public void clientConnected(int clientID) throws RemoteException {
+		++numOfActiveClients;
+	}
+
+	@Override
+	public int getTypesOfObjects() throws RemoteException {
+		return typesOfObjects;
+	}
 
 }

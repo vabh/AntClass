@@ -1,6 +1,5 @@
 package shared_classes;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.io.Serializable;
 
@@ -22,11 +21,11 @@ public class EmptyCellEntity implements Serializable, CellEntity {
 
 	@Override
 	public void drawOnBoard(Graphics g, int sizecol, int sizerow, Board board) {
-		 //do nothing for now
-		 int y = location.getRow() * sizerow;
-		 int x = location.getColumn() * sizecol;
-		 g.setColor(Color.orange);
-		 g.fillOval(x, y, 30, 30);
+		// do nothing for now
+		// int y = location.getRow() * sizerow;
+		// int x = location.getColumn() * sizecol;
+		// g.setColor(Color.orange);
+		// g.fillOval(x, y, 30, 30);
 	}
 
 	@Override

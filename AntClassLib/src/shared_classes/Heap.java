@@ -17,12 +17,13 @@ public class Heap implements Serializable, CellEntity {
 
 
 	// probabilities for heap operation
-	public Heap(int r, int c){
+	public Heap(int r, int c, int maxType) {
 		location = new Location(r, c);
-		//should be changed
-		types = 2;
+		// should be changed
+		types = maxType;
 		elements = new LinkedList<Integer>();
 	}
+
 	public Heap(int r, int c, int size, int types) {
 		location = new Location(r, c);
 		this.types = types;
@@ -61,26 +62,26 @@ public class Heap implements Serializable, CellEntity {
 	public void drawOnBoard(Graphics g, int sizecol, int sizerow, Board board) {
 		// Drawing heap objects of different types with different colors
 		// Heap heap = (Heap) board.getBoardCells()[r][c].getEntityOnCell();
-		if (getSize() == 0){
+		if (getSize() == 0) {
 			int y = getLocation().getRow() * sizerow;
 			int x = getLocation().getColumn() * sizecol;
-			g.fillRect((int) (x * (sizecol / getSize())), (int) (y + (sizerow * 0.1)), sizecol / getSize(),
-					(int) (sizerow * 0.8));
+			g.fillRect((int) (x * (sizecol / getSize())), (int) (y + (sizerow * 0.1)), sizecol / getSize(), (int) (sizerow * 0.8));
 			g.setColor(Color.red);
 		} else {
-		for (int k = 0; k < getSize(); k++) {
-			Color colorHeap = new Color((int) (((float) elements.get(k) / (float) getTypes()) * 255),
-					(int) (((float) elements.get(k) / (float) getTypes()) * 255), (int) ((0.7) * 255));
-			g.setColor(colorHeap);
-			int y = getLocation().getRow() * sizerow;
-			int x = getLocation().getColumn() * sizecol;
-			g.fillRect((int) (x + (k) * (sizecol / getSize())), (int) (y + (sizerow * 0.1)), sizecol / getSize(),
-					(int) (sizerow * 0.8));
-			// Drawing an edge for a heap element, to differentiate their quantity
-			g.setColor(Color.white);
-			g.drawRect((int) (x + (k) * (sizecol / getSize())), (int) (y + (sizerow * 0.1)), sizecol / getSize(),
-					(int) (sizerow * 0.8));
-		}
+			for (int k = 0; k < getSize(); k++) {
+				// System.err.println("elements.get(k) = " + elements.get(k) + " | getTypes() = " + getTypes());
+				Color colorHeap = new Color((int) (((float) elements.get(k) / (float) getTypes()) * 255),
+						(int) (((float) elements.get(k) / (float) getTypes()) * 255), (int) ((0.7) * 255));
+				g.setColor(colorHeap);
+				int y = getLocation().getRow() * sizerow;
+				int x = getLocation().getColumn() * sizecol;
+				g.fillRect((int) (x + (k) * (sizecol / getSize())), (int) (y + (sizerow * 0.1)), sizecol / getSize(),
+						(int) (sizerow * 0.8));
+				// Drawing an edge for a heap element, to differentiate their quantity
+				g.setColor(Color.white);
+				g.drawRect((int) (x + (k) * (sizecol / getSize())), (int) (y + (sizerow * 0.1)), sizecol / getSize(),
+						(int) (sizerow * 0.8));
+			}
 		}
 	}
 

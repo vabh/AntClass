@@ -16,11 +16,11 @@ public class MainServer {
 	// declare the member variable for array of objects in order to have
 	// them locked while processing ants with sync methods
 	private int boardSize = 10;
-	private final int NUM_OF_ANTS = 5;
-	private int MAX_HEAP_SIZE = 3;
-	private int NUMBER_OF_INITIAL_HEAPS = 3;
-	private int TYPES_OF_OBJECTS = 2;
-	private final int NUMBER_OF_PROCESSORS = 2;
+	private final int NUM_OF_ANTS = 11;
+	private int MAX_HEAP_SIZE = 5;
+	private int NUMBER_OF_INITIAL_HEAPS = 5;
+	private int TYPES_OF_OBJECTS = 5;
+	private final int NUMBER_OF_PROCESSORS = 10;
 
 	private final int ANT_PROBABILITY = 5;
 	private final int HEAP_PROBABILITY = 2;
@@ -108,7 +108,8 @@ public class MainServer {
 		// create the register and the shared/remote object being accessed from the clients
 		try {
 			Registry registry = LocateRegistry.createRegistry(1099);
-			AntStub antsStub = new AntStub(mainServer.ants, mainServer.NUMBER_OF_PROCESSORS, mainServer.board, gui);
+			AntStub antsStub = new AntStub(mainServer.ants, mainServer.NUMBER_OF_PROCESSORS, mainServer.board, gui,
+					mainServer.TYPES_OF_OBJECTS);
 			registry.rebind("remoteAnt", antsStub);
 			System.out.println("registry created and remote object rebound");
 		} catch (RemoteException e) {

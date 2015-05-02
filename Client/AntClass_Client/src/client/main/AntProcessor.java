@@ -72,19 +72,18 @@ public class AntProcessor {
 				lookatY %= columns;
 			} else if (lookatY < 0) {
 				lookatY = columns - 1;
-			}			
+			}
 			if (cells[lookatX][lookatY].getEntityType().equals("heap")) {
 				resultLocation.setRow(lookatX);
 				resultLocation.setColumn(lookatY);
 				return resultLocation;
-			}
-			else{
+			} else {
 				continue;
 			}
 		}
 		return null;
 	}
-	
+
 	public Location lookAroundForEmpty(Ant ant, Board board) {
 		Location resultLocation = new Location();
 
@@ -109,13 +108,12 @@ public class AntProcessor {
 				lookatY %= columns;
 			} else if (lookatY < 0) {
 				lookatY = columns - 1;
-			}			
+			}
 			if (cells[lookatX][lookatY].getEntityType().equals("empty")) {
 				resultLocation.setRow(lookatX);
 				resultLocation.setColumn(lookatY);
 				return resultLocation;
-			}
-			else{
+			} else {
 				continue;
 			}
 		}
@@ -126,10 +124,10 @@ public class AntProcessor {
 		synchronized (board) {
 			// first, check if the heap is still there (because it may have disappeared because of other clients' ants)
 			if (!board.getBoardCells()[heapLocation.getRow()][heapLocation.getColumn()].getEntityType().equalsIgnoreCase("heap")) {
-				
-				//drop on EmptyCell
-				Heap heap = new Heap(heapLocation.getRow(), heapLocation.getColumn());
-				LinkedList<Integer> heapElements =  new LinkedList<Integer>();
+
+				// drop on EmptyCell
+				Heap heap = new Heap(heapLocation.getRow(), heapLocation.getColumn(), antStub.getTypesOfObjects());
+				LinkedList<Integer> heapElements = new LinkedList<Integer>();
 				heapElements.add(ant.getHeapElementType());
 				heap.updateHeap(heapElements);
 				antStub.placeHeap(heap);
