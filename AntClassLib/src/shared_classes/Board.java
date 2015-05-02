@@ -92,8 +92,8 @@ public class Board implements Serializable {
 		int r = heap.getLocation().getRow();
 		int c = heap.getLocation().getColumn();
 		if ((r >= 0 && r < rows) && (c >= 0 && c < columns)) {
-			System.out.println(cells[r][c].getEntityType());
-			System.out.println(r + ":" + c);			
+			// System.out.println(cells[r][c].getEntityType());
+			// System.out.println(r + ":" + c);
 			cells[r][c].setEntityOnCell(heap);
 		}
 	}
@@ -105,7 +105,7 @@ public class Board implements Serializable {
 		}
 		cells[location.getRow()][location.getColumn()].setEntityOnCell(new EmptyCellEntity(location.getRow(), location
 				.getColumn()));
-		
+
 	}
 
 }

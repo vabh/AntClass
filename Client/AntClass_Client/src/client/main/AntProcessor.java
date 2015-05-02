@@ -14,7 +14,7 @@ public class AntProcessor {
 
 	public Location move(Location antLocation, int boardRows, int boardColumns, Board board) throws RemoteException {
 		while (true) { // TODO: what if there's no way to go? (i.e. surrounded with the heaps and other ants)
-			//System.err.println("yahoo!!!!!");
+			// System.err.println("yahoo!!!!!");
 			Location oldLocation = antLocation;
 			float x = (float) Math.random();
 			float y = (float) Math.random();
@@ -32,13 +32,13 @@ public class AntProcessor {
 			}
 
 			// check if new cell contains a heap
-			if (board.getCellObjectType(r, c).equalsIgnoreCase("empty")) {				
-				//antStub.destroyAnt(oldLocation);
-				//Location newLocation = null;
-				//newLocation.setRow(r);
-				//newLocation.setColumn(c);
-				//antStub.placeAntObject(r, c);
-				
+			if (board.getCellObjectType(r, c).equalsIgnoreCase("empty")) {
+				// antStub.destroyAnt(oldLocation);
+				// Location newLocation = null;
+				// newLocation.setRow(r);
+				// newLocation.setColumn(c);
+				// antStub.placeAntObject(r, c);
+
 				return new Location(r, c);
 			} else { // move in a new direction if we saw a heap it should not move on top of a heap
 				continue;
@@ -149,15 +149,15 @@ public class AntProcessor {
 				antStub.updateHeap(heapLocation, heap); // update the heap object on the server side
 				break;
 			}
-			for (int i = 0; i < board.getRows(); i++) {
-				for (int j = 0; j < board.getColumns(); j++) {
-					System.out.print(board.getCellObjectType(i, j) + "--|");
-				}
-				System.out.println("");
-			}
-			System.out.println("___________________________________________________");
+			// for (int i = 0; i < board.getRows(); i++) {
+			// for (int j = 0; j < board.getColumns(); j++) {
+			// System.out.print(board.getCellObjectType(i, j) + "--|");
+			// }
+			// System.out.println("");
+			// }
+			// System.out.println("___________________________________________________");
 			return element; // return the type of the picked-up object
-			
+
 		}
 	}
 
