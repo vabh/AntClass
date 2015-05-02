@@ -9,19 +9,20 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 
 	private Ant[] ants;
 	private int totalNumOfClients;
+	private static int numOfActiveClients;
 	private Board board;
 	private GUI gui;
 	private int clientID;
-	private static int numOfActiveClients;
-	private int typesOfObjects;
+	
+	private int typesOfHeapObjects;
 
-	public AntStub(Ant[] ants, int totalNumOfClients, Board board, GUI gui, int typesOfObjects) throws RemoteException {
+	public AntStub(Ant[] ants, int totalNumOfClients, Board board, GUI gui, int typesOfHeapObjects) throws RemoteException {
 		this.ants = ants;
 		this.totalNumOfClients = totalNumOfClients;
 		this.board = board;
 		this.gui = gui;
 		AntStub.numOfActiveClients = 0;
-		this.typesOfObjects = typesOfObjects;
+		this.typesOfHeapObjects = typesOfHeapObjects;
 	}
 
 	@Override
@@ -30,25 +31,25 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 	}
 
 	@Override
-	public synchronized void changeLocation(Location current, Location next, int antIndex) throws RemoteException {
-		destroyAnt(current);
+	public synchronized void changeAntLocation(Location current, Location next, int antIndex) throws RemoteException {
+		destroyAntOnBoard(current);
 		ants[antIndex].getLocation().setColumn(next.getColumn());
 		ants[antIndex].getLocation().setRow(next.getRow());
-		placeAnt(ants[antIndex]);
+		placeAntOnBoard(ants[antIndex]);
 
 	}
 
 	@Override
-	public void updateCarryingObject(int antIndex, int carryingObjectType) throws RemoteException {
+	public void updateAntHeapObject(int antIndex, int carryingObjectType) throws RemoteException {
 		if (carryingObjectType == -1) {
-			ants[antIndex].dropCarriedObject();
+			ants[antIndex].dropCarryingHeapObject();
 		} else {
-			ants[antIndex].pickUp(carryingObjectType);
+			ants[antIndex].pickUpHeapObject(carryingObjectType);
 		}
 	}
 
 	@Override
-	public synchronized void updateHeap(Location heapLocation, Heap newHeap) throws RemoteException {
+	public synchronized void updateHeapOnBoard(Location heapLocation, Heap newHeap) throws RemoteException {
 		// check if the heap is there
 		if (board.getBoardCells()[heapLocation.getRow()][heapLocation.getColumn()].getEntityOnCell().getEntityType()
 				.equalsIgnoreCase("heap")) {
@@ -60,7 +61,7 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 	 * heapLocation is a parameter for heap location
 	 */
 	@Override
-	public void destroyHeap(Location heapLocation) throws RemoteException {
+	public void destroyHeapOnBoard(Location heapLocation) throws RemoteException {
 		// check if the heap is there
 		if (board.getBoardCells()[heapLocation.getRow()][heapLocation.getColumn()].getEntityOnCell().getEntityType()
 				.equalsIgnoreCase("heap")) {
@@ -69,7 +70,7 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 		}
 	}
 
-	public void placeHeap(Heap heap) throws RemoteException {
+	public void placeHeapOnBoard(Heap heap) throws RemoteException {
 		// check if the heap is there
 		Location heapLocation = heap.getLocation();
 		if (board.getBoardCells()[heapLocation.getRow()][heapLocation.getColumn()].getEntityOnCell().getEntityType()
@@ -99,14 +100,14 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 	}
 
 	@Override
-	public int getStartIndex(int clientID) throws RemoteException {
+	public int getStartIndexOfAnts(int clientID) throws RemoteException {
 		// clientID should start from 0
 		// return clientID * (getTotalNumOfAnts() / getTotalNumOfClients());
 		return clientID * (getTotalNumOfAnts() / numOfActiveClients);
 	}
 
 	@Override
-	public int getEndIndex(int clientID) throws RemoteException {
+	public int getEndIndexOfAnts(int clientID) throws RemoteException {
 		// clientID should start from 0
 		// if (clientID + 1 == getTotalNumOfClients()) { // check if this is the last client (i.e. with the highest ID)
 		if (clientID + 1 == numOfActiveClients) { // check if this is the last client (i.e. with the highest ID)
@@ -134,7 +135,7 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 	}
 
 	@Override
-	public void assignColor(int antIndex, int _clientID) throws RemoteException {
+	public void assignColorToAnt(int antIndex, int _clientID) throws RemoteException {
 		this.clientID = _clientID;
 		// ants[antIndex].assignColor((float) clientID / (float) totalNumOfClients);
 		ants[antIndex].assignColor((float) clientID / (float) numOfActiveClients);
@@ -146,7 +147,7 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 	}
 
 	@Override
-	public void destroyAnt(Location oldLocation) throws RemoteException {
+	public void destroyAntOnBoard(Location oldLocation) throws RemoteException {
 		if (board.getBoardCells()[oldLocation.getRow()][oldLocation.getColumn()].getEntityOnCell().getEntityType()
 				.equalsIgnoreCase("ant")) {
 			board.getBoardCells()[oldLocation.getRow()][oldLocation.getColumn()].setEntityOnCell(new EmptyCellEntity(oldLocation
@@ -156,7 +157,7 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 	}
 
 	@Override
-	public void placeAnt(Ant ant) throws RemoteException {
+	public void placeAntOnBoard(Ant ant) throws RemoteException {
 		int r = ant.getLocation().getRow();
 		int c = ant.getLocation().getColumn();
 		if (board.getBoardCells()[r][c].getEntityOnCell().getEntityType().equalsIgnoreCase("empty")) {
@@ -171,8 +172,8 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 	}
 
 	@Override
-	public int getTypesOfObjects() throws RemoteException {
-		return typesOfObjects;
+	public int getTypesOfHeapObjects() throws RemoteException {
+		return typesOfHeapObjects;
 	}
 
 }

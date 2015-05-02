@@ -9,7 +9,7 @@ import shared_classes.Location;
 
 public class MainClient {
 
-	private final int clientID = 6; // should start from 0 and be less than the number of clients set in the server
+	private final int clientID = 1; // should start from 0 and be less than the number of clients set in the server
 
 	private void start() {
 		try {
@@ -24,25 +24,28 @@ public class MainClient {
 			AntProcessor antProc = new AntProcessor();
 
 			while (true) { // loop forever
-				int startIndex = remoteAnts.getStartIndex(clientID);
-				int endIndex = remoteAnts.getEndIndex(clientID);
+				int startIndex = remoteAnts.getStartIndexOfAnts(clientID);
+				int endIndex = remoteAnts.getEndIndexOfAnts(clientID);
+				
+				int heapObjectDropProbability = 4;
+				int rand = (int) (Math.random() * 10);
+				
 				for (int index = startIndex; index < endIndex; ++index) {
 					// move the ant[index]
 
 					Location current = remoteAnts.getAnt(index).getLocation();
 					Location next = antProc.move(current, remoteAnts.getBoardHeight(), remoteAnts.getBoardWidth(),
-							remoteAnts.getBoard());
-					remoteAnts.changeLocation(current, next, index);
-
-					int dropProb = 4;
-					int rand = (int) (Math.random() * 10);
-					remoteAnts.getAnt(index).printStatus();
+												remoteAnts.getBoard());
+					remoteAnts.changeAntLocation(current, next, index);
+					
+					//remoteAnts.getAnt(index).printStatus();
 
 					// look around of the ant[index]
 					Location heapLocation = antProc.lookAround(remoteAnts.getAnt(index), remoteAnts.getBoard());
 					// Assigning color to Ant depending on the client ID
-					remoteAnts.assignColor(index, clientID);
+					remoteAnts.assignColorToAnt(index, clientID);
 					remoteAnts.assignAntsClientID(index, clientID);
+					
 					if (heapLocation != null) {
 						// pick-up or drop an object
 						if (remoteAnts.getAnt(index).isCarrying()) {
@@ -52,7 +55,7 @@ public class MainClient {
 									remoteAnts);
 
 							// update the ant object on the server side
-							remoteAnts.updateCarryingObject(index, -1);
+							remoteAnts.updateAntHeapObject(index, -1);
 						} else {
 							// find the pickup object (do the heavy processing on client side), heap update will be called inside
 							// pickup algorithm but again on client side, that's why passing remoteAnts stub object here
@@ -60,14 +63,14 @@ public class MainClient {
 									remoteAnts.getAnt(index), remoteAnts);
 
 							// update the ant object on the server side
-							remoteAnts.updateCarryingObject(index, pickupObject);
+							remoteAnts.updateAntHeapObject(index, pickupObject);
 						}
-					} else if (rand > dropProb && remoteAnts.getAnt(index).isCarrying()) {
+						//drop heapObject on EmptyCell
+					} else if (rand > heapObjectDropProbability && remoteAnts.getAnt(index).isCarrying()) {
 						Location emptyLocation = antProc.lookAroundForEmpty(remoteAnts.getAnt(index), remoteAnts.getBoard());
 						antProc.processDropAlgorithm(remoteAnts.getBoard(), emptyLocation, remoteAnts.getAnt(index), remoteAnts);
-						remoteAnts.updateCarryingObject(index, -1);
+						remoteAnts.updateAntHeapObject(index, -1);
 					}
-
 				}
 				remoteAnts.requestRedraw();
 			}

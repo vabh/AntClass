@@ -33,7 +33,7 @@ public class MainServer {
 	private int currentHeaps;
 	private int client_id;
 	private float color = 0;
-	// (float) client_id / (float) NUMBER_OF_PROCESSORS;
+
 	private int width = 1024;
 	private int height = 600;
 
@@ -42,7 +42,7 @@ public class MainServer {
 														// functions of this
 														// class
 
-		// initialise the grid with objects and ants in it
+		// initialise the grid with objects and ants on it
 		mainServer.currentAnts = 0;
 		mainServer.currentHeaps = 0;
 
@@ -60,7 +60,7 @@ public class MainServer {
 				Ant ant = new Ant(r, c, mainServer.color, mainServer.TYPES_OF_OBJECTS);
 				// System.out.print(mainServer.client_id + " " + mainServer.color);
 				mainServer.ants[mainServer.currentAnts++] = ant;
-				mainServer.board.placeAnt(ant);
+				mainServer.board.placeAntOnCell(ant);
 				counter--;
 			}
 		}
@@ -78,7 +78,7 @@ public class MainServer {
 			if (mainServer.board.getCellObjectType(r, c).equals("empty")) {
 				int hSize = (int) (Math.random() * mainServer.MAX_HEAP_SIZE + 1);
 				Heap heap = new Heap(r, c, hSize, mainServer.TYPES_OF_OBJECTS);
-				mainServer.board.placeHeap(heap);
+				mainServer.board.placeHeapOnCell(heap);
 				mainServer.heaps[mainServer.currentHeaps++] = heap;
 				counter--;
 			}
