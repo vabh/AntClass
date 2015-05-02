@@ -10,17 +10,11 @@ public class Board implements Serializable {
 	private int rows;
 	private int columns;
 
-	// private int types; // number of different heap elements for the board
-	// private int maxHeapSize; // maximum size of a heap
-
 	public Board(int rows, int columns, int types, int heapSize) {
 
 		setRows(rows);
 		setColumns(columns);
-
-		// this.types = types;
-		// this.maxHeapSize = heapSize;
-
+		
 		cells = new Cell[rows][columns];
 		for (int i = 0; i < rows; ++i) {
 			for (int j = 0; j < columns; ++j) {
@@ -59,15 +53,6 @@ public class Board implements Serializable {
 		return cells[r][c].getEntityOnCell();
 	}
 
-	public void destroyHeap(Location location) {
-		if (!cells[location.getRow()][location.getColumn()].getEntityType().equalsIgnoreCase("heap")) {
-			System.err.println("No heap found at " + location.toString());
-			return;
-		}
-		cells[location.getRow()][location.getColumn()].setEntityOnCell(new EmptyCellEntity(location.getRow(), location
-				.getColumn()));
-	}
-
 	// returns -- ant | heap | empty
 	public String getCellObjectType(int r, int c) {
 		return cells[r][c].getEntityType();
@@ -80,15 +65,16 @@ public class Board implements Serializable {
 		return cells[r][c].getEntityType();
 	}
 
-	public void placeAnt(Ant ant) {
-		int r = ant.getLocation().getRow();
-		int c = ant.getLocation().getColumn();
-		if ((r >= 0 && r < rows) && (c >= 0 && c < columns)) {
-			cells[r][c].setEntityOnCell(ant);
+	public void destroyHeapOnCell(Location location) {
+		if (!cells[location.getRow()][location.getColumn()].getEntityType().equalsIgnoreCase("heap")) {
+			System.err.println("No heap found at " + location.toString());
+			return;
 		}
+		cells[location.getRow()][location.getColumn()].setEntityOnCell(new EmptyCellEntity(location.getRow(), location
+				.getColumn()));
 	}
-
-	public void placeHeap(Heap heap) {
+	
+	public void placeHeapOnCell(Heap heap) {
 		int r = heap.getLocation().getRow();
 		int c = heap.getLocation().getColumn();
 		if ((r >= 0 && r < rows) && (c >= 0 && c < columns)) {
@@ -96,9 +82,17 @@ public class Board implements Serializable {
 			// System.out.println(r + ":" + c);
 			cells[r][c].setEntityOnCell(heap);
 		}
+	}	
+
+	public void placeAntOnCell(Ant ant) {
+		int r = ant.getLocation().getRow();
+		int c = ant.getLocation().getColumn();
+		if ((r >= 0 && r < rows) && (c >= 0 && c < columns)) {
+			cells[r][c].setEntityOnCell(ant);
+		}
 	}
 
-	public void destroyAnt(Location location) {
+	public void destroyAntOnCell(Location location) {
 		if (!cells[location.getRow()][location.getColumn()].getEntityType().equalsIgnoreCase("ant")) {
 			System.err.println("No ant found at " + location.toString());
 			return;

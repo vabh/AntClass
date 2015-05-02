@@ -10,7 +10,7 @@ public class Ant implements Serializable, CellEntity {
 
 	private Location location;
 	private boolean isCarrying;
-	private int carriedHeapObject; // -1 when not isCarrying any object
+	private int carryingHeapObject; // -1 when not isCarrying any object
 	private float color;
 	private int totalNumberOfTypesOfHeapObjects;
 	private int clientID;
@@ -24,7 +24,7 @@ public class Ant implements Serializable, CellEntity {
 		//System.out.println("ant born");
 		location = new Location(r, c);
 		this.isCarrying = false;
-		this.carriedHeapObject = -1;
+		this.carryingHeapObject = -1;
 		this.color = _color;
 		this.totalNumberOfTypesOfHeapObjects = _typesOfObjects;
 
@@ -32,7 +32,7 @@ public class Ant implements Serializable, CellEntity {
 	public Ant(int r, int c){
 		location = new Location(r, c);
 		this.isCarrying = false;
-		this.carriedHeapObject = -1;
+		this.carryingHeapObject = -1;
 	};
 
 	public boolean isCarrying() {
@@ -41,18 +41,18 @@ public class Ant implements Serializable, CellEntity {
 
 	public int getHeapElementType() {
 		// -1 if ant is not isCarrying anything
-		return carriedHeapObject;
+		return carryingHeapObject;
 	}
 
-	public void dropCarriedObject() {
+	public void dropCarryingHeapObject() {
 		isCarrying = false;
-		carriedHeapObject = -1;
+		carryingHeapObject = -1;
 	}
 
-	public void pickUp(int heapElement) {
+	public void pickUpHeapObject(int heapObject) {
 		//System.err.println("inside pickUp() with parameter " + carriedHeapObject);
 		isCarrying = true;
-		this.carriedHeapObject = heapElement;
+		this.carryingHeapObject = heapObject;
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class Ant implements Serializable, CellEntity {
 		
 		//Drawing heap object on Ant if isCarrying
 		if (isCarrying) {
-			float colorheapvalue = (float) carriedHeapObject / (float) totalNumberOfTypesOfHeapObjects;
+			float colorheapvalue = (float) carryingHeapObject / (float) totalNumberOfTypesOfHeapObjects;
 			Color colorHeap = new Color((int) ((colorheapvalue) * 255), (int) ((colorheapvalue) * 255), (int) ((0.7) * 255));
 			g.setColor(colorHeap);
 			g.fillRect((int) (x + (sizecol - getDrawingSize() / 2 * 0.02 * Math.min(sizecol, sizerow)) / 2.0),
@@ -121,7 +121,7 @@ public class Ant implements Serializable, CellEntity {
 	}
 
 	public void printStatus() {
-		//System.out.println(isCarrying + ":" + carriedHeapObject);
+		System.out.println(isCarrying + ":" + carryingHeapObject);
 	}
 
 }

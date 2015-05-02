@@ -14,16 +14,16 @@ public class AntProcessor {
 
 	public Location move(Location antLocation, int boardRows, int boardColumns, Board board) throws RemoteException {
 		while (true) { // TODO: what if there's no way to go? (i.e. surrounded with the heaps and other ants)
-			float x = (float) Math.random();
-			float y = (float) Math.random();
+			float hDirection = (float) Math.random();
+			float vDirection = (float) Math.random();
 			int r;
 			int c;
-			if (x >= 0.5) {
+			if (hDirection >= 0.5) {
 				r = (antLocation.getRow() + 1) % boardRows;
 			} else {
 				r = (antLocation.getRow() - 1 + boardRows) % boardRows;
 			}
-			if (y >= 0.5) {
+			if (vDirection >= 0.5) {
 				c = (antLocation.getColumn() + 1) % boardColumns;
 			} else {
 				c = (antLocation.getColumn() - 1 + boardColumns) % boardColumns;
@@ -44,30 +44,30 @@ public class AntProcessor {
 		Location resultLocation = new Location();
 
 		// direction to look at
-		int xPos[] = { -1, -1, 0, 1, 1, 1, 0, -1 };
-		int yPos[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
+		int hDirection[] = { -1, -1, 0, 1, 1, 1, 0, -1 };
+		int vDirection[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
 
 		Cell[][] cells = board.getBoardCells();
 		int rows = board.getRows();
 		int columns = board.getColumns();
 
-		for (int i = 0; i < xPos.length; i++) {
-			int lookatX = ant.getLocation().getRow() + xPos[i];
-			int lookatY = ant.getLocation().getColumn() + yPos[i];
-			if (lookatX >= 0) {
-				lookatX %= rows;
-			} else if (lookatX < 0) {
-				lookatX = rows - 1;
+		for (int i = 0; i < hDirection.length; i++) {
+			int lookatH = ant.getLocation().getRow() + hDirection[i];
+			int lookatV = ant.getLocation().getColumn() + vDirection[i];
+			if (lookatH >= 0) {
+				lookatH %= rows;
+			} else if (lookatH < 0) {
+				lookatH = rows - 1;
 			}
 
-			if (lookatY >= 0) {
-				lookatY %= columns;
-			} else if (lookatY < 0) {
-				lookatY = columns - 1;
+			if (lookatV >= 0) {
+				lookatV %= columns;
+			} else if (lookatV < 0) {
+				lookatV = columns - 1;
 			}
-			if (cells[lookatX][lookatY].getEntityType().equals("heap")) {
-				resultLocation.setRow(lookatX);
-				resultLocation.setColumn(lookatY);
+			if (cells[lookatH][lookatV].getEntityType().equals("heap")) {
+				resultLocation.setRow(lookatH);
+				resultLocation.setColumn(lookatV);
 				return resultLocation;
 			} else {
 				continue;
@@ -80,30 +80,30 @@ public class AntProcessor {
 		Location resultLocation = new Location();
 
 		// direction to look at
-		int xPos[] = { -1, -1, 0, 1, 1, 1, 0, -1 };
-		int yPos[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
+		int hDirection[] = { -1, -1, 0, 1, 1, 1, 0, -1 };
+		int vDirection[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
 
 		Cell[][] cells = board.getBoardCells();
 		int rows = board.getRows();
 		int columns = board.getColumns();
 
-		for (int i = 0; i < xPos.length; i++) {
-			int lookatX = ant.getLocation().getRow() + xPos[i];
-			int lookatY = ant.getLocation().getColumn() + yPos[i];
-			if (lookatX >= 0) {
-				lookatX %= rows;
-			} else if (lookatX < 0) {
-				lookatX = rows - 1;
+		for (int i = 0; i < hDirection.length; i++) {
+			int lookatH = ant.getLocation().getRow() + hDirection[i];
+			int lookatV = ant.getLocation().getColumn() + vDirection[i];
+			if (lookatH >= 0) {
+				lookatH %= rows;
+			} else if (lookatH < 0) {
+				lookatH = rows - 1;
 			}
 
-			if (lookatY >= 0) {
-				lookatY %= columns;
-			} else if (lookatY < 0) {
-				lookatY = columns - 1;
+			if (lookatV >= 0) {
+				lookatV %= columns;
+			} else if (lookatV < 0) {
+				lookatV = columns - 1;
 			}
-			if (cells[lookatX][lookatY].getEntityType().equals("empty")) {
-				resultLocation.setRow(lookatX);
-				resultLocation.setColumn(lookatY);
+			if (cells[lookatH][lookatV].getEntityType().equals("empty")) {
+				resultLocation.setRow(lookatH);
+				resultLocation.setColumn(lookatV);
 				return resultLocation;
 			} else {
 				continue;
@@ -115,34 +115,34 @@ public class AntProcessor {
 	public void processDropAlgorithm(Board board, Location heapLocation, Ant ant, IRemoteAnt antStub) throws RemoteException {
 		synchronized (board) {
 			// first, check if the heap is still there (because it may have disappeared because of other clients' ants)
-			if (!board.getBoardCells()[heapLocation.getRow()][heapLocation.getColumn()].getEntityType().equalsIgnoreCase("heap")) {
+			if (board.getBoardCells()[heapLocation.getRow()][heapLocation.getColumn()].getEntityType().equalsIgnoreCase("empty")) {
 
 				// drop on EmptyCell
-				Heap heap = new Heap(heapLocation.getRow(), heapLocation.getColumn(), antStub.getTypesOfObjects());
-				LinkedList<Integer> heapElements = new LinkedList<Integer>();
-				heapElements.add(ant.getHeapElementType());
-				heap.updateHeap(heapElements);
-				antStub.placeHeap(heap);
-				return; // do nothing
+				Heap heap = new Heap(heapLocation.getRow(), heapLocation.getColumn(), antStub.getTypesOfHeapObjects());
+				LinkedList<Integer> heapObjects = new LinkedList<Integer>();
+				heapObjects.add(ant.getHeapElementType());
+				heap.updateHeapObjects(heapObjects);
+				antStub.placeHeapOnBoard(heap);
+				return;
 			}
 
 			Heap heap = (Heap) board.getCellEntity(heapLocation);
-			LinkedList<Integer> heapElements = heap.getHeapElements();
+			LinkedList<Integer> heapObjects = heap.getHeapObjects();
 
-			switch (heapElements.size()) {
+			switch (heapObjects.size()) {
 			case 0: // TODO: according to the reference .pdf file, there should be such a case
 				return;
 			case 1:
 				// TODO: apply the drop algorithm according to the reference .pdf file
-				heapElements.add(ant.getHeapElementType());
+				heapObjects.add(ant.getHeapElementType());
 				// ant.drop();
-				antStub.updateHeap(heapLocation, heap); // update the heap object on the server side
+				antStub.updateHeapOnBoard(heapLocation, heap); // update the heap object on the server side
 				return;
 			default:
 				// TODO: apply the drop algorithm according to the reference .pdf file
-				heapElements.add(ant.getHeapElementType());
+				heapObjects.add(ant.getHeapElementType());
 				// ant.drop();
-				antStub.updateHeap(heapLocation, heap); // update the heap object on the server side
+				antStub.updateHeapOnBoard(heapLocation, heap); // update the heap object on the server side
 				return;
 			}
 
@@ -158,29 +158,29 @@ public class AntProcessor {
 			}
 
 			Heap heap = (Heap) board.getCellEntity(heapLocation);
-			LinkedList<Integer> heapElements = heap.getHeapElements();
-			int element = -1; // return -1 if it is not carrying anything
-			switch (heapElements.size()) {
+			LinkedList<Integer> heapObjects = heap.getHeapObjects();
+			int heapObjectElement = -1; // return -1 if it is not carrying anything
+			switch (heapObjects.size()) {
 			case 0: // nothing to do [but remove heap from board]
-				antStub.destroyHeap(heapLocation);
+				antStub.destroyHeapOnBoard(heapLocation);
 				break;
 			case 1:// pickup object, destroy heap
 					// ant.pickUp(heapElements.get(0));
-				element = heapElements.remove(0); // set type of object to be returned
-				antStub.destroyHeap(heapLocation);
+				heapObjectElement = heapObjects.remove(0); // set type of object to be returned
+				antStub.destroyHeapOnBoard(heapLocation);
 				// antStub.updateHeap(heapLocation, heap); // update the heap object on the server side
 				break;
 			case 2: // pickup object, update heap
-				element = heapElements.remove(0); // TODO: adjust according to the .pdf reference document
+				heapObjectElement = heapObjects.remove(0); // TODO: adjust according to the .pdf reference document
 													// set type of object to be returned
-				heap.updateHeap(heapElements);
-				antStub.updateHeap(heapLocation, heap); // update the heap object on the server side
+				heap.updateHeapObjects(heapObjects);
+				antStub.updateHeapOnBoard(heapLocation, heap); // update the heap object on the server side
 				break; // return the type of the picked-up object
 			default:
-				element = heapElements.remove(0); // TODO: adjust according to the .pdf reference document as well
+				heapObjectElement = heapObjects.remove(0); // TODO: adjust according to the .pdf reference document as well
 
-				heap.updateHeap(heapElements);
-				antStub.updateHeap(heapLocation, heap); // update the heap object on the server side
+				heap.updateHeapObjects(heapObjects);
+				antStub.updateHeapOnBoard(heapLocation, heap); // update the heap object on the server side
 				break;
 			}
 			// for (int i = 0; i < board.getRows(); i++) {
@@ -190,7 +190,7 @@ public class AntProcessor {
 			// System.out.println("");
 			// }
 			// System.out.println("___________________________________________________");
-			return element; // return the type of the picked-up object
+			return heapObjectElement; // return the type of the picked-up object
 
 		}
 	}

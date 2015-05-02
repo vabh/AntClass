@@ -9,43 +9,39 @@ public class Heap implements Serializable, CellEntity {
 
 	private static final long serialVersionUID = 6933443421222451481L;
 
-	// private int r; // location on board
-	// private int c;
 	private Location location;
-	private LinkedList<Integer> elements;
-	private int types; // the different types of heap elements
+	private LinkedList<Integer> heapObjects;
+	private int heapObjectTypes; // the different types of heap elements
 
-
-	// probabilities for heap operation
-	public Heap(int r, int c, int maxType) {
+	public Heap(int r, int c, int heapObjectTypes) {
 		location = new Location(r, c);
 		// should be changed
-		types = maxType;
-		elements = new LinkedList<Integer>();
+		this.heapObjectTypes = heapObjectTypes;
+		heapObjects = new LinkedList<Integer>();
 	}
 
 	public Heap(int r, int c, int size, int types) {
 		location = new Location(r, c);
-		this.types = types;
-		elements = new LinkedList<Integer>();
+		this.heapObjectTypes = types;
+		heapObjects = new LinkedList<Integer>();
 
 		// populating the heap
 		for (int i = 0; i < size; i++) {
-			elements.add((int) (Math.random() * types));
+			heapObjects.add((int) (Math.random() * types));
 		}
 	}
 
-	public int getSize() {
-		return elements.size();
+	public int getNumberOfHeapObjects() {
+		return heapObjects.size();
 	}
 
-	public LinkedList<Integer> getHeapElements() {
-		return elements;
+	public LinkedList<Integer> getHeapObjects() {
+		return heapObjects;
 	}
 
 	// returns an upper bound on the types of heap elements
-	public int getTypes() {
-		return types;
+	public int getHeapObjectTypes() {
+		return heapObjectTypes;
 	}
 
 	@Override
@@ -62,34 +58,34 @@ public class Heap implements Serializable, CellEntity {
 	public void drawOnBoard(Graphics g, int sizecol, int sizerow, Board board) {
 		// Drawing heap objects of different types with different colors
 		// Heap heap = (Heap) board.getBoardCells()[r][c].getEntityOnCell();
-		if (getSize() == 0) {
+		if (getNumberOfHeapObjects() == 0) {
 			int y = getLocation().getRow() * sizerow;
 			int x = getLocation().getColumn() * sizecol;
-			g.fillRect((int) (x * (sizecol / getSize())), (int) (y + (sizerow * 0.1)), sizecol / getSize(), (int) (sizerow * 0.8));
+			g.fillRect((int) (x * (sizecol / getNumberOfHeapObjects())), (int) (y + (sizerow * 0.1)), sizecol / getNumberOfHeapObjects(), (int) (sizerow * 0.8));
 			g.setColor(Color.red);
 		} else {
-			for (int k = 0; k < getSize(); k++) {
+			for (int k = 0; k < getNumberOfHeapObjects(); k++) {
 				// System.err.println("elements.get(k) = " + elements.get(k) + " | getTypes() = " + getTypes());
-				Color colorHeap = new Color((int) (((float) elements.get(k) / (float) getTypes()) * 255),
-						(int) (((float) elements.get(k) / (float) getTypes()) * 255), (int) ((0.7) * 255));
+				Color colorHeap = new Color((int) (((float) heapObjects.get(k) / (float) getHeapObjectTypes()) * 255),
+						(int) (((float) heapObjects.get(k) / (float) getHeapObjectTypes()) * 255), (int) ((0.7) * 255));
 				g.setColor(colorHeap);
 				int y = getLocation().getRow() * sizerow;
 				int x = getLocation().getColumn() * sizecol;
-				g.fillRect((int) (x + (k) * (sizecol / getSize())), (int) (y + (sizerow * 0.1)), sizecol / getSize(),
+				g.fillRect((int) (x + (k) * (sizecol / getNumberOfHeapObjects())), (int) (y + (sizerow * 0.1)), sizecol / getNumberOfHeapObjects(),
 						(int) (sizerow * 0.8));
 				// Drawing an edge for a heap element, to differentiate their quantity
 				g.setColor(Color.white);
-				g.drawRect((int) (x + (k) * (sizecol / getSize())), (int) (y + (sizerow * 0.1)), sizecol / getSize(),
+				g.drawRect((int) (x + (k) * (sizecol / getNumberOfHeapObjects())), (int) (y + (sizerow * 0.1)), sizecol / getNumberOfHeapObjects(),
 						(int) (sizerow * 0.8));
 			}
 		}
 	}
 
 	// modified after the pickup and dropping operations
-	public void updateHeap(LinkedList<Integer> heap) {
-		this.elements = new LinkedList<Integer>();
+	public void updateHeapObjects(LinkedList<Integer> heap) {
+		this.heapObjects = new LinkedList<Integer>();
 		for (int i = 0; i < heap.size(); i++) {
-			this.elements.add(heap.get(i)); // TODO: make sure it's consistent with the .pdf document description
+			this.heapObjects.add(heap.get(i)); // TODO: make sure it's consistent with the .pdf document description
 		}
 	}
 
