@@ -13,9 +13,14 @@ public class Heap implements Serializable, CellEntity {
 	private LinkedList<Integer> heapObjects;
 	private int heapObjectTypes; // the different types of heap elements
 
+	/**
+	 * Constructor for a HeapObject
+	 * @param r - row number
+	 * @param c - column number
+	 * @param heapObjectTypes - number of types of HeapObjects
+	 */
 	public Heap(int r, int c, int heapObjectTypes) {
 		location = new Location(r, c);
-		// should be changed
 		this.heapObjectTypes = heapObjectTypes;
 		heapObjects = new LinkedList<Integer>();
 	}
@@ -31,15 +36,26 @@ public class Heap implements Serializable, CellEntity {
 		}
 	}
 
+	/**
+	 * Get the number of HeapObject in one heap (size of a Heap)
+	 * @return size
+	 */
 	public int getNumberOfHeapObjects() {
 		return heapObjects.size();
 	}
 
+	/**
+	 * Return the HeapObject
+	 * @return HeapObject
+	 */
 	public LinkedList<Integer> getHeapObjects() {
 		return heapObjects;
 	}
 
-	// returns an upper bound on the types of heap elements
+	/**
+	 * Return an upper bound on the types of HeapObjects
+	 * @return number of predefined types of HeapObjects
+	 */
 	public int getHeapObjectTypes() {
 		return heapObjectTypes;
 	}

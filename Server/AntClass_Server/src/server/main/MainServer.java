@@ -86,16 +86,6 @@ public class MainServer {
 
 		System.out.println("Initialized with " + mainServer.currentAnts + " ants and " + mainServer.currentHeaps + " heaps!");
 
-
-		// for (int i = 0; i < mainServer.boardSize; i++) {
-		// for (int j = 0; j < mainServer.boardSize; j++) {
-		// System.out.print(mainServer.board.getCellObjectType(i, j) + "--|");
-		// }
-		// System.out.println();
-		// }
-		// for (int i = 0; i < mainServer.ants.length; i++) {
-		// System.out.println(mainServer.ants[i].getLocation());
-		// }
 		// create the GUI object
 		JFrame frame = new JFrame("AntClass");
 		frame.setSize(mainServer.width, mainServer.height);

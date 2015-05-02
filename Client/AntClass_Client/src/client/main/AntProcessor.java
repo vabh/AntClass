@@ -12,6 +12,15 @@ import shared_classes.Location;
 
 public class AntProcessor {
 
+	/**
+	 * Move an Ant on the board with randomly generated probability on hDirection and/or vDirection
+	 * @param antLocation - current Ant location
+	 * @param boardRows - number of rows
+	 * @param boardColumns - number of columns
+	 * @param board - Current Instance of a board
+	 * @return - New location of an Ant
+	 * @throws RemoteException
+	 */
 	public Location move(Location antLocation, int boardRows, int boardColumns, Board board) throws RemoteException {
 		while (true) { // TODO: what if there's no way to go? (i.e. surrounded with the heaps and other ants)
 			float hDirection = (float) Math.random();
@@ -38,8 +47,13 @@ public class AntProcessor {
 		}
 	}
 
-	// returns a nearby heap location if found any, otherwise returns null
-	// index parameter is the index of the ant in the ants[] array which needs to look around itself
+	/**
+	 * Returns a nearby heap location if found any, otherwise returns null
+	 * Index parameter is the index of the ant in the ants[] array which needs to look around itself
+	 * @param ant - Currently processed Ant
+	 * @param board - Current instance of a board
+	 * @return Heap location on the board if found around the Ant, null otherwise
+	 */
 	public Location lookAround(Ant ant, Board board) {
 		Location resultLocation = new Location();
 
@@ -76,6 +90,12 @@ public class AntProcessor {
 		return null;
 	}
 
+	/**
+	 * Looking for an Empty Cell to place the HeapObject
+	 * @param ant
+	 * @param board
+	 * @return Location of an EmptyCell
+	 */
 	public Location lookAroundForEmpty(Ant ant, Board board) {
 		Location resultLocation = new Location();
 
@@ -112,6 +132,14 @@ public class AntProcessor {
 		return null;
 	}
 
+	/**
+	 * Algorithm to drop an Object on the empty cell or a heap
+	 * @param board - current instance of a board
+	 * @param heapLocation - location of found heap
+	 * @param ant
+	 * @param antStub
+	 * @throws RemoteException
+	 */
 	public void processDropAlgorithm(Board board, Location heapLocation, Ant ant, IRemoteAnt antStub) throws RemoteException {
 		synchronized (board) {
 			// first, check if the heap is still there (because it may have disappeared because of other clients' ants)
@@ -149,7 +177,16 @@ public class AntProcessor {
 		}
 	}
 
-	// returns the type of the picked-up object
+	
+	/**
+	 * Algorithm to pick up an Object from the Heap
+	 * @param board
+	 * @param heapLocation
+	 * @param ant
+	 * @param antStub
+	 * @return type of the picked-up object
+	 * @throws RemoteException
+	 */
 	public int processPickUpAlgorithm(Board board, Location heapLocation, Ant ant, IRemoteAnt antStub) throws RemoteException {
 		synchronized (board) {
 			// first, check if the heap is still there (because it may have disappeared because of other clients' ants)
@@ -183,13 +220,6 @@ public class AntProcessor {
 				antStub.updateHeapOnBoard(heapLocation, heap); // update the heap object on the server side
 				break;
 			}
-			// for (int i = 0; i < board.getRows(); i++) {
-			// for (int j = 0; j < board.getColumns(); j++) {
-			// System.out.print(board.getCellObjectType(i, j) + "--|");
-			// }
-			// System.out.println("");
-			// }
-			// System.out.println("___________________________________________________");
 			return heapObjectElement; // return the type of the picked-up object
 
 		}
