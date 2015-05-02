@@ -20,7 +20,7 @@ public class MainServer {
 	private int MAX_HEAP_SIZE = 3;
 	private int NUMBER_OF_INITIAL_HEAPS = 3;
 	private int TYPES_OF_OBJECTS = 2;
-	private final int NUMBER_OF_PROCESSORS = 1;
+	private final int NUMBER_OF_PROCESSORS = 2;
 
 	private final int ANT_PROBABILITY = 5;
 	private final int HEAP_PROBABILITY = 2;

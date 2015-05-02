@@ -9,7 +9,7 @@ import shared_classes.Location;
 
 public class MainClient {
 
-	private final int clientID = 0; // should start from 0 and be less than the number of clients set in the server
+	private final int clientID = 1; // should start from 0 and be less than the number of clients set in the server
 
 	private void start() {
 		try {
