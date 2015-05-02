@@ -17,7 +17,12 @@ public class Heap implements Serializable, CellEntity {
 
 
 	// probabilities for heap operation
-
+	public Heap(int r, int c){
+		location = new Location(r, c);
+		//should be changed
+		types = 2;
+		elements = new LinkedList<Integer>();
+	}
 	public Heap(int r, int c, int size, int types) {
 		location = new Location(r, c);
 		this.types = types;

@@ -72,14 +72,51 @@ public class AntProcessor {
 				lookatY %= columns;
 			} else if (lookatY < 0) {
 				lookatY = columns - 1;
-			}
-			if (cells[lookatX][lookatY] == null) {
-				continue;
-			}
+			}			
 			if (cells[lookatX][lookatY].getEntityType().equals("heap")) {
 				resultLocation.setRow(lookatX);
 				resultLocation.setColumn(lookatY);
 				return resultLocation;
+			}
+			else{
+				continue;
+			}
+		}
+		return null;
+	}
+	
+	public Location lookAroundForEmpty(Ant ant, Board board) {
+		Location resultLocation = new Location();
+
+		// direction to look at
+		int xPos[] = { -1, -1, 0, 1, 1, 1, 0, -1 };
+		int yPos[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
+
+		Cell[][] cells = board.getBoardCells();
+		int rows = board.getRows();
+		int columns = board.getColumns();
+
+		for (int i = 0; i < xPos.length; i++) {
+			int lookatX = ant.getLocation().getRow() + xPos[i];
+			int lookatY = ant.getLocation().getColumn() + yPos[i];
+			if (lookatX >= 0) {
+				lookatX %= rows;
+			} else if (lookatX < 0) {
+				lookatX = rows - 1;
+			}
+
+			if (lookatY >= 0) {
+				lookatY %= columns;
+			} else if (lookatY < 0) {
+				lookatY = columns - 1;
+			}			
+			if (cells[lookatX][lookatY].getEntityType().equals("empty")) {
+				resultLocation.setRow(lookatX);
+				resultLocation.setColumn(lookatY);
+				return resultLocation;
+			}
+			else{
+				continue;
 			}
 		}
 		return null;
@@ -89,6 +126,13 @@ public class AntProcessor {
 		synchronized (board) {
 			// first, check if the heap is still there (because it may have disappeared because of other clients' ants)
 			if (!board.getBoardCells()[heapLocation.getRow()][heapLocation.getColumn()].getEntityType().equalsIgnoreCase("heap")) {
+				
+				//drop on EmptyCell
+				Heap heap = new Heap(heapLocation.getRow(), heapLocation.getColumn());
+				LinkedList<Integer> heapElements =  new LinkedList<Integer>();
+				heapElements.add(ant.getHeapElementType());
+				heap.updateHeap(heapElements);
+				antStub.placeHeap(heap);
 				return; // do nothing
 			}
 

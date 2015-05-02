@@ -62,6 +62,15 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 					heapLocation.getRow(), heapLocation.getColumn()));
 		}
 	}
+	
+	public void placeHeap(Heap heap) throws RemoteException {
+		// check if the heap is there
+		Location heapLocation = heap.getLocation();
+		if (board.getBoardCells()[heapLocation.getRow()][heapLocation.getColumn()].getEntityOnCell().getEntityType()
+				.equalsIgnoreCase("empty")) {
+			board.getBoardCells()[heapLocation.getRow()][heapLocation.getColumn()].setEntityOnCell(heap);
+		}
+	}
 
 	@Override
 	public int getBoardWidth() throws RemoteException {

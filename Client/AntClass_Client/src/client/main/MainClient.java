@@ -9,7 +9,7 @@ import shared_classes.Location;
 
 public class MainClient {
 
-	private final int clientID = 0; // should start from 0 and be less than the number of clients set in the server
+	private final int clientID = 1; // should start from 0 and be less than the number of clients set in the server
 
 	private void start() {
 		try {
@@ -29,6 +29,8 @@ public class MainClient {
 					Location next = antProc.move(current, remoteAnts.getBoardHeight(), remoteAnts.getBoardWidth(), remoteAnts.getBoard());
 					remoteAnts.changeLocation(current, next, index);							
 
+					int dropProb = 4;
+					int rand = (int)(Math.random()*10);
 					remoteAnts.getAnt(index).printStatus();
 
 					// look around of the ant[index]
@@ -55,6 +57,12 @@ public class MainClient {
 							// update the ant object on the server side
 							remoteAnts.updateCarryingObject(index, pickupObject);
 						}
+					}
+					else if(rand > dropProb && remoteAnts.getAnt(index).isCarrying()){
+						Location emptyLocation = antProc.lookAroundForEmpty(remoteAnts.getAnt(index), remoteAnts.getBoard());
+						antProc.processDropAlgorithm(remoteAnts.getBoard(), emptyLocation, remoteAnts.getAnt(index),
+								remoteAnts);
+						remoteAnts.updateCarryingObject(index, -1);
 					}
 
 				}
