@@ -140,9 +140,10 @@ public class AntProcessor {
 	 * @param heapLocation - location of found heap
 	 * @param ant
 	 * @param antStub
+	 * @return TODO
 	 * @throws RemoteException
 	 */
-	public void processDropAlgorithm(Board board, Location heapLocation, Ant ant, IRemoteAnt antStub) throws RemoteException {
+	public int processDropAlgorithm(Board board, Location heapLocation, Ant ant, IRemoteAnt antStub) throws RemoteException {
 		synchronized (board) {
 			// first, check if the heap is still there (because it may have disappeared because of other clients' ants)
 			if (board.getBoardCells()[heapLocation.getRow()][heapLocation.getColumn()].getEntityType().equalsIgnoreCase("empty")) {
@@ -153,7 +154,7 @@ public class AntProcessor {
 				heapObjects.add(ant.getHeapElementType());
 				heap.updateHeapObjects(heapObjects);
 				antStub.placeHeapOnBoard(heap);
-				return;
+				return -1;
 			}
 
 			Heap heap = (Heap) board.getCellEntity(heapLocation);
@@ -161,21 +162,25 @@ public class AntProcessor {
 
 			switch (heapObjects.size()) {
 			case 0: // TODO: according to the reference .pdf file, there should be such a case
-				return;
+				return -1;
 			case 1:
 				// TODO: apply the drop algorithm according to the reference .pdf file
-				heapObjects.add(ant.getHeapElementType());
-				// ant.drop();
-				antStub.updateHeapOnBoard(heapLocation, heap); // update the heap object on the server side
-				return;
+				if(heapObjects.get(0) == ant.getHeapElementType()){
+					heapObjects.add(ant.getHeapElementType());
+					// ant.drop();
+					antStub.updateHeapOnBoard(heapLocation, heap); // update the heap object on the server side
+					return -1;
+				}
+				else{
+					return ant.getHeapElementType();
+				}				
 			default:
 				// TODO: apply the drop algorithm according to the reference .pdf file
 				heapObjects.add(ant.getHeapElementType());
 				// ant.drop();
 				antStub.updateHeapOnBoard(heapLocation, heap); // update the heap object on the server side
-				return;
+				return -1;
 			}
-
 		}
 	}
 
@@ -222,15 +227,13 @@ public class AntProcessor {
 				}
 				break; // return the type of the picked-up object
 			default:
-				
-				Integer temp[] = null;
-				heapObjects.toArray(temp);
-				Arrays.sort(temp);
-				
-				
-				heapObjectElement = heapObjects.remove(0); // TODO: adjust according to the .pdf reference document as well	
-				heap.updateHeapObjects(heapObjects);
-				antStub.updateHeapOnBoard(heapLocation, heap); // update the heap object on the server side				
+				int s = heapObjects.getFirst();
+				int l = heapObjects.getLast();
+				if(s != l){
+					heapObjectElement = heapObjects.remove(0); // TODO: adjust according to the .pdf reference document as well	
+					heap.updateHeapObjects(heapObjects);
+					antStub.updateHeapOnBoard(heapLocation, heap); // update the heap object on the server side
+				}
 			}
 			return heapObjectElement; // return the type of the picked-up object
 		}

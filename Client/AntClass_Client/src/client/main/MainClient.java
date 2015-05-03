@@ -9,7 +9,7 @@ import shared_classes.Location;
 
 public class MainClient {
 
-	private final int clientID = 2; // should start from 0 and be less than the number of clients set in the server
+	private final int clientID = 1; // should start from 0 and be less than the number of clients set in the server
 
 	private void start() {
 		try {
@@ -28,7 +28,7 @@ public class MainClient {
 				int endIndex = remoteAnts.getEndIndexOfAnts(clientID);
 
 				final int heapObjectDropProbability = 2;
-				final int rand = (int) (Math.random() * 10);
+				
 
 				for (int i = startIndex; i < endIndex; ++i) {
 					final int index = i;
@@ -36,6 +36,8 @@ public class MainClient {
 						public void run() {
 							try {
 								// move the ant[index]
+								int rand = (int) (Math.random() * 10);
+								
 								Location current = remoteAnts.getAnt(index).getLocation();
 								Location next = antProc.move(current, remoteAnts.getBoardHeight(), remoteAnts.getBoardWidth(),
 										remoteAnts.getBoard());
@@ -53,11 +55,11 @@ public class MainClient {
 										// drop the carrying object according to the drop algorithm (do the heavy computation on
 										// client side) the heap will be updated on the server side, that's why passing remoteAnts
 										// stub object here
-										antProc.processDropAlgorithm(remoteAnts.getBoard(), heapLocation,
+										int droppedElement = antProc.processDropAlgorithm(remoteAnts.getBoard(), heapLocation,
 												remoteAnts.getAnt(index), remoteAnts);
 
 										// update the ant object on the server side
-										remoteAnts.updateAntHeapObject(index, -1);
+										remoteAnts.updateAntHeapObject(index, droppedElement);
 									} else {
 										// find the pickup object (do the heavy processing on client side), heap update will be
 										// called inside pickup algorithm but again on client side, that's why passing remoteAnts
@@ -72,7 +74,7 @@ public class MainClient {
 								} else if (rand < heapObjectDropProbability && remoteAnts.getAnt(index).isCarrying()) {
 									Location emptyLocation = antProc.lookAroundForEmpty(remoteAnts.getAnt(index),
 											remoteAnts.getBoard());
-									antProc.processDropAlgorithm(remoteAnts.getBoard(), emptyLocation, remoteAnts.getAnt(index),
+									int droppedElement = antProc.processDropAlgorithm(remoteAnts.getBoard(), emptyLocation, remoteAnts.getAnt(index),
 											remoteAnts);
 									remoteAnts.updateAntHeapObject(index, -1);
 								}

@@ -15,11 +15,11 @@ import shared_classes.Heap;
 public class MainServer {
 	// declare the member variable for array of objects in order to have
 	// them locked while processing ants with sync methods
-	private int boardSize = 10;
-	private final int NUM_OF_ANTS = 11;
-	private int MAX_HEAP_SIZE = 5;
+	private int boardSize = 5;
+	private final int NUM_OF_ANTS = 2;
+	private int MAX_HEAP_SIZE = 4;
 	private int NUMBER_OF_INITIAL_HEAPS = 5;
-	private int TYPES_OF_OBJECTS = 5;
+	private int TYPES_OF_OBJECTS = 3;
 	private final int NUMBER_OF_PROCESSORS = 10;
 
 	private final int ANT_PROBABILITY = 5;
