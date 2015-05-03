@@ -9,7 +9,7 @@ import shared_classes.Location;
 
 public class MainClient {
 
-	private final int clientID = 0; // should start from 0 and be less than the number of clients set in the server
+	private final int clientID = 2; // should start from 0 and be less than the number of clients set in the server
 
 	private void start() {
 		try {
@@ -27,7 +27,7 @@ public class MainClient {
 				int startIndex = remoteAnts.getStartIndexOfAnts(clientID);
 				int endIndex = remoteAnts.getEndIndexOfAnts(clientID);
 
-				final int heapObjectDropProbability = 4;
+				final int heapObjectDropProbability = 2;
 				final int rand = (int) (Math.random() * 10);
 
 				for (int i = startIndex; i < endIndex; ++i) {
@@ -69,7 +69,7 @@ public class MainClient {
 										remoteAnts.updateAntHeapObject(index, pickupObject);
 									}
 									// drop heapObject on EmptyCell
-								} else if (rand > heapObjectDropProbability && remoteAnts.getAnt(index).isCarrying()) {
+								} else if (rand < heapObjectDropProbability && remoteAnts.getAnt(index).isCarrying()) {
 									Location emptyLocation = antProc.lookAroundForEmpty(remoteAnts.getAnt(index),
 											remoteAnts.getBoard());
 									antProc.processDropAlgorithm(remoteAnts.getBoard(), emptyLocation, remoteAnts.getAnt(index),

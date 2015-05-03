@@ -1,6 +1,8 @@
 package client.main;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 import shared_classes.Ant;
@@ -207,21 +209,30 @@ public class AntProcessor {
 				antStub.destroyHeapOnBoard(heapLocation);
 				// antStub.updateHeap(heapLocation, heap); // update the heap object on the server side
 				break;
-			case 2: // pickup object, update heap
-				heapObjectElement = heapObjects.remove(0); // TODO: adjust according to the .pdf reference document
-													// set type of object to be returned
-				heap.updateHeapObjects(heapObjects);
-				antStub.updateHeapOnBoard(heapLocation, heap); // update the heap object on the server side
+			case 2:
+				//pickup if the two heapObjects are not same
+				if(heapObjects.get(0) !=  heapObjects.get(1)){
+					heapObjectElement = heapObjects.remove(0); // TODO: adjust according to the .pdf reference document
+														// set type of object to be returned
+					heap.updateHeapObjects(heapObjects);
+					antStub.updateHeapOnBoard(heapLocation, heap); // update the heap object on the server side
+				}
+				else{
+					heapObjectElement = -1;
+				}
 				break; // return the type of the picked-up object
 			default:
-				heapObjectElement = heapObjects.remove(0); // TODO: adjust according to the .pdf reference document as well
-
+				
+				Integer temp[] = null;
+				heapObjects.toArray(temp);
+				Arrays.sort(temp);
+				
+				
+				heapObjectElement = heapObjects.remove(0); // TODO: adjust according to the .pdf reference document as well	
 				heap.updateHeapObjects(heapObjects);
-				antStub.updateHeapOnBoard(heapLocation, heap); // update the heap object on the server side
-				break;
+				antStub.updateHeapOnBoard(heapLocation, heap); // update the heap object on the server side				
 			}
 			return heapObjectElement; // return the type of the picked-up object
-
 		}
 	}
 

@@ -159,7 +159,7 @@ public class AntStub extends UnicastRemoteObject implements IRemoteAnt {
 			// assign until the last ant
 			return getTotalNumOfAnts();
 		} else {
-			return (clientID + 1) * (getTotalNumOfAnts() / getTotalNumOfClients());
+			return (clientID + 1) * (getTotalNumOfAnts() / numOfActiveClients);
 		}
 	}
 
